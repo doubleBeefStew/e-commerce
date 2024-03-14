@@ -1,11 +1,9 @@
 import sendEmail from "../utils/sendEmail.js"
 import asyncHandler from "express-async-handler"
 import userModel from "../models/user.js"
-import {badRequestError} from "../errors/customErrors.js"
-import { generateToken } from "../utils/generateToken.js"
-import jwt from 'jsonwebtoken'
+import {badRequestError, unauthorizedError} from "../errors/customErrors.js"
+import { generateToken,validateToken } from "../utils/token.js"
 import dotenv from 'dotenv'
-
 dotenv.config()
 
 export const register = asyncHandler(async (req,res,next)=>{
@@ -38,19 +36,21 @@ export const register = asyncHandler(async (req,res,next)=>{
     res.status(200).json({message:'confirmation email sent',email})
 })
 
-export const verifyToken = asyncHandler(async(req,res,next)=>{
+export const verifyRegistration = asyncHandler(async(req,res,next)=>{
     const token = req.params.token
+    
+    const data = validateToken(token)
 
-    const {email,password} = jwt.verify(token,process.env.JWT_KEY)
+    const {email,password} = data
+    console.log(email,password);
+
     const name = 'user'+ Math.floor(Math.random()*100000).toString()
 
     const user = await userModel.create({name,email,password})
 
-    res.status(201).json({message:'user registered successfully',user})
+    res.status(201).json({message:'user registered successfully'})
 })
 
-
-//TODO: set token and cookie for login
 export const login = asyncHandler(async(req,res,next)=>{
     const {email,password, rememberMe} = req.body
 
@@ -62,5 +62,15 @@ export const login = asyncHandler(async(req,res,next)=>{
     if(!verifyPassword)
         throw new unauthorizedError("invalid username or password")
 
-    res.status(200).json({message:'login successful'})
+    if(!rememberMe)
+        res.status(200).json({message:'login successful'})
+
+    const token = generateToken({user})
+    const options = {
+        expires:new Date(Date.now() + (1*24*60*60*1000)),
+        httpOnly:true,
+        sameSite:"none",
+        secure:true
+    }
+    res.status(200).cookie('token',token,options).json({message:'login successful'})
 })

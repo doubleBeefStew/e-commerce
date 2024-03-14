@@ -1,5 +1,5 @@
 import Express from "express"
-import { register,verifyToken,login } from "../controllers/auth.js"
+import { register,verifyRegistration,login } from "../controllers/auth.js"
 
 const router = Express.Router()
 
@@ -7,7 +7,7 @@ router.route('/register')
     .get(register)
 
 router.route('/verify/:token')
-.get(verifyToken)
+.get(verifyRegistration)
 
 router.route('/login')
     .post(login)

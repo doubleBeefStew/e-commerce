@@ -5,20 +5,26 @@ import bcrypt from "bcrypt"
 const userSchema = new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        required:[true,'Please fill in your name']
     },
     email:{
         type:String,
-        required:true,
+        required:[true,'Please fill in your email'],
         index:true,
         unique:true
     },
     password:{
         type:String,
-        required:true
+        select:false,
+        required:[true,'Please fill in your password'],
+        minLength:[4,'Password must be between 8-20 characters length'],
+        maxLength:[20,'Password must be between 8-20 characters length'],
+
     },
     phoneNumber:{
         type:String,
+        minLength:[12,'Phone number must be between 12-18 characters length'],
+        maxLength:[18,'Phone number must be between 12-18 characters length'],
     },
     address:[
         {
@@ -64,12 +70,14 @@ const userSchema = new mongoose.Schema({
     resetPasswordTime:Date
 })
 
+//hash password
 userSchema.pre('save',async function(next){
     if(!this.isModified('password'))
         next()
     this.password = await bcrypt.hash(this.password,10)
 })
 
+// validate password
 userSchema.methods.comparePassword = async function(password){
     return await bcrypt.compare(password,this.password)
 }
