@@ -12,7 +12,7 @@ export const register = asyncHandler(async (req,res,next)=>{
     const user = await userModel.findOne({email})
 
     if(user)
-        throw new badRequestError('email already registered')
+        throw new badRequestError('user is already registered')
 
     const token = generateToken({email,password})
 
@@ -26,7 +26,7 @@ export const register = asyncHandler(async (req,res,next)=>{
         We received a registration request to Sheepo.com
         Please click on the link below to continue your registration and activate your account:
 
-        ${process.env.API_URL}/auth/verify/${token}
+        ${process.env.FE_ORIGIN}/register/activation/${token}
 
         Ignore this email if you did not signup for this registration process.
 
@@ -36,19 +36,22 @@ export const register = asyncHandler(async (req,res,next)=>{
     res.status(200).json({message:'confirmation email sent',email})
 })
 
-export const verifyRegistration = asyncHandler(async(req,res,next)=>{
+export const activation = asyncHandler(async(req,res,next)=>{
     const token = req.params.token
     
     const data = validateToken(token)
 
     const {email,password} = data
-    console.log(email,password);
 
     const name = 'user'+ Math.floor(Math.random()*100000).toString()
 
-    const user = await userModel.create({name,email,password})
+    const existingUser = await userModel.findOne({email})
+    if(existingUser){
+        throw new badRequestError('user is already registered')
+    }
 
-    res.status(201).json({message:'user registered successfully'})
+    const user = await userModel.create({name,email,password})
+    res.status(201).json({message:'user registered successfully',user})
 })
 
 export const login = asyncHandler(async(req,res,next)=>{
@@ -63,7 +66,7 @@ export const login = asyncHandler(async(req,res,next)=>{
         throw new unauthorizedError("invalid username or password")
 
     if(!rememberMe)
-        res.status(200).json({message:'login successful'})
+        return res.status(200).json({message:'login successful'})
 
     const token = generateToken({user})
     const options = {

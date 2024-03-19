@@ -1,13 +1,13 @@
 import Express from "express"
-import { register,verifyRegistration,login } from "../controllers/auth.js"
+import { register,activation as activation,login } from "../controllers/auth.js"
 
 const router = Express.Router()
 
 router.route('/register')
-    .get(register)
+    .post(register)
 
-router.route('/verify/:token')
-.get(verifyRegistration)
+router.route('/activation/:token')
+.get(activation)
 
 router.route('/login')
     .post(login)

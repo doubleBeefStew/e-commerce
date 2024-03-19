@@ -1,31 +1,27 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import {createBrowserRouter,RouterProvider} from 'react-router-dom'
+import {Login,Register,LandingLayout,Error, Activation} from './pages'
+
+const router = createBrowserRouter([{
+    path:'/',
+    element:<LandingLayout/>,
+    errorElement:<Error/>,
+    children:[{
+        element:<Login/>,
+        index:true,
+    },{
+        path:'register',
+        element:<Register/>,
+    },{
+        path:'register/activation/:token',
+        element:<Activation/>,
+    },{
+        path:'login',
+        element:<Login/>
+    }]
+}])
 
 const App = ()=>{
-    const [message, SetMessage] = useState('')
-
-    useEffect(()=>{
-        SetMessage('loading..')
-        axios({
-            url:'https://studious-couscous-x9gxvg999g2v5wx-3000.app.github.dev/api'
-        })
-            .then((res)=>{
-                console.log(res.data.message)
-                SetMessage(res.data.message)
-
-            })
-            .catch((err)=>{
-                console.log(err.message)
-                SetMessage(err.message)
-            })
-    },[])
-
-    return (
-        <>
-            <h1>test application</h1>
-            <h4>{message ? message : 'loading..'}</h4>
-        </>
-    )
+    return <RouterProvider router={router} />
 }
 
 export default App
