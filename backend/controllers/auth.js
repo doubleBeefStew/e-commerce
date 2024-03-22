@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler"
 import userModel from "../models/user.js"
 import {badRequestError, unauthorizedError} from "../errors/customErrors.js"
 import { generateToken,validateToken } from "../utils/token.js"
+import responseSchema from "../data/models/responseSchema.tsx"
 import dotenv from 'dotenv'
 dotenv.config()
 

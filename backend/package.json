@@ -6,7 +6,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "tsx watch index.tsx"
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +21,6 @@
     "nodemailer": "^6.9.12"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0",
     "tsx": "^4.7.1",
     "typescript": "^5.4.2"
   }
