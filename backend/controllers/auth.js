@@ -12,7 +12,7 @@ export const register = asyncHandler(async (req,res,next)=>{
     const user = await userModel.findOne({email})
 
     if(user)
-        throw new badRequestError('user is already registered')
+        throw new badRequestError('user is already registered','RGS-401')
 
     const token = generateToken({email,password})
 
@@ -47,7 +47,7 @@ export const activation = asyncHandler(async(req,res,next)=>{
 
     const existingUser = await userModel.findOne({email})
     if(existingUser){
-        throw new badRequestError('user is already registered')
+        throw new badRequestError('user is already registered','RGS-201')
     }
 
     const user = await userModel.create({name,email,password})
@@ -59,21 +59,28 @@ export const login = asyncHandler(async(req,res,next)=>{
 
     const user = await userModel.findOne({email})
     if(!user)
-        throw new badRequestError("user is not registered")
+        throw new badRequestError("user is not registered",'LGN-400')
 
     const verifyPassword = await user.comparePassword(password)
     if(!verifyPassword)
-        throw new unauthorizedError("invalid username or password")
+        throw new unauthorizedError("invalid username or password",'LGN-401')
 
-    if(!rememberMe)
-        return res.status(200).json({message:'login successful'})
-
-    const token = generateToken({user})
+    const userData = {
+        name:user.name,
+        email:user.email,
+        role:user.role,
+        address:user.address,
+        createdAt:user.createdAt
+    }
+    const token = generateToken({userData})
     const options = {
-        expires:new Date(Date.now() + (1*24*60*60*1000)),
+        expires:new Date(Date.now() + ((rememberMe?60:1)*24*60*60*1000)),
         httpOnly:true,
         sameSite:"none",
         secure:true
     }
-    res.status(200).cookie('token',token,options).json({message:'login successful'})
+    res.status(200).cookie('token',token,options)
+        .json({
+            message:'login successful',
+        })
 })
