@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Form from 'react-bootstrap/Form'
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
@@ -18,6 +18,7 @@ const Login = ()=>{
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries(formData)
+        const navigate = useNavigate()
 
         if(!data.email)
             setAlert({message:'Please fill in your email address.',type:'danger'})
@@ -29,12 +30,18 @@ const Login = ()=>{
             console.log(data);
             axios.post('https://studious-couscous-x9gxvg999g2v5wx-3000.app.github.dev/api/v1/auth/login',data)
             .then(function(res){
-                setAlert({message:'Login successful.',type:'success'})
                 console.log(res)
                 setLoading(false)
+                navigate('/')
             })
             .catch((err)=>{
-                setAlert({message:'Login failed.',type:'danger'})
+                if(err.response && err.response.data.error.code=='LGN-400')
+                    setAlert({message:'Email is not registered.',type:'danger'})
+                else if(err.response && err.response.data.error.code=='LGN-401')
+                    setAlert({message:'Invalid email or password.',type:'danger'})
+                else
+                    setAlert({message:'Sorry, something went wrong. Please try again later.',type:'danger'})
+
                 console.log(err)
                 setLoading(false)
             })

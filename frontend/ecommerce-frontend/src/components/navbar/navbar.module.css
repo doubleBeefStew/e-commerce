@@ -1,0 +1,9 @@
+.searchBar{
+    padding: 3px;
+    background-color: white;
+}
+
+.searchButton{
+    width:4rem;
+    padding:auto;
+}

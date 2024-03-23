@@ -41,11 +41,11 @@ const Register = ()=>{
                 })
                 .catch((err)=>{
                     console.log(err)
-                    if(err.response.data.message=='user is already registered'){
+                    if(err.response && err.response.data.error.code=='RGS-401'){
                         setAlert({message:'Your email is already registered. Please login to continue',type:'danger'})
                     }
                     else{
-                        setAlert({message:'Sorry, something went wrong. Please try again.',type:'danger'})
+                        setAlert({message:'Sorry, something went wrong. Please try again later.',type:'danger'})
                     }
                     setLoading(false)
                 })

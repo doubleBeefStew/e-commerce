@@ -1,23 +1,25 @@
 import {createBrowserRouter,RouterProvider} from 'react-router-dom'
-import {Login,Register,LandingLayout,Error, Activation} from './pages'
+import {Login,Register,Error, HomePage, Activation, AppContainer} from './pages'
 
 const router = createBrowserRouter([{
-    path:'/',
-    element:<LandingLayout/>,
+    path:'',
+    element:<AppContainer/>,
     errorElement:<Error/>,
-    children:[{
-        element:<Login/>,
-        index:true,
-    },{
-        path:'register',
-        element:<Register/>,
-    },{
-        path:'register/activation/:token',
-        element:<Activation/>,
-    },{
-        path:'login',
-        element:<Login/>
-    }]
+    children:[
+        {
+            index:true,
+            element:<HomePage/>,
+        },{
+            path:'/login',
+            element:<Login/>,
+        },{
+            path:'register',
+            element:<Register/>,
+        },{
+            path:'register/activation/:token',
+            element:<Activation/>,
+        }
+    ]
 }])
 
 const App = ()=>{
