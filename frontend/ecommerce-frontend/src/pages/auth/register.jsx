@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
 import Form from 'react-bootstrap/Form'
-import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Card from 'react-bootstrap/Card'
@@ -53,9 +52,8 @@ const Register = ()=>{
     }
 
     return (<>
-        <Container>
             <Row className='vh-100'>
-            <Col md={5} className='d-flex flex-column justify-content-center px-sm-5'>
+            <Col className='col-12 col-md-6 d-flex flex-column justify-content-center px-sm-5'>
                 <Card className='border-sm-0'>
                     <Card.Body>
                         <Card.Title className='text-center mb-4'>Create a New Account</Card.Title>
@@ -91,8 +89,6 @@ const Register = ()=>{
                 </Card>
             </Col>
             </Row>
-
-        </Container>
     </>)
 }
 

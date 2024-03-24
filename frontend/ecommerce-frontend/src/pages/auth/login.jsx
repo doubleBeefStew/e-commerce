@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
 import Form from 'react-bootstrap/Form'
-import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Card from 'react-bootstrap/Card'
@@ -49,9 +48,8 @@ const Login = ()=>{
     }
 
     return (<>
-        <Container>
             <Row className='vh-100'>
-            <Col lg={5} className='d-flex flex-column justify-content-center px-sm-5'>
+            <Col className='col-12 col-md-6 d-flex flex-column justify-content-center px-sm-5'>
                 <Card>
                     <Card.Body>
                         <Card.Title className='text-center mb-4'>Login</Card.Title>
@@ -88,8 +86,6 @@ const Login = ()=>{
                 </Card>
             </Col>
             </Row>
-
-        </Container>
     </>)
 }
 

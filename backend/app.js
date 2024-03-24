@@ -3,7 +3,8 @@ import cors from 'cors'
 import logger from './utils/logger.js'
 import customErrorHandler from './errors/customErrorHandler.js'
 import notFoundHandler from './errors/notFoundHandler.js'
-import auth from './routes/auth.js'
+import auth from './routes/auth.tsx'
+import user from './routes/user.tsx'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -17,10 +18,11 @@ app.use(express.json())
 app.use(logger)
 
 app.use('/api/v1/ping', (req,res,next)=>{
-    res.status(200).json({message:'OK'})
+    res.status(200).json({output:{message:'OK'}})
 })
 
 app.use('/api/v1/auth', auth)
+app.use('/api/v1/user', user)
 
 app.use(notFoundHandler)
 app.use(customErrorHandler)
