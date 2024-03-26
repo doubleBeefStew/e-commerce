@@ -1,5 +1,5 @@
 import Express from "express"
-import { register,activation,login } from "../controllers/auth.tsx"
+import { register,activation,login } from "../controllers/auth.js"
 
 const router = Express.Router()
 

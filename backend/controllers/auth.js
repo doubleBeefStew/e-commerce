@@ -3,7 +3,6 @@ import asyncHandler from "express-async-handler"
 import userModel from "../models/user.tsx"
 import {badRequestError, unauthorizedError} from "../errors/customErrors.js"
 import { generateToken,validateToken } from "../utils/token.js"
-import responseSchema from "../data/models/responseSchema.tsx"
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -58,7 +57,7 @@ export const activation = asyncHandler(async(req,res,next)=>{
 export const login = asyncHandler(async(req,res,next)=>{
     const {email,password, rememberMe} = req.body
 
-    const user = await userModel.findOne({email})
+    const user = await userModel.findOne({email}).select('+password')
     if(!user)
         throw new badRequestError("user is not registered",'LGN-400')
 
@@ -67,6 +66,7 @@ export const login = asyncHandler(async(req,res,next)=>{
         throw new unauthorizedError("invalid username or password",'LGN-401')
 
     const userData = {
+        _id:user._id,
         name:user.name,
         email:user.email,
         role:user.role,
@@ -77,9 +77,12 @@ export const login = asyncHandler(async(req,res,next)=>{
     const options = {
         expires:new Date(Date.now() + ((rememberMe?60:1)*24*60*60*1000)),
         httpOnly:true,
-        sameSite:false,
-        secure:true
+        sameSite:"none",
+        secure:true,
     }
-    res.status(200).cookie('token',token,options)
-        .json({output:{message:'login successful'}})
+    
+    res.cookie('token',token,options)
+    console.log(res);
+    res.status(200)
+        .json({output:{message:'login successful',payload:userData}})
 })

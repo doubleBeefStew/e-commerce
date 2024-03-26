@@ -1,9 +1,9 @@
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 import { Login,Register,Error,HomePage,Activation, AppContainer,MainLayout } from './pages'
 
-import {useSelector,useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import { useEffect } from 'react'
-import { loadUser,setError } from './redux/slices/user'
+import { loadUser } from './redux/slices/user'
 
 const router = createBrowserRouter([{
     path:'/',
@@ -33,18 +33,9 @@ const router = createBrowserRouter([{
 
 const App = ()=>{
     const dispatch = useDispatch()
-    const user = useSelector((state)=>{state.user})
 
     useEffect(()=>{
-        const getUserData = async ()=>{
-            try{
-                await dispatch(loadUser())
-            }catch(e){
-                console.log(e)
-                dispatch(setError('failed to load user data'))
-            }
-        }
-        getUserData()
+            dispatch(loadUser())
     },[])
 
     return <RouterProvider router={router} />

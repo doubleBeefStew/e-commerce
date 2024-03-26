@@ -8,16 +8,19 @@ import Alert from 'react-bootstrap/Alert'
 import Spinner from 'react-bootstrap/Spinner'
 import { useState } from "react"
 import axios from 'axios'
+import env from '../../../../env'
+import Cookies from 'js-cookie'
+
 
 const Login = ()=>{
     const [alert,setAlert] = useState({message:'',type:''})
     const [loading,setLoading] = useState(false)
+    const navigate = useNavigate()
     
     const handleSubmit = (e)=>{
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
         const data = Object.fromEntries(formData)
-        const navigate = useNavigate()
 
         if(!data.email)
             setAlert({message:'Please fill in your email address.',type:'danger'})
@@ -26,12 +29,12 @@ const Login = ()=>{
         else{
             setAlert('')
             setLoading(true)
-            console.log(data);
-            axios.post('https://studious-couscous-x9gxvg999g2v5wx-3000.app.github.dev/api/v1/auth/login',data)
+            axios.post(`${env.API_URL}/auth/login`,data,{withCredentials:true})
             .then(function(res){
                 console.log(res)
                 setLoading(false)
                 navigate('/')
+                window.location.reload(true)
             })
             .catch((err)=>{
                 if(err.response && err.response.data.error.code=='LGN-400')

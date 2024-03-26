@@ -39,6 +39,7 @@ const userSchema = new Schema<User>({
     },
     password:{
         type:String,
+        select:false
     },
     phoneNumber:{
         type:String,
