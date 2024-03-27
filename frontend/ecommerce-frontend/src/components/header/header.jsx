@@ -3,24 +3,31 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/esm/Button"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styles from "./header.module.css"
 import { BsSearch,BsCart3 } from "react-icons/bs";
-import { useSelector } from "react-redux"
+import { useSelector,useDispatch } from "react-redux"
+import { logout } from '../../redux/slices/user'
+import { CgProfile } from "react-icons/cg"
 
-
-// TODO: shows profile name in the header
-const AppNav = ()=>{
+const Header = ()=>{
     const user = useSelector((state)=>{return state.user})
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     return (
     <>
         {/* header login-signup */}
-        <Row className='bg-orange justify-content-end py-1'>
-            <Col className='col-auto'>
-                <span className="text-white">
+        <Row className='bg-orange  justify-content-end py-1'>
+            <Col className='col-auto d-flex align-items-center'>
+                <span className="text-white px-1">
                     {
-                        user.isAuthenticated?(
-                            <><Link className="px-1 text-decoration-none text-white" to={'/register'}> {user.userData.name}</Link> | 
+                        user.isAuthenticated==true?(
+                            <>
+                            <Link className="text-decoration-none text-white " to={'/profile'}>
+                                <span className="p-1 "><CgProfile color='white' size='20'/></span> 
+                                <span>{user.userData.name}</span>
+                            </Link> | 
                             <Link className="px-1 text-decoration-none text-white" to={'/logout'}> Logout</Link></>
                         ):(
                             <><Link className="px-1 text-decoration-none text-white" to={'/login'}>Login</Link> | 
@@ -47,11 +54,11 @@ const AppNav = ()=>{
                                     <Button className={`${styles.searchButton} btn btn-primary border-0`}><BsSearch/></Button>
                             </Form>
                         </div>
-                        <div className="d-flex justify-content-center align-items-center">
-                                <Link className="px-1 text-decoration-none text-white" to={'/home'}>Home</Link>
-                                <Link className="px-1 text-decoration-none text-white" to={'/home'}>Home</Link>
-                                <Link className="px-1 text-decoration-none text-white" to={'/home'}>Home</Link>
-                                <Link className="px-1 text-decoration-none text-white" to={'/home'}>Home</Link>
+                        <div className="d-flex justify-content-center align-items-center text-center">
+                            <Col><Link className="px-1 text-decoration-none text-white" to={'/home'}>Products</Link></Col>
+                            <Col><Link className="px-1 text-decoration-none text-white" to={'/home'}>Events</Link></Col>
+                            <Col><Link className="px-1 text-decoration-none text-white" to={'/home'}>Best Selling</Link></Col>
+                            <Col><Link className="px-1 text-decoration-none text-white" to={'/home'}>Home</Link></Col>
                         </div>
                     </Col>
                     {/* Cart */}
@@ -70,4 +77,4 @@ const AppNav = ()=>{
     )
 }
 
-export default AppNav
+export default Header

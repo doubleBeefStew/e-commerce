@@ -1,5 +1,5 @@
 import Express from "express"
-import { register,activation,login } from "../controllers/auth.js"
+import { register,activation,login,logout } from "../controllers/auth.js"
 
 const router = Express.Router()
 
@@ -11,5 +11,8 @@ router.route('/activation/:token')
 
 router.route('/login')
     .post(login)
+
+router.route('/logout')
+    .get(logout)
 
 export default router

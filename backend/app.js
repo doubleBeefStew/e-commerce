@@ -4,9 +4,9 @@ import logger from './utils/logger.js'
 import cookieParser from 'cookie-parser'
 import customErrorHandler from './errors/customErrorHandler.js'
 import notFoundHandler from './errors/notFoundHandler.js'
-import auth from './routes/auth.tsx'
+import auth from './routes/auth.js'
 import isAuthenticated from './middlewares/auth.js'
-import user from './routes/user.tsx'
+import user from './routes/user.js'
 import dotenv from 'dotenv'
 dotenv.config()
 

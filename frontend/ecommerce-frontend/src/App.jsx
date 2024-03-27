@@ -1,5 +1,5 @@
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
-import { Login,Register,Error,HomePage,Activation, AppContainer,MainLayout } from './pages'
+import { Login,Logout,Register,Error,HomePage,Activation,AppContainer,MainLayout } from './pages'
 
 import {useDispatch} from 'react-redux'
 import { useEffect } from 'react'
@@ -24,6 +24,9 @@ const router = createBrowserRouter([{
         },{
             path:'register',
             element:<Register/>,
+        },{
+            path:'logout',
+            element:<Logout/>,
         },{
             path:'register/activation/:token',
             element:<Activation/>,

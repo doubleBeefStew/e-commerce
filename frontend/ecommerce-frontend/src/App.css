@@ -1,6 +1,10 @@
 :root{
-    --bs-border-radius:0.0rem;
+    --bs-border-radius:0.15rem;
     --bs-primary:#ee4d2d;
+}
+
+body{
+    background-color: rgb(235, 236, 236);
 }
 
 * {

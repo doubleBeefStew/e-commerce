@@ -5,11 +5,24 @@ import env from '../../../../env'
 export const loadUser = createAsyncThunk('user/fetch',async()=>{
     try{
         const response = await axios.get(`${env.API_URL}/user`,{withCredentials:true})
+        console.log(response.data);
         return response.data
     }catch(err){
         throw new Error(err.message)
     }
 })
+
+//try making a logout async
+export const logout = createAsyncThunk('user/logout',async()=>{
+    try{
+        const response = await axios.get(`${env.API_URL}/auth/logout`,{withCredentials:true})
+        console.log(response.data)
+        return response.data
+    }catch(err){
+        throw new Error(err.message)
+    }
+})
+
 
 const initialState = {
     isAuthenticated:false,
@@ -24,6 +37,10 @@ const userSlice = createSlice({
     reducers:{
         setError(state,action){
             state.error = action.payload
+        },
+        logout(state){
+            state = initialState
+            console.log(state);
         }
     },
     extraReducers:(builder)=>{

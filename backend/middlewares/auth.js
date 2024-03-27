@@ -6,7 +6,6 @@ import { validateToken } from "../utils/token"
 import { badRequestError } from "../errors/customErrors"
 dotenv.config()
 
-//TODO: fix cookies, seems like a frontend problem, the cookie was not set
 const isAuthenticated = expressAsyncHandler(async (req,res,next)=>{
     const {token} = req.cookies
     console.log(req.cookies);

@@ -1,4 +1,5 @@
 export {default as Login} from './auth/login'
+export {default as Logout} from './auth/logout'
 export {default as Register} from './auth/register'
 export {default as Activation} from './auth/activation'
 

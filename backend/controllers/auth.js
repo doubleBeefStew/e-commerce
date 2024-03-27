@@ -86,3 +86,9 @@ export const login = asyncHandler(async(req,res,next)=>{
     res.status(200)
         .json({output:{message:'login successful',payload:userData}})
 })
+
+export const logout = asyncHandler(async(req,res,next)=>{    
+    res.clearCookie('token')
+    res.status(200)
+        .json({output:{message:'logout successful'}})
+})
