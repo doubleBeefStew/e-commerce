@@ -3,6 +3,7 @@ import Row from "react-bootstrap/Row"
 import Container from "react-bootstrap/Container"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
+import env from "../../../../env"
 import axios from "axios"
 
 const Activation = ()=>{
@@ -14,7 +15,7 @@ const Activation = ()=>{
     useEffect(()=>{
         setLoading(true)
         if(token){
-            axios.get(`https://studious-couscous-x9gxvg999g2v5wx-3000.app.github.dev/api/v1/auth/activation/${token}`)
+            axios.get(`${env.API_URL}/auth/activation/${token}`)
             .then(function(res){
                 setError(false)
                 setLoading(false)

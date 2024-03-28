@@ -37,6 +37,7 @@ const Login = ()=>{
                 window.location.reload(true)
             })
             .catch((err)=>{
+                console.log(err);
                 if(err.response && err.response.data.error.code=='LGN-400')
                     setAlert({message:'Email is not registered.',type:'danger'})
                 else if(err.response && err.response.data.error.code=='LGN-401')

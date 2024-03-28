@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import Spinner from 'react-bootstrap/Spinner'
 import { useState } from "react"
+import env from "../../../../env"
 import axios from 'axios'
 
 const Register = ()=>{
@@ -31,7 +32,7 @@ const Register = ()=>{
         else{
             setAlert('')
             setLoading(true)
-            axios.post('https://studious-couscous-x9gxvg999g2v5wx-3000.app.github.dev/api/v1/auth/register',data)
+            axios.post(`${env.API_URL}/auth/register`,data)
                 .then(function(res){
                     console.log(res)
                     setAlert({message:`Registration successful. Please confirm the email sent to ${data.email} to continue.`,type:'success'})

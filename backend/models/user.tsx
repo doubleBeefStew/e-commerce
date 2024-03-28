@@ -12,6 +12,7 @@ interface User{
   createdAt:Date;
   resetPasswordToken: String;
   resetPasswordTime:Date;
+  isActive:boolean;
   comparePassword(password:string):boolean
 }
 
@@ -67,6 +68,10 @@ const userSchema = new Schema<User>({
         type:String,
         default:'user'
     },
+    isActive:{
+      type:Boolean,
+      default:true
+    },
     avatar:{
         public_id: {
             type: String,
@@ -82,8 +87,6 @@ const userSchema = new Schema<User>({
     resetPasswordToken: String,
     resetPasswordTime:Date
 })
-
-
 
 //hash password
 userSchema.pre('save',async function(next){

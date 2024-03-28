@@ -5,7 +5,7 @@ import env from '../../../../env'
 export const loadUser = createAsyncThunk('user/fetch',async()=>{
     try{
         const response = await axios.get(`${env.API_URL}/user`,{withCredentials:true})
-        console.log(response.data);
+        console.log(response);
         return response.data
     }catch(err){
         throw new Error(err.message)
