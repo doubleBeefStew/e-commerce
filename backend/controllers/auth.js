@@ -26,7 +26,7 @@ export const register = asyncHandler(async (req,res,next)=>{
         We received a registration request to Sheepo.com
         Please click on the link below to continue your registration and activate your account:
 
-        ${process.env.FE_ORIGIN}/register/activation/${token}
+        ${process.env.FE_URL}/register/activation/${token}
 
         Ignore this email if you did not signup for this registration process.
 
@@ -82,7 +82,6 @@ export const login = asyncHandler(async(req,res,next)=>{
     }
     
     res.cookie('token',token,options)
-    console.log(res);
     res.status(200)
         .json({output:{message:'login successful',payload:userData}})
 })

@@ -1,6 +1,6 @@
 import Express from "express"
 import { getUser,updateUser } from "../controllers/user"
-import uploadProfile from "../middlewares/uploadProfile"
+import parseImage from "../middlewares/multer"
 
 const router = Express.Router()
 
@@ -11,6 +11,6 @@ router.route('/')
     .get(getUser)
 
 router.route('/update/:id')
-    .patch(uploadProfile.single('image'),updateUser)
+    .patch(parseImage.single('image'),updateUser)
 
 export default router

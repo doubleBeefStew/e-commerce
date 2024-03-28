@@ -1,7 +1,6 @@
-import expressAsyncHandler from "express-async-handler";
-import userModel from "../models/user";
-import { notFoundError, unauthorizedError } from "../errors/customErrors";
-import { log } from "console";
+import expressAsyncHandler from "express-async-handler"
+import userModel from "../models/user"
+import cloudinary from "../middlewares/cloudinary"
 
 export const getUser = expressAsyncHandler(async(req,res,next)=>{
     const {id} = req.params
@@ -18,9 +17,9 @@ export const getUser = expressAsyncHandler(async(req,res,next)=>{
 })
 
 export const updateUser = expressAsyncHandler(async(req,res,next)=>{
-    console.log(req.file)
     const {id} = req.params
     const { name,email,role,phoneNumber,address,avatar } = req.body
+    const imagePath = req.file.path
     let updatedUser
 
     if(id && req.user.role=='admin')
@@ -32,12 +31,16 @@ export const updateUser = expressAsyncHandler(async(req,res,next)=>{
     if(!foundUser)
         throw new notFoundError(`user with ID ${id} is not found`,'USR-404')
 
+    if(imagePath){
+        const result = await cloudinary.uploader.upload(imagePath,{public_id:'test_upload'})
+        foundUser.avatar.url = result.secure_url
+    }
+
     email && (foundUser.email = email)
     name && (foundUser.name = name)
     role && (foundUser.role = role)
     phoneNumber && (foundUser.phoneNumber = phoneNumber)
     address && (foundUser.address = address)
-    avatar && (foundUser.avatar = avatar)
 
     await foundUser.save()
    

@@ -21,7 +21,7 @@ import notFoundHandler from './errors/notFoundHandler.js'
 dotenv.config()
 const app = express()
 app.use(cors({
-    origin:process.env.FE_ORIGIN,
+    origin:process.env.FE_URL,
     credentials:true,
 }))
 app.use(express.json())
@@ -34,15 +34,6 @@ const __dirname = dirname((fileURLToPath(import.meta.url)))
 app.use(express.static(path.resolve(__dirname,'./public')))
 
 
-// CLOUDINARY
-import {v2 as cloudinary} from 'cloudinary';
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-    api_key: process.env.CLOUDINARY_API_KEY, 
-    api_secret: process.env. CLOUDINARY_API_SECRET
-})
-
-
 // TEST PING
 app.use('/api/v1/ping',(req,res,next)=>{
     res.status(200).json({output:{message:'OK'}})
@@ -50,7 +41,6 @@ app.use('/api/v1/ping',(req,res,next)=>{
 
 // ROUTING
 app.use('/api/v1/auth', auth)
-// TODO: setup cloudinary upload
 app.use('/api/v1/user',isAuthenticated,user)
 
 // ERRORS

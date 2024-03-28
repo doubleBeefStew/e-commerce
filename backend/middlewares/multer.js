@@ -2,6 +2,7 @@ import multer from "multer"
 import fs from 'fs'
 
 const storage = multer.diskStorage({
+    // disable local storage
     destination:(req,file,cb)=>{
         const uploadPath = `./public/users/${req.user._id}`
         if(fs.existsSync(uploadPath)){
@@ -14,12 +15,13 @@ const storage = multer.diskStorage({
         
         cb(null,uploadPath)
     },
+    
     filename:(req,file,cb)=>{
         const uniqueSuffix = Date.now()
         cb(null, `${req.user._id}-${file.originalname}`)
     }
 })
 
-const uploadProfile = multer({storage})
+const parseImage = multer({storage})
 
-export default uploadProfile
+export default parseImage
