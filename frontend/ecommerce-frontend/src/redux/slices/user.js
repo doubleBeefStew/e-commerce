@@ -5,10 +5,11 @@ import env from '../../../../env'
 export const loadUser = createAsyncThunk('user/fetch',async()=>{
     try{
         const response = await axios.get(`${env.API_URL}/user`,{withCredentials:true})
-        console.log(response);
+        console.log(response.data)
         return response.data
     }catch(err){
-        throw new Error(err.message)
+        console.log(err.response.data.error.message)
+        throw new Error(err.response.data.error.message)
     }
 })
 
@@ -27,7 +28,7 @@ export const logout = createAsyncThunk('user/logout',async()=>{
 const initialState = {
     isAuthenticated:false,
     userData:null,
-    isLoadingUser:false,
+    isLoadingUser:true,
     error:null,
 }
 

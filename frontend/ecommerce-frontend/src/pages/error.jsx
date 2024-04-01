@@ -1,4 +1,4 @@
-import { useRouteError } from "react-router-dom"
+import { Link, useRouteError } from "react-router-dom"
 import Container from "react-bootstrap/Container"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -12,6 +12,7 @@ const Error = ({message})=>{
         <Col className='d-flex flex-column align-items-center justify-content-center text-center'>
             <h1>Error page</h1>
             <p>{message? message:'Sorry, something went wrong.'}</p>
+            <p>Return to <Link to={'/'}>home</Link></p>
         </Col>
         </Row>
         </Container>

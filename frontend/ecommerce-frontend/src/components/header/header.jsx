@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom"
 import styles from "./header.module.css"
 import { BsSearch,BsCart3 } from "react-icons/bs";
 import { useSelector,useDispatch } from "react-redux"
-import { logout } from '../../redux/slices/user'
 import { CgProfile } from "react-icons/cg"
 
 const Header = ()=>{
@@ -24,7 +23,7 @@ const Header = ()=>{
                     {
                         user.isAuthenticated==true?(
                             <>
-                            <Link className="text-decoration-none text-white " to={'/profile'}>
+                            <Link className="text-decoration-none text-white " to={'user/account'}>
                                 <span className="p-1 "><CgProfile color='white' size='20'/></span> 
                                 <span>{user.userData.name}</span>
                             </Link> | 
@@ -42,7 +41,9 @@ const Header = ()=>{
         <Row className='bg-orange py-2 justify-content-center gy-3'>
             {/* logo */}
             <Col className='col-auto'>
-                <Logo className='d-none' />
+                <Link to={'/'}>
+                    <Logo className='d-none' />
+                </Link>
             </Col>
             <Col>
                 {/* searchbar & menu */}    
@@ -55,10 +56,10 @@ const Header = ()=>{
                             </Form>
                         </div>
                         <div className="d-flex justify-content-center align-items-center text-center">
-                            <Col><Link className="px-1 text-decoration-none text-white" to={'/home'}>Products</Link></Col>
-                            <Col><Link className="px-1 text-decoration-none text-white" to={'/home'}>Events</Link></Col>
-                            <Col><Link className="px-1 text-decoration-none text-white" to={'/home'}>Best Selling</Link></Col>
-                            <Col><Link className="px-1 text-decoration-none text-white" to={'/home'}>Home</Link></Col>
+                            <Col><Link className="px-1 text-decoration-none text-white" to={'/'}>Home</Link></Col>
+                            <Col><Link className="px-1 text-decoration-none text-white" to={'/events'}>Events</Link></Col>
+                            <Col><Link className="px-1 text-decoration-none text-white" to={'/best-sellers'}>Best Selling</Link></Col>
+                            <Col><Link className="px-1 text-decoration-none text-white" to={'/products'}>Products</Link></Col>
                         </div>
                     </Col>
                     {/* Cart */}

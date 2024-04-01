@@ -3,6 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { dirname } from 'path'
 import path from 'path'
+import bodyParser from 'body-parser'
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 
@@ -26,6 +27,7 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(cookieParser())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(logger)
 
 
