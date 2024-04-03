@@ -9,9 +9,6 @@ export const getUser = expressAsyncHandler(async(req,res,next)=>{
     const {id} = req.params
     const {user} = req
     
-    console.log(id)
-    console.log(user);
-    
     if(id){
         const data = await userModel.findById(id)
         if(!data)
@@ -23,10 +20,8 @@ export const getUser = expressAsyncHandler(async(req,res,next)=>{
 })
 
 export const updateUserInfo = expressAsyncHandler(async(req,res,next)=>{
-    console.log('updating profile info');
     const {id} = req.params
     const { name,email,role,phoneNumber,address } = req.body
-    console.log(req.body)
 
     let updatedUser
 

@@ -72,8 +72,7 @@ const App = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        //TODO: check cookie first before fetching user data from backend 
-        dispatch(loadUser())
+            dispatch(loadUser())
     }, [])
 
     return <RouterProvider router={router} />

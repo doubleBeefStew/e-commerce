@@ -5,7 +5,6 @@ import env from '../../../../env'
 export const loadUser = createAsyncThunk('user/fetch',async()=>{
     try{
         const response = await axios.get(`${env.API_URL}/user`,{withCredentials:true})
-        console.log(response.data)
         return response.data
     }catch(err){
         console.log(err.response.data.error.message)
@@ -39,9 +38,11 @@ const userSlice = createSlice({
         setError(state,action){
             state.error = action.payload
         },
+        setState(state,action){
+            state = action.payload
+        },
         logout(state){
             state = initialState
-            console.log(state);
         }
     },
     extraReducers:(builder)=>{
@@ -52,6 +53,9 @@ const userSlice = createSlice({
         .addCase(loadUser.fulfilled,(state,action)=>{
             state.isAuthenticated=true
             state.userData = action.payload.output.data
+            // why do we need localstorage in the first place?
+            window.localStorage.setItem('userData',JSON.stringify(action.payload.output.data))
+            console.log(JSON.parse(window.localStorage.getItem('userData')))
             state.isLoadingUser=false
         })
         .addCase(loadUser.rejected,(state,action)=>{
