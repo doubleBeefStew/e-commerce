@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Form from 'react-bootstrap/Form'
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
@@ -7,57 +7,56 @@ import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import Spinner from 'react-bootstrap/Spinner'
 import { useState } from "react"
-import env from "../../../../env"
 import axios from 'axios'
+import env from '../../../../env'
+import Cookies from 'js-cookie'
 
-const Register = ()=>{
+
+const Login = ()=>{
     const [alert,setAlert] = useState({message:'',type:''})
     const [loading,setLoading] = useState(false)
+    const navigate = useNavigate()
     
     const handleSubmit = (e)=>{
         e.preventDefault()
-        const form = e.currentTarget
-        const data = Object.fromEntries(new FormData(form))
-        
+        const formData = new FormData(e.currentTarget)
+        const data = Object.fromEntries(formData)
+
         if(!data.email)
             setAlert({message:'Please fill in your email address.',type:'danger'})
         else if(!data.password)
             setAlert({message:'Please fill in your password.',type:'danger'})
-        else if(data.password.length<4 || data.password.length>20)
-            setAlert({message:'Password must be between 4-20 characters long.',type:'danger'})
-        else if(!data.repeatPassword)
-            setAlert({message:'Please confirm your password.',type:'danger'})
-        else if(data.password!=data.repeatPassword)
-            setAlert({message:'Password must be correctly confirmed.',type:'danger'})
         else{
             setAlert('')
             setLoading(true)
-            axios.post(`${env.API_URL}/auth/register`,data)
-                .then(function(res){
-                    console.log(res)
-                    setAlert({message:`Registration successful. Please confirm the email sent to ${data.email} to continue.`,type:'success'})
-                    setLoading(false)
-                    form.reset()
-                })
-                .catch((err)=>{
-                    console.log(err)
-                    if(err.response && err.response.data.error.code=='RGS-401'){
-                        setAlert({message:'Your email is already registered. Please login to continue',type:'danger'})
-                    }
-                    else{
-                        setAlert({message:'Sorry, something went wrong. Please try again later.',type:'danger'})
-                    }
-                    setLoading(false)
-                })
+            axios.post(`${env.API_URL}/auth/login`,data,{withCredentials:true})
+            .then(function(res){
+                console.log(res)
+                setLoading(false)
+                navigate('/')
+                window.location.reload(true)
+            })
+            .catch((err)=>{
+                console.log(err);
+                if(err.response && err.response.data.error.code=='LGN-400')
+                    setAlert({message:'Email is not registered.',type:'danger'})
+                else if(err.response && err.response.data.error.code=='LGN-401')
+                    setAlert({message:'Invalid email or password.',type:'danger'})
+                else
+                    setAlert({message:'Sorry, something went wrong. Please try again later.',type:'danger'})
+
+                console.log(err)
+                setLoading(false)
+            })
         }
     }
 
     return (<>
             <Row className='vh-100'>
             <Col className='col-12 col-md-6 d-flex flex-column justify-content-center px-sm-5'>
-                <Card className='border-sm-0'>
+                <Card>
                     <Card.Body>
-                        <Card.Title className='text-center mb-4'>Create a New Account</Card.Title>
+                        <Card.Title className='text-center mb-4'>Login</Card.Title>
                         {
                             alert.message && <Alert className="mb-3" variant={alert.type}>{alert.message}</Alert>
                         }
@@ -70,10 +69,11 @@ const Register = ()=>{
                                 <Form.Label >Password</Form.Label>
                                 <Form.Control type="password" name="password" placeholder="John@123"/>
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="repeatPassword">
-                                <Form.Label >Repeat Password</Form.Label>
-                                <Form.Control type="password" name="repeatPassword" placeholder="John@123"/>
-                            </Form.Group>
+                            <Form.Check className='mb-3'
+                                type="checkbox"
+                                id="rememberMe"
+                                label="Remember Me?"
+                            />
                             
                             <Button className='w-100 mb-3' type='submit'>
                                 {
@@ -81,11 +81,11 @@ const Register = ()=>{
                                     <Spinner animation="border" role="status" size='sm'>
                                         <span className="visually-hidden">Loading...</span>
                                     </Spinner>
-                                    :"Register"
+                                    :"Login"
                                 }
                             </Button>
                         </Form>
-                        <Card.Text className='mb-3'>Already have an account? <Link to={'/login'}>Login</Link></Card.Text>
+                        <Card.Text className='mb-3'>Not Registered? <Link to={'/register'}>Sign Up</Link></Card.Text>
                     </Card.Body>
                 </Card>
             </Col>
@@ -93,4 +93,4 @@ const Register = ()=>{
     </>)
 }
 
-export default Register
+export default Login

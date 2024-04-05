@@ -55,7 +55,7 @@ export const activation = asyncHandler(async(req,res,next)=>{
 })
 
 export const login = asyncHandler(async(req,res,next)=>{
-    const {email,password, rememberMe} = req.body
+    const {email,password,rememberMe} = req.body
 
     const user = await userModel.findOne({email}).select('+password')
     if(!user)

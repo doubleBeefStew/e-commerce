@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 
-//TODO: learn about formik & validation on FE & BE
+//TODO: learn about validation on BE
 const Profile = ()=>{
     const [alert,setAlert] = useState({message:'',type:''})
     const [loading,setLoading] = useState(false)
@@ -37,9 +37,6 @@ const Profile = ()=>{
                 <Form onSubmit={handleSubmit}>
                     <table className='w-100 table table-borderless align-middle'>
                         <tbody>
-                        {
-                            // TODO: display user data first, then make change email feature
-                        }
                         <tr>
                             <td className='w-25 text-end text-secondary'>Name</td>
                             <td><Form.Control name="name" value={newState.name} onChange={handleFieldChange}/></td>
