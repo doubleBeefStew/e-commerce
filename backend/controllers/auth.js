@@ -38,6 +38,10 @@ export const register = asyncHandler(async (req,res,next)=>{
 
 export const activation = asyncHandler(async(req,res,next)=>{
     const token = req.params.token
+    const phoneNumber = ''
+    const address = ''
+    const avatar= ''
+
     
     const data = validateToken(token)
 
@@ -50,7 +54,7 @@ export const activation = asyncHandler(async(req,res,next)=>{
         throw new badRequestError('user is already registered','RGS-201')
     }
 
-    const user = await userModel.create({name,email,password})
+    const user = await userModel.create({name,email,password,phoneNumber,address,avatar})
     res.status(201).json({output:{message:'user registered successfully',user}})
 })
 

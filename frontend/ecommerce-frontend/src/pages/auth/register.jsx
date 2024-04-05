@@ -104,7 +104,7 @@ const Register = ()=>{
                                     errors.repeatPassword && touched.repeatPassword? errors.repeatPassword:'' 
                                 }</small>
                                 
-                                <Button disabled={isSubmitting || !isValid} className='w-100 my-3' type='submit'>
+                                <Button disabled={isSubmitting || !isValid} className='w-100 mt-4' type='submit'>
                                     {
                                         isSubmitting? 
                                         <Spinner animation="border" role="status" size='sm'>
@@ -114,7 +114,7 @@ const Register = ()=>{
                                     }
                                 </Button>
                             </Form>
-                        <Card.Text className='mb-3'>Already have an account? <Link to={'/login'}>Login</Link></Card.Text>
+                        <Card.Text className='mt-1 text-center'><small>Already have an account? <Link to={'/login'}>Login</Link></small></Card.Text>
                     </Card.Body>
                 </Card>
             </Col>

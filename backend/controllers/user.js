@@ -34,11 +34,11 @@ export const updateUserInfo = expressAsyncHandler(async(req,res,next)=>{
     if(!foundUser)
         throw new notFoundError(`user with ID ${id} is not found`,'USR-404')
 
-    email && (foundUser.email = email)
     name && (foundUser.name = name)
-    role && (foundUser.role = role)
+    email && (foundUser.email = email)
     phoneNumber && (foundUser.phoneNumber = phoneNumber)
     address && (foundUser.address = address)
+    role && (foundUser.role = role)
 
     await foundUser.save()
     res.status(200).json({output:{message:'OK',id,data:foundUser}})
@@ -68,7 +68,7 @@ export const updateUserPicture = expressAsyncHandler(async(req,res,next)=>{
         resource_type:'auto',
         public_id:updatedUser
     })
-    foundUser.avatar.url = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${result.public_id}`
+    foundUser.avatar = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${result.public_id}`
 
     await foundUser.save()
    

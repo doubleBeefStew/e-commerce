@@ -55,7 +55,6 @@ const userSlice = createSlice({
             state.userData = action.payload.output.data
             // why do we need localstorage in the first place?
             window.localStorage.setItem('userData',JSON.stringify(action.payload.output.data))
-            console.log(JSON.parse(window.localStorage.getItem('userData')))
             state.isLoadingUser=false
         })
         .addCase(loadUser.rejected,(state,action)=>{

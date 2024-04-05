@@ -106,7 +106,7 @@ const Login = ()=>{
                                 }
                             </Button>
                         </Form>
-                        <Card.Text className='mt-3'>Not Registered? <Link to={'/register'}>Sign Up</Link></Card.Text>
+                        <Card.Text className='mt- text-center'><small>Not Registered? <Link to={'/register'}>Sign Up</Link></small></Card.Text>
                     </Card.Body>
                 </Card>
             </Col>
