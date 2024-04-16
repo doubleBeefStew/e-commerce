@@ -17,11 +17,11 @@ const AccountLayout = ()=>{
             (!userData ?
                 <Navigate to={'/'} replace/>:
                 (<>
-                    <Row className="vh-auto py-5 px-5">
-                        <Col className="bg-transparent vh-auto p-3 col-2">
+                    <Row className="vh-auto py-5 px-2 px-sm-5">
+                        <Col className="col-12 col-sm-2 bg-transparent vh-auto p-3 ">
                             <AccountSideBar/>
                         </Col>
-                        <Col className={'bg-white vh-auto p-3 col-10'}>
+                        <Col className={'col-12 col-sm-10 bg-white vh-auto p-3 '}>
                             <Outlet/>
                         </Col>
                     </Row>

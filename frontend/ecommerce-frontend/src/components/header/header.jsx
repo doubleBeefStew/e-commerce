@@ -8,23 +8,35 @@ import styles from "./header.module.css"
 import { BsSearch,BsCart3 } from "react-icons/bs";
 import { useSelector,useDispatch } from "react-redux"
 import { CgProfile } from "react-icons/cg"
+import ProfilePicture from "../profilePicture/profilePicture"
 
+//TODO: make profile picture badge beside the username
 const Header = ()=>{
     const user = useSelector((state)=>{return state.user})
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const imageUrl= 'https://www.thesprucepets.com/thmb/3ABKoAPm0Hu4PcWsDH1giawq7ck=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/chinese-dog-breeds-4797219-hero-2a1e9c5ed2c54d00aef75b05c5db399c.jpg'
+
     return (
     <>
         {/* header login-signup */}
         <Row className='bg-orange  justify-content-end py-1'>
-            <Col className='col-auto d-flex align-items-center'>
+            <Col className='col-auto d-flex align-items-center justify-content-center no-wrap'>
+                {
+                    user.isAuthenticated?
+                        (user.userData.avatar?
+                            <ProfilePicture className='d-inline' image={imageUrl} size={'1rem'}/>:
+                            <CgProfile color='white' size='20'/>
+                        ):''
+
+                }
                 <span className="text-white px-1">
                     {
-                        user.isAuthenticated==true?(
+                        user.isAuthenticated?(
                             <>
                             <Link className="text-decoration-none text-white " to={'user/account'}>
-                                <span className="p-1 "><CgProfile color='white' size='20'/></span> 
+                                
                                 <span>{user.userData.name}</span>
                             </Link> | 
                             <Link className="px-1 text-decoration-none text-white" to={'/logout'}> Logout</Link></>
@@ -56,10 +68,10 @@ const Header = ()=>{
                             </Form>
                         </div>
                         <div className="d-flex justify-content-center align-items-center text-center">
-                            <Col><Link className="px-1 text-decoration-none text-white" to={'/'}>Home</Link></Col>
-                            <Col><Link className="px-1 text-decoration-none text-white" to={'/events'}>Events</Link></Col>
-                            <Col><Link className="px-1 text-decoration-none text-white" to={'/best-sellers'}>Best Selling</Link></Col>
-                            <Col><Link className="px-1 text-decoration-none text-white" to={'/products'}>Products</Link></Col>
+                            <Col><small><Link className="px-1 text-decoration-none text-white" to={'/'}>Home</Link></small></Col>
+                            <Col><small><Link className="px-1 text-decoration-none text-white" to={'/events'}>Events</Link></small></Col>
+                            <Col><small><Link className="px-1 text-decoration-none text-white" to={'/best-sellers'}>Best Selling</Link></small></Col>
+                            <Col><small><Link className="px-1 text-decoration-none text-white" to={'/products'}>Products</Link></small></Col>
                         </div>
                     </Col>
                     {/* Cart */}

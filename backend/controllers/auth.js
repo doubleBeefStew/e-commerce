@@ -12,7 +12,7 @@ export const register = asyncHandler(async (req,res,next)=>{
     const user = await userModel.findOne({email})
 
     if(user)
-        throw new badRequestError('user is already registered','RGS-401')
+        throw new badRequestError('user is already registered','RGS-40')
 
     const token = generateToken({email,password})
 

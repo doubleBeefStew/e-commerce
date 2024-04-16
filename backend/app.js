@@ -13,9 +13,11 @@ import isAuthenticated from './middlewares/auth.js'
 // ROUTES
 import auth from './routes/auth.js'
 import user from './routes/user.js'
+import products from './routes/products.js'
 // ERROR HANDLERS
 import customErrorHandler from './errors/customErrorHandler.js'
 import notFoundHandler from './errors/notFoundHandler.js'
+import { validateRegister } from './middlewares/validations.js'
 
 
 // INITIALIZATION
@@ -37,13 +39,14 @@ app.use(express.static(path.resolve(__dirname,'./public')))
 
 
 // TEST PING
-app.use('/api/v1/ping',(req,res,next)=>{
+app.use('/api/v1/ping',validateRegister,(req,res,next)=>{
     res.status(200).json({output:{message:'OK'}})
 })
 
 // ROUTING
-app.use('/api/v1/auth', auth)
-app.use('/api/v1/user',isAuthenticated,user)
+app.use('/api/v1/auth', auth) //validated
+app.use('/api/v1/products',products)
+app.use('/api/v1/user',isAuthenticated,user) //validated
 
 // ERRORS
 app.use(notFoundHandler)

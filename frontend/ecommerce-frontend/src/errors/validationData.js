@@ -1,4 +1,4 @@
-const validationString = {
+const validationData = {
     email_format:'Email format is invalid',
     email_required:'Please input your email',
 
@@ -20,4 +20,4 @@ const validationString = {
 
 }
 
-export default validationString
+export default validationData

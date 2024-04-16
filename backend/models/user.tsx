@@ -30,9 +30,7 @@ interface Avatar {
 }
 
 const userSchema = new Schema<User>({
-  name: {
-    type: String,
-  },
+  name: String,
   email: {
     type: String,
     index: true,
@@ -42,9 +40,7 @@ const userSchema = new Schema<User>({
     type: String,
     select: false
   },
-  phoneNumber: {
-    type: String,
-  },
+  phoneNumber: String,
   address:String,
     // [
     //   {

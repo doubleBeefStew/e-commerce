@@ -1,5 +1,6 @@
 import Express from "express"
-import { getUser,updateUserInfo,updateUserPicture } from "../controllers/user"
+import { getUser,updateUserInfo } from "../controllers/user"
+import { validateUserInfo } from "../middlewares/validations"
 import parseImage from "../middlewares/multer"
 
 const router = Express.Router()
@@ -11,9 +12,6 @@ router.route('/')
     .get(getUser)
 
 router.route('/update/info/:id?')
-    .patch(updateUserInfo)
-
-router.route('/update/picture/:id?')
-    .patch(parseImage.single('image'),updateUserPicture)
+    .patch(parseImage.single('image'),validateUserInfo,updateUserInfo)
 
 export default router

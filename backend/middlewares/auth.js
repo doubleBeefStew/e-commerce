@@ -1,4 +1,4 @@
-import expressAsyncHandler from "express-async-handler"
+import asyncHandler from "express-async-handler"
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import userModel from "../models/user"
@@ -6,7 +6,7 @@ import { validateToken } from "../utils/token"
 import { badRequestError } from "../errors/customErrors"
 dotenv.config()
 
-const isAuthenticated = expressAsyncHandler(async (req,res,next)=>{
+const isAuthenticated = asyncHandler(async (req,res,next)=>{
     const {token} = req.cookies
     if(!token)
         throw new badRequestError('token is invalid or not provided','AUT-401')

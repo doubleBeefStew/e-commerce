@@ -6,31 +6,51 @@ import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import Alert from "react-bootstrap/Alert"
 import profileSchema from '../../../../schema/profileSchema'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import env from '../../../../../../env'
+import { BiSolidEditAlt } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg"
+import ProfilePicture from '../../../../components/profilePicture/profilePicture'
+import styles from '../account.module.css'
+import {loadUser} from '../../../../redux/slices/user'
 
-//TODO: learn about validation on BE
 const Profile = ()=>{
     const [alert,setAlert] = useState({message:'',type:''})
     const {userData} = useSelector((state)=>{ return state.user })
+    const [displayedImage,setDisplayedImage] = useState(userData.avatar||'')
+    const [selectedImage,setSelectedImage] = useState(null)
+    const selectPicture = useRef(null)
+    const dispatch = useDispatch()
 
     const initialValues = {
         name:userData.name,
         email:userData.email,
         phoneNumber:userData.phoneNumber,
         address:userData.address,
+        avatar:userData.avatar,
     }
 
     const onSubmit = (values,actions)=>{
         console.log(values)
+        const formData = new FormData()
+        values.name && formData.append('name',values.name)
+        values.email && formData.append('email',values.email)
+        values.phoneNumber && formData.append('phoneNumber',values.phoneNumber)
+        values.address && formData.append('address',values.address)
+        values.avatar && formData.append('avatar',values.avatar)
+        selectedImage && formData.append('image',selectedImage)
 
-        axios.post(`${env.API_URL}/user/update/info`,values,{withCredentials:true})
+        axios.patch(`${env.API_URL}/user/update/info`,formData,{withCredentials:true})
         .then(function(res){
             console.log(res)
+            dispatch(loadUser())
+            // TODO: alert message not showing because of change in redux state
             setAlert({message:`Your profile information is successfully updated.`,type:'success'})
-
             actions.resetForm()
+            setSelectedImage('')
+            setDisplayedImage('')
         })
         .catch((err)=>{
             console.log(err)
@@ -50,14 +70,25 @@ const Profile = ()=>{
         onSubmit
     })
 
+    const handleImageChange = (event)=>{
+        handleChange(event)
+        if(event.target.files && event.target.files[0]){
+            setSelectedImage(event.target.files[0])
+
+            const reader = new FileReader()
+            reader.onload=(e)=>{setDisplayedImage(e.target.result)}
+            reader.readAsDataURL(event.target.files[0])
+        }
+    }
+
     return(<>
+        <Form onSubmit={handleSubmit}>
         <Row>
-            <Col className='col-9'>
-                <p className='fs-5'>My Profile</p>
+            <Col className='col-12 col-md-8 order-2 order-md-1'>
+                <p className='fs-5 text-center text-sm-start fw-bold'>My Profile</p>
                 {
                     alert.message && <Alert className="mb-3" variant={alert.type}>{alert.message}</Alert>
                 }
-                <Form onSubmit={handleSubmit}>
                     <table className='w-100 table table-borderless align-middle'>
                         <tbody>
                         {/* Name */}
@@ -111,11 +142,30 @@ const Profile = ()=>{
                         </tr>
                         </tbody>
                     </table>
-                </Form>
             </Col>
-            <Col className='col-3'>
+            <Col className='col-12 col-md-4 order-1 order-md-2 d-flex align-items-center justify-content-center'>
+                    <div className={`${styles.profileContainer}`} onClick={()=>{ selectPicture.current.click() }}>
+                        {
+                            displayedImage?
+                            <ProfilePicture image={displayedImage} size={'10rem'} />:
+                            <CgProfile color='grey' size='10rem'/>
+                        }
+                        <div className={`${styles.editIcon} h-100 d-flex align-items-center justify-content-center`}>
+                            <BiSolidEditAlt  size={'4rem'}/>
+                        </div>
+                        <small className="d-block text-secondary text-center fw-light">Profile picture</small>
+                    </div>
+                    <input 
+                        type='file' 
+                        name='image'
+                        className='d-none' 
+                        ref={selectPicture}
+                        value={values.image}
+                        onBlur={handleBlur}
+                        onChange={handleImageChange}/>
             </Col>
         </Row>
+        </Form>
     </>)
 }
 

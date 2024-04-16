@@ -9,7 +9,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import env from "../../../../env"
 import axios from 'axios'
 import {useFormik} from 'formik'
-import registerSchema from "../../schema/registerSchema"
+import registerSchema from "../../validationSchema/registerSchema"
 import { useState } from "react"
 
 const Register = ()=>{
@@ -50,7 +50,7 @@ const Register = ()=>{
 
     return (<>
             <Row className='vh-100'>
-            <Col className='col-12 col-md-6 d-flex flex-column justify-content-center px-sm-5'>
+            <Col className='col-12 col-sm-6 d-flex flex-column justify-content-center px-sm-5'>
                 <Card className='border-sm-0'>
                     <Card.Body>
                         <Card.Title className='text-center mb-4'>Create a New Account</Card.Title>

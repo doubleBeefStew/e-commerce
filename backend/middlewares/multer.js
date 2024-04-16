@@ -4,6 +4,9 @@ import fs from 'fs'
 const storage = multer.diskStorage({
     // disable local storage
     destination:(req,file,cb)=>{
+        if(!file){
+            console.log('file doesnt exist');
+        }
         const uploadPath = `./public/users/${req.user._id}`
         if(fs.existsSync(uploadPath)){
             fs.rmSync(uploadPath,{ recursive: true, force: true },(err)=>{
@@ -15,9 +18,7 @@ const storage = multer.diskStorage({
         
         cb(null,uploadPath)
     },
-    
     filename:(req,file,cb)=>{
-        const uniqueSuffix = Date.now()
         cb(null, `${req.user._id}-${file.originalname}`)
     }
 })
