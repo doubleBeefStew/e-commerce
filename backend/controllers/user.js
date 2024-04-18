@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler"
 import userModel from "../models/user"
 import cloudinary from "../middlewares/cloudinary"
+import { clearStorage } from "../middlewares/multer"
 import { notFoundError,badRequestError } from "../errors/customErrors"
 import dotenv from 'dotenv'
 dotenv.config()
@@ -42,6 +43,7 @@ export const updateUserInfo = asyncHandler(async(req,res,next)=>{
 
     // TODO: call cloudinary API to invalidate the old cache
     if(req.file){
+        const imagePath = req.file.path
         const folderPath = `users/profiles/${updatedUser}`
         const result = await cloudinary.uploader.upload(imagePath,{
             folder:folderPath,
@@ -54,5 +56,6 @@ export const updateUserInfo = asyncHandler(async(req,res,next)=>{
     }
 
     await foundUser.save()
+    clearStorage()
     res.status(200).json({output:{message:'OK',id,data:foundUser}})
 })

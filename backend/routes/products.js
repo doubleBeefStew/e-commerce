@@ -14,7 +14,7 @@ router.route('/create')
     .post(isAuthenticated,parseImage.array('images',5),validateProductInfo,createProduct)
 
 router.route('/update/:id')
-    .patch(isAuthenticated,parseImage.array('images',5),validateProductInfo,updateProduct)
+    .patch(isAuthenticated,parseImage.array('images',5 ),validateProductInfo,updateProduct)
 
 router.route('/delete/:id')
     .delete(isAuthenticated,deleteProduct)

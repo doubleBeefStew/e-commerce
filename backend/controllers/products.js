@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler"
 import cloudinary from "../middlewares/cloudinary"
 import productModel from "../models/products"
+import { clearStorage } from "../middlewares/multer"
 import { notFoundError,unauthorizedError } from "../errors/customErrors"
 import dotenv from 'dotenv'
 dotenv.config()
@@ -24,12 +25,13 @@ export const getProduct = asyncHandler(async(req,res,next)=>{
 export const createProduct = asyncHandler(async (req,res,next)=>{
     if(req.user.role!='admin')
         throw new unauthorizedError('only admin can create new products','CRT-401')
-    console.log(req.files);
 
     const {name,description,initialPrice,discountPrice,stock} = req.body
 
     const newProduct = await productModel.create({name,description,initialPrice,discountPrice,stock})
+    //TODO: 1. upload new & updated products image to cloudinary
 
+    clearStorage()
     res.status(201).json({output:{message:'product created successfully',payload:newProduct}})
 })
 
@@ -51,6 +53,7 @@ export const updateProduct = asyncHandler(async (req,res,next)=>{
 
     updatedProduct.save()
 
+    clearStorage()
     res.status(200).json({output:{message:'product updated successfully',payload:updatedProduct}})
 })
 
@@ -60,6 +63,7 @@ export const deleteProduct = asyncHandler(async (req,res,next)=>{
 
     const {id} = req.params
 
+    //TODO: 2. also delete the images from cloudinary
     const deletedProduct = await productModel.findByIdAndDelete(id)
     res.status(200).json({output:{message:'product deleted successfully',payload:deletedProduct}})
 
