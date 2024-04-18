@@ -42,8 +42,6 @@ export const updateUserInfo = asyncHandler(async(req,res,next)=>{
 
     // TODO: call cloudinary API to invalidate the old cache
     if(req.file){
-        await cloudinary.uploader.destroy(updatedUser)
-        const imagePath = req.file.path
         const folderPath = `users/profiles/${updatedUser}`
         const result = await cloudinary.uploader.upload(imagePath,{
             folder:folderPath,

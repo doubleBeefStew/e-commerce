@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import validationData from '../validationData/validationData'
+import validationData from '../errors/validationData'
 
 const registerSchema = Yup.object().shape({
     email:Yup.string()

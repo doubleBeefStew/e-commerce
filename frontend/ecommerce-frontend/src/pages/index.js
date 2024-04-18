@@ -6,7 +6,7 @@ export {default as Protected} from './auth/protected'
 
 export {default as AppContainer} from './appContainer'
 export {default as MainLayout} from './MainLayout'
-export {default as Error} from './error'
+export {default as Error} from '../errors/error'
 
 export {default as Bestselling} from './public/bestselling'
 export {default as Categories} from './public/categories'

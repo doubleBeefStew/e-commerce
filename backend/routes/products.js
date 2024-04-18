@@ -2,21 +2,21 @@ import Express from "express"
 import parseImage from "../middlewares/multer"
 import { validateProductInfo } from "../middlewares/validations"
 import isAuthenticated from "../middlewares/auth"
-import {createProduct} from "../controllers/products"
+import {getProduct,createProduct,updateProduct,deleteProduct} from "../controllers/products"
 
 const router = Express.Router()
 
-// router.route('/:id')
-//     .get(getProduct)
-
-// router.route('/')
-//     .get(getProduct)
+router.route('/:id?')
+    .get(getProduct)
 
 //TODO: add upload image function for product
 router.route('/create')
-    .post(isAuthenticated,validateProductInfo,createProduct)
+    .post(isAuthenticated,parseImage.array('images',5),validateProductInfo,createProduct)
 
-// router.route('/update/info/:id?')
-//     .patch(parseImage.single('image'),updateProduct)
+router.route('/update/:id')
+    .patch(isAuthenticated,parseImage.array('images',5),validateProductInfo,updateProduct)
+
+router.route('/delete/:id')
+    .delete(isAuthenticated,deleteProduct)
 
 export default router

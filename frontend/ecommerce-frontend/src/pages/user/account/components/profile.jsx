@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import Alert from "react-bootstrap/Alert"
-import profileSchema from '../../../../schema/profileSchema'
+import profileSchema from '../../../../validationSchema/profileSchema'
 import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
@@ -32,6 +32,7 @@ const Profile = ()=>{
         avatar:userData.avatar,
     }
 
+    //TODO: make profile pic only allow 1 image
     const onSubmit = (values,actions)=>{
         console.log(values)
         const formData = new FormData()

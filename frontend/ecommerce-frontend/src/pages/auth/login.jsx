@@ -10,7 +10,7 @@ import { useState } from "react"
 import { useFormik } from 'formik'
 import axios from 'axios'
 import env from '../../../../env'
-import loginSchema from "../../schema/loginSchema"
+import loginSchema from "../../validationSchema/loginSchema"
 
 const Login = ()=>{
     const [alert,setAlert] = useState({message:'',type:''})

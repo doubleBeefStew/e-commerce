@@ -21,7 +21,7 @@ export const validationData = {
     stock_amount:'Product stock must be more than 0',
 
     product_name_required:'Please input your product name',
-    product_name_length:'Product name must be between 10-150 characters',
+    product_name_length:'Product name must be between 5-150 characters',
     
     product_description_required:'Please input your product description',
     product_description_length:'Product description reached maximum limit of 1500 characters',

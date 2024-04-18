@@ -5,10 +5,7 @@ import parseImage from "../middlewares/multer"
 
 const router = Express.Router()
 
-router.route('/:id')
-    .get(getUser)
-
-router.route('/')
+router.route('/:id?')
     .get(getUser)
 
 router.route('/update/info/:id?')

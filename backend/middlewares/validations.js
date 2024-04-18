@@ -43,7 +43,7 @@ export const validateUserInfo = validateValues([
 export const validateProductInfo = validateValues([
     body('name').escape().trim()
         .notEmpty().withMessage(validationData.product_name_required)
-        .isLength({min:10,max:150}).withMessage(validationData.product_name_length),
+        .isLength({min:5,max:150}).withMessage(validationData.product_name_length),
     body('description').escape().trim()
         .notEmpty().withMessage(validationData.product_description_required)
         .isLength({max:1500}).withMessage(validationData.product_description_length),
