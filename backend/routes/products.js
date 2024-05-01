@@ -9,7 +9,6 @@ const router = Express.Router()
 router.route('/:id?')
     .get(getProduct)
 
-//TODO: add upload image function for product
 router.route('/create')
     .post(isAuthenticated,parseImage.array('images',5),validateProductInfo,createProduct)
 

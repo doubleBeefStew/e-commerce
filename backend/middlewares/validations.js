@@ -4,7 +4,6 @@ import { validationData } from "../errors/validationData"
 import { roles } from "../errors/validationData"
 
 const validateValues = (validations)=>{
-    console.log(body('name'))
     return [validations,(req,res,next)=>{
         const errors = validationResult(req)
         if(!errors.isEmpty()){

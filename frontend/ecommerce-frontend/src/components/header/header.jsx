@@ -11,6 +11,7 @@ import { CgProfile } from "react-icons/cg"
 import ProfilePicture from "../profilePicture/profilePicture"
 
 //TODO: make profile picture badge beside the username
+//TODO: make header sticky when scrolling
 const Header = ()=>{
     const user = useSelector((state)=>{return state.user})
     const dispatch = useDispatch()

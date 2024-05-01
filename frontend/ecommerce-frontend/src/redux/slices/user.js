@@ -52,9 +52,7 @@ const userSlice = createSlice({
         })
         .addCase(loadUser.fulfilled,(state,action)=>{
             state.isAuthenticated=true
-            state.userData = action.payload.output.data
-            // why do we need localstorage in the first place?
-            window.localStorage.setItem('userData',JSON.stringify(action.payload.output.data))
+            state.userData = action.payload.output.payload
             state.isLoadingUser=false
         })
         .addCase(loadUser.rejected,(state,action)=>{

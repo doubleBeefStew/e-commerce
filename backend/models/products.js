@@ -10,7 +10,10 @@ const productSchema = new Schema({
     initialPrice:Number,
     discountPrice:Number,
     stock:Number,
-    images:[String],
+    images:[{
+        public_id:String,
+        url:String
+    }],
     reviews:[{
         user:Schema.ObjectId,
         rating:Number,
@@ -20,7 +23,10 @@ const productSchema = new Schema({
             default:Date.now()
         }
     }],
-    rating:Number,
+    rating:{
+        type:Number,
+        default:0
+    },
     shop:Schema.ObjectId,
     sold_out:{
         type:Number,

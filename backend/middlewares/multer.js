@@ -1,20 +1,18 @@
 import multer from "multer"
 import fs from 'fs'
 
+//TODO: 1. fix multer enoent error
 const storage = multer.diskStorage({
     // disable local storage
     destination:(req,file,cb)=>{
-        if(!file){
-            console.log('file doesnt exist');
-        }
         const uploadPath = `./public/images/${req.user._id}`
-        if(fs.existsSync(uploadPath)){
-            fs.rmSync(uploadPath,{ recursive: true, force: true },(err)=>{
-                if(err)
-                    console.log(err)
-            })
+        if(!fs.existsSync(uploadPath)){
+            // fs.rmSync(uploadPath,{ recursive: true, force: true },(err)=>{
+            //     if(err)
+            //         console.log(err)
+            // })
+            fs.mkdirSync(uploadPath,{recursive:true})
         }
-        fs.mkdirSync(uploadPath,{recursive:true})
         
         cb(null,uploadPath)
     },
@@ -25,7 +23,7 @@ const storage = multer.diskStorage({
 
 const parseImage = multer({
     storage,
-    limits:{fileSize:2*1024 *1024},
+    limits:{fileSize:5*1024 *1024},
     fileFilter:(req,file,cb)=>{
         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
             cb(null, true);

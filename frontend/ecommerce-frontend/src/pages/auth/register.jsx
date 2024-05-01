@@ -22,8 +22,6 @@ const Register = ()=>{
     }
 
     const onSubmit = (values,actions)=>{
-        console.log(values)
-        
         axios.post(`${env.API_URL}/auth/register`,values)
         .then(function(res){
             console.log(res)

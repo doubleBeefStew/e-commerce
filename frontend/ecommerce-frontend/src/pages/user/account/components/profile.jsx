@@ -34,7 +34,6 @@ const Profile = ()=>{
 
     //TODO: make profile pic only allow 1 image
     const onSubmit = (values,actions)=>{
-        console.log(values)
         const formData = new FormData()
         values.name && formData.append('name',values.name)
         values.email && formData.append('email',values.email)

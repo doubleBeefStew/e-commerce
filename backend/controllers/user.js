@@ -11,12 +11,12 @@ export const getUser = asyncHandler(async(req,res,next)=>{
     const {user} = req
     
     if(id){
-        const data = await userModel.findById(id)
-        if(!data)
+        const payload = await userModel.findById(id)
+        if(!payload)
             throw new notFoundError(`user with ID ${id} is not found`,'USR-404')
-        return res.status(200).json({output:{message:'OK',data}})
+        return res.status(200).json({output:{message:'OK',payload}})
     } else if(user){
-        return res.status(200).json({output:{message:'OK',data:user}})
+        return res.status(200).json({output:{message:'OK',payload:user}})
     }
 })
 
@@ -41,7 +41,8 @@ export const updateUserInfo = asyncHandler(async(req,res,next)=>{
     address && (foundUser.address = address)
     role && (foundUser.role = role)
 
-    // TODO: call cloudinary API to invalidate the old cache
+    // TODO: 1. use cloudinary util to upload
+    // TODO: 3. make product frontend
     if(req.file){
         const imagePath = req.file.path
         const folderPath = `users/profiles/${updatedUser}`
@@ -49,13 +50,12 @@ export const updateUserInfo = asyncHandler(async(req,res,next)=>{
             folder:folderPath,
             resource_type:'auto',
             invalidate:true,
-            public_id:updatedUser
+            public_id:encodeURIComponent(updatedUser.trim())
         })
         foundUser.avatar = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${result.public_id}`
-        console.log(foundUser.avatar);
     }
 
     await foundUser.save()
     clearStorage()
-    res.status(200).json({output:{message:'OK',id,data:foundUser}})
+    res.status(200).json({output:{message:'OK',payload:{id,foundUser}}})
 })
