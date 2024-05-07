@@ -13,20 +13,19 @@ const Products = ()=>{
         !products.productsData && (dispatch(loadProducts()))
     },[])
     
-    return (<div className='container'>
+    return (
+        <Row className='vh-auto py-5 px-2 px-sm-5'>
         {console.log(products.productsData)}
-        <Row>
         {
             products.isLoadingProducts? 'Loading':
             products.productsData.map((item)=>{
-                return (<Col className='col-6 col-lg-4 col-xl-3 py-2' key={item._id}>
+                return (<Col className='col-6 col-md-4 col-lg-3 col-xl-2 py-2' key={item._id}>
                         <ProductCard product={item}></ProductCard>
                 </Col>)
             })
         }
-            
         </Row>
-    </div>)
+)
 }
 
 export default Products

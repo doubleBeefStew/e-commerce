@@ -16,5 +16,6 @@ export {default as Programs} from './public/programs'
 export {default as Recommendation} from './public/recommendation'
 export {default as HomePage} from './public/homePage'
 export {default as Products} from './public/products/products'
+export {default as ProductDetail} from './public/products/productDetail'
 
 export {default as AccountLayout} from './user/account/layout'

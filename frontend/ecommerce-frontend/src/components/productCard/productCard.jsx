@@ -2,21 +2,22 @@ import Card from 'react-bootstrap/Card'
 import { Link } from 'react-router-dom'
 import styles from './productCard.module.css'
 import { MdStarRate } from "react-icons/md"
+import priceFormat from '../../utils/priceFormat'
 
 //<MdStarHalf />
 
-//TODO:price format
 const ProductCard = ({product})=>{
     return (
-        <Link className={styles.link}>
+        <Link className='text-decoration-none' to={`/products/${product._id}`}>
             <Card>
+                {/* TODO: set height in rem */}
                 <Card.Img 
-                    className={styles.thumbnail}
+                    className='overflow-hidden object-fit-cover' height={'200px'}
                     variant="top" 
                     src={product.images[0]? product.images[0].url : 'Loading..'}/>
                 <Card.Body>
-                    <Card.Title className={`${styles.title} fs-6`}>{product.name}</Card.Title>
-                        <span className='text-primary fs-4'>{`Rp ${product.initialPrice}`}</span>
+                    <Card.Title className={'text-transform-capitalize fs-6'}>{product.name}</Card.Title>
+                        <span className='text-primary fs-4'>{`Rp ${priceFormat(product.initialPrice)}`}</span>
                         <div className='row'>
                             <div className='col-6 d-flex align-items-center'>
                                 {

@@ -12,6 +12,7 @@ import {
     Bestselling,
     Events,
     Products,
+    ProductDetail,
     Protected
 } from './pages'
 
@@ -62,6 +63,9 @@ const router = createBrowserRouter([{
                     }, {
                         path: 'products',
                         element: <Products />
+                    }, {
+                        path: 'products/:id',
+                        element: <ProductDetail/>
                     }
                 ]
             }
