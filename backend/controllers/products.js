@@ -72,7 +72,6 @@ export const deleteProduct = asyncHandler(async (req,res,next)=>{
     const {id} = req.params
 
     const deletedProduct = await productModel.findByIdAndDelete(id)
-    console.log(deletedProduct)
 
     const deletedImages = deletedProduct.images.map((image)=>{
         return image.public_id

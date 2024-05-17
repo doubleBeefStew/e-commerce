@@ -23,17 +23,19 @@ const ProductDetail = () => {
     },[])
 
     return (
-        <Row className="vh-auto py-5 px-2 px-sm-5">
+        <Row className="vh-100 py-5 px-0 px-sm-5 justify-content-center">
             {
                 isLoading ? 
                     <p>loading..</p> :
-                    <>
-                        <Col>
-                        {console.log(productData.images)}
+                    <Row className='bg-white pt-3 g-5'>
+                        <Col className='col-12 col-md-5'>
                             <ProductCarousel images={productData.images}/>
                         </Col>
-                        <Col></Col>
-                    </>
+                        <Col className='col-12 col-md-7'>
+                            <h1>{productData.name}</h1>
+                            <p>{productData.description}</p>
+                        </Col>
+                    </Row>
             }
         </Row>
     )

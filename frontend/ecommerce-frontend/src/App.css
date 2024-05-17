@@ -3,12 +3,17 @@
     --bs-primary: #ee4d2d;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 body {
     background-color: rgb(235, 236, 236);
 }
 
 * {
     border-radius: var(--bs-border-radius) !important;
+    /* box-sizing: border-box !important; */
 }
 
 .bg-orange {

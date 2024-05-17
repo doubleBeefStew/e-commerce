@@ -1,25 +1,43 @@
+import { useEffect, useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 import Image from 'react-bootstrap/Image'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import styles from './productCarousel.module.css'
 
 const ProductCarousel = ({images}) => {
-    console.log(images)
+    const [imgLink,setImgLink] = useState(null)
+    let idx = 0
+
+    useEffect(()=>{
+        setImgLink(images[idx].url)
+    },[])
+
     return (
-        <Carousel>
-            {
-                images.map((item)=>{
-                    return (
-                        <Carousel.Item key={item._id}>
-                            <Image
-                                className="d-block w-100 overflow-hidden object-fit-cover"
-                                src={item.url}
-                                width={1710}
-                                height={315}
-                            />
-                        </Carousel.Item>
-                    )
-                })
-            }
-        </Carousel>
+        <div>
+            <div className='ratio ratio-1x1 bg-dark mb-3'>
+                <img className='object-fit-contain' src={imgLink}/>
+            </div>
+            <Row className='m-0 w-100 flex-nowrap overflow-scroll justify-content-start' style={{height:100}} >
+                {
+                    images.map((item)=>{
+                        return (
+                            <Col
+                                className={`col-3 p-0 me-1 ${styles.thumbnail}`}
+                                style={{width:100,height:100}}
+                                key={item._id}>
+                                <img 
+                                    className='w-100 h-100 object-fit-cover overflow-hidden'
+                                    src={item.url}/>
+                            </Col>
+                        )
+                    })
+                    
+                }
+                
+                
+            </Row>
+        </div>
     )
 }
 

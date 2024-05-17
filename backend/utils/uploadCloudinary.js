@@ -14,7 +14,6 @@ const uploadCloudinary = async (files,folderPath)=>{
             console.log(e)
         }
     }))
-    console.log(imageData)
     return imageData
 }
 
