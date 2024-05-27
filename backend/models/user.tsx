@@ -3,6 +3,7 @@ import bcrypt from "bcrypt"
 
 interface User {
   name: string;
+  cartId: typeof Schema.ObjectId,
   email: string;
   password: string;
   phoneNumber: string;
@@ -31,6 +32,7 @@ interface Avatar {
 
 const userSchema = new Schema<User>({
   name: String,
+  cartId:Schema.ObjectId,
   email: {
     type: String,
     index: true,

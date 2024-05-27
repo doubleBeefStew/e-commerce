@@ -2,7 +2,7 @@ import asyncHandler from "express-async-handler"
 import userModel from "../models/user"
 import cloudinary from "../middlewares/cloudinary"
 import { clearStorage } from "../middlewares/multer"
-import { notFoundError,badRequestError } from "../errors/customErrors"
+import { notFoundError } from "../errors/customErrors"
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -22,7 +22,7 @@ export const getUser = asyncHandler(async(req,res,next)=>{
 
 export const updateUserInfo = asyncHandler(async(req,res,next)=>{
     const {id} = req.params
-    const { name,email,phoneNumber,address,image,role } = req.body
+    const { name,cartId,email,phoneNumber,address,image,role } = req.body
 
     let updatedUser
 
@@ -36,13 +36,12 @@ export const updateUserInfo = asyncHandler(async(req,res,next)=>{
         throw new notFoundError(`user with ID ${id} is not found`,'USR-404')
 
     name && (foundUser.name = name)
+    cartId && (foundUser.cartId = cartId)
     email && (foundUser.email = email)
     phoneNumber && (foundUser.phoneNumber = phoneNumber)
     address && (foundUser.address = address)
     role && (foundUser.role = role)
 
-    // TODO: 1. use cloudinary util to upload
-    // TODO: 3. make product frontend
     if(req.file){
         const imagePath = req.file.path
         const folderPath = `users/profiles/${updatedUser}`

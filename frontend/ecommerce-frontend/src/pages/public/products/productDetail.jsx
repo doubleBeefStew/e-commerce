@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/esm/Col'
 import { useParams } from 'react-router-dom'
-import Image from "react-bootstrap/Image"
 import axios from 'axios'
 import env from '../../../../../env'
 import ProductCarousel from '../../../components/Carousel/productCarousel'

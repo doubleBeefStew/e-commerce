@@ -13,6 +13,7 @@ import isAuthenticated from './middlewares/auth.js'
 // ROUTES
 import auth from './routes/auth.js'
 import user from './routes/user.js'
+import cart from './routes/cart.js'
 import products from './routes/products.js'
 // ERROR HANDLERS
 import customErrorHandler from './errors/customErrorHandler.js'
@@ -47,6 +48,7 @@ app.use('/api/v1/ping',validateRegister,(req,res,next)=>{
 app.use('/api/v1/auth', auth) //validated
 app.use('/api/v1/products',products)
 app.use('/api/v1/user',isAuthenticated,user) //validated
+app.use('/api/v1/cart', isAuthenticated,cart)
 
 // ERRORS
 app.use(notFoundHandler)

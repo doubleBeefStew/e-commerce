@@ -1,4 +1,4 @@
-import {Mongoose, Schema, model} from "mongoose"
+import {Schema, model} from "mongoose"
 
 
 //TODO: integrate with category, reviews, shop model
