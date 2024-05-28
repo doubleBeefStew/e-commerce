@@ -5,6 +5,8 @@ const cartSchema = new Schema({
     products:{
         type:[{
             productId:Schema.ObjectId,
+            productName:String,
+            productPrice:Number,
             quantity:Number,
         }],
         default:[]

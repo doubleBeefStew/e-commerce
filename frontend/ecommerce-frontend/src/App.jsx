@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { loadUser } from './redux/slices/user'
 import Profile from './pages/user/account/components/profile'
+import { loadCart } from './redux/slices/cart'
 
 const router = createBrowserRouter([{
         path: 'login',
@@ -81,6 +82,7 @@ const App = () => {
 
     useEffect(() => {
             dispatch(loadUser())
+            dispatch(loadCart())
     }, [])
 
     return <RouterProvider router={router} />

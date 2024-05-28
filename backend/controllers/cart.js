@@ -4,20 +4,21 @@ import userModel from "../models/user"
 import { badRequestError } from "../errors/customErrors"
 
 export const getCart = asyncHandler(async (req,res,next)=>{
-    const {cartId} = req.params
+    const {user} = req
+    const {all} = req.params
     
-    if(cartId){
-        const cart = await cartModel.findById(cartId)
+    if(all==true){
+        const carts = await cartModel.find({})
+        res.status(200).json({output:{message:'OK',payload:carts}})
+    }else if(user._id){
+        const cart = await cartModel.findOne({userId:user._id})
+        console.log(cart)
         if(!cart)
             throw new badRequestError('Cart not found','CRT-404')
         res.status(200).json({output:{message:'OK',payload:cart}})
-    }else if(!cartId){
-        const carts = await cartModel.find({})
-        res.status(200).json({output:{message:'OK',payload:carts}})
     }
 })
 
-//TODO: integrate create cart with create user
 export const createCart = asyncHandler(async (req,res,next)=>{
     const {userId} = req.params
     const user = await userModel.findById(userId)
@@ -41,10 +42,10 @@ export const deleteCart = asyncHandler(async (req,res,next)=>{
 })
 
 export const updateCart = asyncHandler(async (req,res,next)=>{
-    const {cartId} = req.params
+    const {user} = req
     const {products} = req.body
     
-    const cart = await cartModel.findById(cartId)
+    const cart = await cartModel.findOne({userId:user._id})
     if(!cart)
         throw new badRequestError('Cart not found','CRT-404')
 

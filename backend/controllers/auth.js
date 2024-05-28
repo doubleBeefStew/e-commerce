@@ -68,6 +68,7 @@ export const login = asyncHandler(async(req,res,next)=>{
 
     const userData = {
         _id:user._id,
+        cartId:user.cartId,
         name:user.name,
         email:user.email,
         role:user.role,

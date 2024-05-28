@@ -4,7 +4,7 @@ import {createCart,getCart,updateCart,deleteCart} from "../controllers/cart"
 
 const router = Router()
 
-router.route('/:cartId?')
+router.route('/:all?')
     .get(isAuthenticated,getCart) 
     
 router.route('/create/:userId')

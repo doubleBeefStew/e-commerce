@@ -25,15 +25,12 @@ const Login = ()=>{
     const onSubmit = async (values,actions)=>{
         try{
             const login = await axios.post(`${env.API_URL}/auth/login`,values,{withCredentials:true})
-            const userData = login.data.output.payload 
-            console.log(userData._id)
+            const userData = login.data.output.payload
             
             if(!userData.cartId){
                 const cart = await axios.post(`${env.API_URL}/cart/create/${userData._id}`,{withCredentials:true})
                 const cartId = cart.data.output.payload._id 
-                console.log(cartId)
                 const updatedUser = await axios.patch(`${env.API_URL}/user/update`,{cartId},{withCredentials:true})
-                console.log(updatedUser)
             }
             navigate('/')
             window.location.reload(true)
