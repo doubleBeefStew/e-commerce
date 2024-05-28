@@ -78,10 +78,12 @@ const Header = ()=>{
                     {/* Cart */}
                     <Col className='col-auto px-4 d-flex align-items-center justify-content-center'>
                         <div className="position-relative p-0">
-                            <BsCart3 color='white' size='30'/>
-                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                99+
-                            </span>
+                            <Link to={'/cart'}>
+                                <BsCart3 color='white' size='30'/>
+                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {}
+                                </span>
+                            </Link>
                         </div>
                     </Col>
                 </Row>

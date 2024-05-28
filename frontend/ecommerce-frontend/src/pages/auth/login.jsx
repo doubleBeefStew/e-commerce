@@ -22,15 +22,24 @@ const Login = ()=>{
         rememberMe:false
     }
 
-    const onSubmit = (values,actions)=>{
-        axios.post(`${env.API_URL}/auth/login`,values,{withCredentials:true})
-        .then(function(res){
-            console.log(res)
+    const onSubmit = async (values,actions)=>{
+        try{
+            const login = await axios.post(`${env.API_URL}/auth/login`,values,{withCredentials:true})
+            const userData = login.data.output.payload 
+            console.log(userData._id)
+            
+            if(!userData.cartId){
+                const cart = await axios.post(`${env.API_URL}/cart/create/${userData._id}`,{withCredentials:true})
+                const cartId = cart.data.output.payload._id 
+                console.log(cartId)
+                const updatedUser = await axios.patch(`${env.API_URL}/user/update`,{cartId},{withCredentials:true})
+                console.log(updatedUser)
+            }
             navigate('/')
             window.location.reload(true)
-        })
-        .catch((err)=>{
+        }catch(err){
             console.log(err)
+            
             actions.setSubmitting(false)
             if(err.response && err.response.data.error.code=='LGN-400')
                 setAlert({message:'Email is not registered.',type:'danger'})
@@ -38,9 +47,7 @@ const Login = ()=>{
                 setAlert({message:'Invalid email or password.',type:'danger'})
             else
                 setAlert({message:'Sorry, something went wrong. Please try again later.',type:'danger'})
-
-            console.log(err)
-        })
+        }
     }
 
     const {values,errors,touched,isSubmitting,isValid,handleSubmit,handleChange,handleBlur} = useFormik({

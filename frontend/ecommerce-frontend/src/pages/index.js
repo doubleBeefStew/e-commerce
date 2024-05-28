@@ -18,4 +18,5 @@ export {default as HomePage} from './public/homePage'
 export {default as Products} from './public/products/products'
 export {default as ProductDetail} from './public/products/productDetail'
 
+export {default as Cart} from './user/cart/cart'
 export {default as AccountLayout} from './user/account/layout'

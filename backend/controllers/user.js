@@ -20,7 +20,7 @@ export const getUser = asyncHandler(async(req,res,next)=>{
     }
 })
 
-export const updateUserInfo = asyncHandler(async(req,res,next)=>{
+export const updateUser = asyncHandler(async(req,res,next)=>{
     const {id} = req.params
     const { name,cartId,email,phoneNumber,address,image,role } = req.body
 

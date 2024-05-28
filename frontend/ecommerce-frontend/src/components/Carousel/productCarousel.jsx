@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
-import Carousel from 'react-bootstrap/Carousel'
-import Image from 'react-bootstrap/Image'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import styles from './productCarousel.module.css'
 
 const ProductCarousel = ({images}) => {
     const [imgLink,setImgLink] = useState(null)
-    let idx = 0
+    let index = 0
 
     useEffect(()=>{
-        setImgLink(images[idx].url)
+        setImgLink(images[index].url)
     },[])
 
     return (
@@ -28,14 +26,11 @@ const ProductCarousel = ({images}) => {
                                 key={item._id}>
                                 <img 
                                     className='w-100 h-100 object-fit-cover overflow-hidden'
-                                    src={item.url}/>
+                                    src={item.url} onClick={()=>{setImgLink(item.url)}}/>
                             </Col>
                         )
                     })
-                    
                 }
-                
-                
             </Row>
         </div>
     )

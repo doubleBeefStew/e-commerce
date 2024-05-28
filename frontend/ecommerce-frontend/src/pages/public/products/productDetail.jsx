@@ -16,22 +16,24 @@ const ProductDetail = () => {
             setIsLoading(true)
             const response = await axios.get(`${env.API_URL}/products/${id}`,{withCredentials:true})
             setProductData(response.data.output.payload)
+            console.log(productData)
             setIsLoading(false)
         }
         getProductData()
     },[])
 
     return (
-        <Row className="vh-100 py-5 px-0 px-sm-5 justify-content-center">
+        <Row className="py-5 px-0 px-sm-5 justify-content-center">
             {
                 isLoading ? 
                     <p>loading..</p> :
-                    <Row className='bg-white pt-3 g-5'>
-                        <Col className='col-12 col-md-5'>
+                    <Row className='bg-white p-3 gx-5'>
+                        <Col className='col-12 col-md-5 pb-5 px-0'>
                             <ProductCarousel images={productData.images}/>
                         </Col>
                         <Col className='col-12 col-md-7'>
-                            <h1>{productData.name}</h1>
+                            <h5>{productData.name}</h5>
+                            <h1>{productData.initialPrice}</h1>
                             <p>{productData.description}</p>
                         </Col>
                     </Row>

@@ -12,7 +12,7 @@ export const register = asyncHandler(async (req,res,next)=>{
     const user = await userModel.findOne({email})
 
     if(user)
-        throw new badRequestError('user is already registered','RGS-40')
+        throw new badRequestError('user is already registered','RGS-401')
 
     const token = generateToken({email,password})
 
@@ -42,11 +42,8 @@ export const activation = asyncHandler(async(req,res,next)=>{
     const address = ''
     const avatar= ''
 
-    
     const data = validateToken(token)
-
     const {email,password} = data
-
     const name = 'user'+ Math.floor(Math.random()*100000).toString()
 
     const existingUser = await userModel.findOne({email})
@@ -55,7 +52,7 @@ export const activation = asyncHandler(async(req,res,next)=>{
     }
 
     const user = await userModel.create({name,email,password,phoneNumber,address,avatar})
-    res.status(201).json({output:{message:'user registered successfully',user}})
+    res.status(201).json({output:{message:'user registered successfully',payload:user}})
 })
 
 export const login = asyncHandler(async(req,res,next)=>{

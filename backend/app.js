@@ -48,7 +48,7 @@ app.use('/api/v1/ping',validateRegister,(req,res,next)=>{
 app.use('/api/v1/auth', auth) //validated
 app.use('/api/v1/products',products)
 app.use('/api/v1/user',isAuthenticated,user) //validated
-app.use('/api/v1/cart', isAuthenticated,cart)
+app.use('/api/v1/cart',cart)
 
 // ERRORS
 app.use(notFoundHandler)

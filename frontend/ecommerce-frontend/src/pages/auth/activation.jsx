@@ -13,24 +13,32 @@ const Activation = ()=>{
     const navigate = useNavigate()
 
     useEffect(()=>{
-        setLoading(true)
-        if(token){
-            axios.get(`${env.API_URL}/auth/activation/${token}`)
-            .then(function(res){
-                setError(false)
-                setLoading(false)
-                console.log(res)
-                setTimeout(()=>{
-                    navigate('/login')
-                },5000)
-            })
-            .catch((err)=>{
-                setError(true)
-                setLoading(false)
-                console.log(err)
-            })
-        }else
-            setError(true)
+        const createUser = async ()=>{
+            try{
+                setLoading(true)
+                
+                if(token){
+                    const user = await axios.get(`${env.API_URL}/auth/activation/${token}`)
+
+                    setError(false)
+                    setLoading(false)
+
+                    setTimeout(()=>{
+                        navigate('/login')
+                    },5000)
+                }else{
+                    setError(true)
+                    setLoading(false)
+                }
+            }catch(e){
+                (err)=>{
+                    setError(true)
+                    setLoading(false)
+                    console.log(err)
+                }
+            }
+        } 
+        createUser()
     },[])
 
     return (<>
