@@ -6,7 +6,7 @@ const Protected = ({children})=>{
     const {isLoadingUser,isAuthenticated} = useSelector((state)=>{ return state.user })
     
     if(!isLoadingUser && !isAuthenticated){
-        return <Navigate to={'/'} replace/>
+        return <Navigate to={'/login'} replace/>
     }
 
     return children

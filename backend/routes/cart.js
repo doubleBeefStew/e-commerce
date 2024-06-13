@@ -13,7 +13,7 @@ router.route('/create/:userId')
 router.route('/delete/:cartId')
     .delete(isAuthenticated,deleteCart)
 
-router.route('/update/:cartId')
+router.route('/update')
     .patch(isAuthenticated,updateCart)
 
 export default router

@@ -7,6 +7,7 @@ import { loadCart, updateCart } from '../../../redux/slices/cart'
 import { useDispatch,useSelector } from 'react-redux'
 import env from '../../../../../env'
 import ProductCarousel from '../../../components/Carousel/productCarousel'
+import priceFormat from '../../../utils/priceFormat'
 
 const ProductDetail = () => {
     const { id } = useParams()
@@ -28,13 +29,30 @@ const ProductDetail = () => {
         getProductData()
     },[])
 
-    const addtoBasket = async(product)=>{
-        const products = [...cartData.products,{
-            "productId":product._id,
-            "productName":product.name,
-            "productPrice":product.initialPrice,
-            "quantity":1
-        }]
+    const addtoCart = async(product)=>{
+        let products
+
+        const idx = cartData.products.findIndex((item)=>{
+            return item.productId == product._id
+        }) 
+        
+        if(idx>=0){
+            products = [...cartData.products]
+            products[idx]={...products[idx], quantity:products[idx].quantity+1}
+        }
+        else{
+            products = [...cartData.products,{
+                "productId":product._id,
+                "productUrl":product.images[0].url,
+                "productName":product.name,
+                "productPrice":product.initialPrice,
+                "quantity":1
+            }]
+            
+        }
+
+        const response = await axios.patch(`${env.API_URL}/cart/update`,products,{withCredentials:true})
+        dispatch(loadCart())
     }
 
     return (
@@ -49,14 +67,14 @@ const ProductDetail = () => {
                         <Col className='d-flex flex-column justify-content-between col-12 col-md-7'>
                             <div>
                                 <h5>{productData.name}</h5>
-                                <h1>{productData.initialPrice}</h1>
-                                <p>{productData.description}</p>
+                                <h1 className='text-orange'>Rp{priceFormat(productData.initialPrice)}</h1>
+                                <small>{productData.description}</small>
                             </div>
                             <Row>
                                 <Col>
                                     <button 
                                         className='w-100 btn btn-outline-primary'
-                                        onClick={()=>{addtoBasket(productData)}}
+                                        onClick={()=>{addtoCart(productData)}}
                                     >Add to Basket</button>
                                 </Col>
                                 <Col>

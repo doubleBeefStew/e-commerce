@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import env from '../../../../env'
 
-export const loadCart = createAsyncThunk('cart/', async(id)=>{
+export const loadCart = createAsyncThunk('cart/', async()=>{
     try{
         const response = await axios.get(`${env.API_URL}/cart`,{withCredentials:true})
         return response.data
@@ -12,9 +12,9 @@ export const loadCart = createAsyncThunk('cart/', async(id)=>{
     }
 })
 
-export const updateCart = createAsyncThunk('cart/update', async(id,data)=>{
+export const updateCart = createAsyncThunk('cart/update', async(data)=>{
     try{
-        const response = await axios.patch(`${env.API_URL}/cart/update/${id}`,data,{withCredentials:true})
+        const response = await axios.patch(`${env.API_URL}/cart/update`,data,{withCredentials:true})
         return response.data
     }catch(err){
         console.log(err.response.data.error.message)

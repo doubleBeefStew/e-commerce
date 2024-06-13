@@ -12,7 +12,6 @@ export const getCart = asyncHandler(async (req,res,next)=>{
         res.status(200).json({output:{message:'OK',payload:carts}})
     }else if(user._id){
         const cart = await cartModel.findOne({userId:user._id})
-        console.log(cart)
         if(!cart)
             throw new badRequestError('Cart not found','CRT-404')
         res.status(200).json({output:{message:'OK',payload:cart}})
@@ -43,8 +42,10 @@ export const deleteCart = asyncHandler(async (req,res,next)=>{
 
 export const updateCart = asyncHandler(async (req,res,next)=>{
     const {user} = req
-    const {products} = req.body
-    
+    const products = req.body
+
+    console.log(products)
+
     const cart = await cartModel.findOne({userId:user._id})
     if(!cart)
         throw new badRequestError('Cart not found','CRT-404')

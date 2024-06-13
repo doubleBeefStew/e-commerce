@@ -17,13 +17,16 @@ const ProductCard = ({product})=>{
                     src={product.images[0]? product.images[0].url : 'Loading..'}/>
                 <Card.Body>
                     <Card.Title className={'text-transform-capitalize fs-6'}>{product.name}</Card.Title>
-                        <span className='text-primary fs-4'>{`Rp ${priceFormat(product.initialPrice)}`}</span>
+                        <small className='text-orange'>Rp</small>
+                        <span className='fs-4 text-orange'>{`${priceFormat(product.initialPrice)}`}</span>
                         <div className='row'>
                             <div className='col-6 d-flex align-items-center'>
                                 {
-                                    product.rating>0 &&
-                                    (<MdStarRate className='text-primary'/> &&
-                                    <small className='p-1'>{product.rating}</small>)
+                                    // product.rating>0 &&
+                                    (<>
+                                        <MdStarRate className='text-orange'/>
+                                        <small className='p-1'>{product.rating}</small>
+                                    </>)
                                 }
                             </div>    
                             <div className='col-6 text-end'>0 sold</div>    

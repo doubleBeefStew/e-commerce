@@ -15,7 +15,6 @@ const Products = ()=>{
     
     return (
         <Row className='vh-auto py-5 px-2 px-sm-5'>
-        {console.log(products.productsData)}
         {
             products.isLoadingProducts? 'Loading':
             products.productsData.map((item)=>{

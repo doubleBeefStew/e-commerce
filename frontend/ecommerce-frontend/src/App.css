@@ -20,6 +20,10 @@ body {
     background-color: var(--bs-primary);
 }
 
+.text-orange{
+    color:#ee4d2d;
+}
+
 .nav {
     max-height: 1rem;
 }
@@ -39,4 +43,11 @@ body {
     --bs-btn-disabled-color: #fff;
     --bs-btn-disabled-bg: #c37564;
     --bs-btn-disabled-border-color: #fff;
+}
+
+.btn-outline-primary{
+    color: #ee4d2d;
+    border-color: #ee4d2d;
+    --bs-btn-hover-bg: #ee4d2d;
+    --bs-btn-hover-border-color: #ee4d2d;
 }
