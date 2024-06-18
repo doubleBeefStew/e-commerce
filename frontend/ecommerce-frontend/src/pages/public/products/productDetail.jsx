@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useParams } from 'react-router-dom'
+import { useParams,useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { loadCart, updateCart } from '../../../redux/slices/cart'
+import { addItem, loadCart, updateCart } from '../../../redux/slices/cart'
 import { useDispatch,useSelector } from 'react-redux'
 import env from '../../../../../env'
 import ProductCarousel from '../../../components/Carousel/productCarousel'
@@ -14,9 +14,14 @@ const ProductDetail = () => {
     const [productData,setProductData] = useState(null)
     const [isLoading,setIsLoading] = useState(true)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const {cartData} = useSelector((state)=>{
         return state.cart
+    })
+
+    const {userData} = useSelector((state)=>{
+        return state.user
     })
 
     useEffect(()=>{
@@ -30,29 +35,21 @@ const ProductDetail = () => {
     },[])
 
     const addtoCart = async(product)=>{
-        let products
-
-        const idx = cartData.products.findIndex((item)=>{
-            return item.productId == product._id
-        }) 
-        
-        if(idx>=0){
-            products = [...cartData.products]
-            products[idx]={...products[idx], quantity:products[idx].quantity+1}
-        }
-        else{
-            products = [...cartData.products,{
+        if(!userData){
+            navigate('/login')
+        }else{
+            dispatch(addItem({
                 "productId":product._id,
                 "productUrl":product.images[0].url,
                 "productName":product.name,
                 "productPrice":product.initialPrice,
                 "quantity":1
-            }]
-            
+            }))
+            // TODO: make react lottie to confirm add cart
+            console.log(cartData.products)
+            const response = await axios.patch(`${env.API_URL}/cart/update`,cartData.products,{withCredentials:true})
         }
 
-        const response = await axios.patch(`${env.API_URL}/cart/update`,products,{withCredentials:true})
-        dispatch(loadCart())
     }
 
     return (

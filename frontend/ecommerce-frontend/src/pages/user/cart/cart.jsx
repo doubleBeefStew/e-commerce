@@ -1,8 +1,8 @@
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/esm/Col'
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSelector,useDispatch } from "react-redux"
-import { loadCart,updateCart } from "../../../redux/slices/cart"
+import { loadCart,updateCart,addItem,removeItem } from "../../../redux/slices/cart"
 import { FaRegTrashCan } from "react-icons/fa6"
 import priceFormat from '../../../utils/priceFormat'
 import Counter from './components/counter'
@@ -11,19 +11,15 @@ const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
     const {userData} = useSelector((state)=>{ return state.user })
     const dispatch = useDispatch()
+    const [currentCart,setCurrentCart] = useState()
 
     useEffect(() => {
-            dispatch(loadCart())
     }, [])
 
     const deleteItem = (itemId)=>{
-        const newData = cartData.products.filter((item)=>{
-            return item._id!=itemId
-        })
-        dispatch(updateCart(newData))
+        dispatch(removeItem(itemId))
     }
 
-    //fix counter
 
     return (<>
     {
@@ -57,10 +53,10 @@ const Cart = ()=>{
                 {
                     cartData.products?.map((item)=>{
                         return (
-                            <Col className='py-4 bg-light' key={item._id}>
+                            <Col className='py-4 bg-light' key={item.productId}>
                                 <Row className='align-items-center justify-content-between px-3'>
                                     <Col className='col-auto'>
-                                        <input type='checkbox'></input>
+                                        <input type='checkbox' />
                                     </Col>
                                     <Col className='col-2 text-center'>
                                         <img className='object-fit-cover w-100' height={100} width={100} src={item.productUrl} />
@@ -72,10 +68,10 @@ const Cart = ()=>{
                                         <small className='m-0'>Rp{priceFormat(item.productPrice)}</small>
                                     </Col>
                                     <Col className='col-3 text-center'>
-                                        <Counter qty={item.quantity}/>
+                                        <Counter qty={item.quantity} onChange={()=>{}}/>
                                     </Col>
                                     <Col className='col-1 text-center'>
-                                        <FaRegTrashCan color='#ee4d2d' onClick={()=>{deleteItem(item._id)}}/>
+                                        <FaRegTrashCan color='#ee4d2d' onClick={()=>{deleteItem(item.productId)}}/>
                                     </Col>
                                 </Row>
                             </Col>)

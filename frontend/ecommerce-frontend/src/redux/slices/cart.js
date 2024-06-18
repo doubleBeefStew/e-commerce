@@ -3,6 +3,7 @@ import axios from 'axios'
 import env from '../../../../env'
 
 export const loadCart = createAsyncThunk('cart/', async()=>{
+    console.log('loading cart data')
     try{
         const response = await axios.get(`${env.API_URL}/cart`,{withCredentials:true})
         return response.data
@@ -23,7 +24,7 @@ export const updateCart = createAsyncThunk('cart/update', async(data)=>{
 })
 
 const initialState = {
-    cartData:null,
+    cartData:localStorage.getItem('cartData')? JSON.parse(localStorage.getItem('cartData')):[],
     isLoadingCart:true,
     error:null
 }
@@ -34,6 +35,29 @@ const cartSlice = createSlice({
     reducers:{
         setError(state,action){
             state.error = action.payload
+        },
+        addItem(state,action){
+            const product = action.payload
+            
+            const index = state.cartData.products.findIndex((item)=>{
+                return item.productId == product.productId
+            })
+            if (index<0){
+                state.cartData.products.push(product)  
+            }else{
+                state.cartData.products[index].quantity+=1
+                localStorage.setItem("cartData",JSON.stringify(state.cartData))
+            }
+        },
+        removeItem(state,action){
+            const id = action.payload
+            
+            const list = state.cartData.products.filter((item)=>{
+                return item.productId != id
+            })
+
+            state.cartData.products=list  
+            localStorage.setItem("cartData",JSON.stringify(state.cartData))
         },
         setState(state,action){
             state = action.payload
@@ -46,6 +70,7 @@ const cartSlice = createSlice({
         })
         .addCase(loadCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload
+            localStorage.setItem("cartData",JSON.stringify(state.cartData))
             state.isLoadingCart=false
         })
         .addCase(loadCart.rejected,(state,action)=>{
@@ -57,6 +82,7 @@ const cartSlice = createSlice({
         })
         .addCase(updateCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload
+            localStorage.setItem(cartData,action.payload.output.payload)
             state.isLoadingCart=false
         })
         .addCase(updateCart.rejected,(state,action)=>{
@@ -66,6 +92,6 @@ const cartSlice = createSlice({
     }
 })
 
-export const { setError } = cartSlice.actions
+export const { setError,addItem,removeItem } = cartSlice.actions
 
 export default cartSlice.reducer
