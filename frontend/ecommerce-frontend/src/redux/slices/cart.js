@@ -3,7 +3,6 @@ import axios from 'axios'
 import env from '../../../../env'
 
 export const loadCart = createAsyncThunk('cart/', async()=>{
-    console.log('loading cart data')
     try{
         const response = await axios.get(`${env.API_URL}/cart`,{withCredentials:true})
         return response.data
@@ -15,6 +14,7 @@ export const loadCart = createAsyncThunk('cart/', async()=>{
 
 export const updateCart = createAsyncThunk('cart/update', async(data)=>{
     try{
+        console.log(data)
         const response = await axios.patch(`${env.API_URL}/cart/update`,data,{withCredentials:true})
         return response.data
     }catch(err){
@@ -46,6 +46,18 @@ const cartSlice = createSlice({
                 state.cartData.products.push(product)  
             }else{
                 state.cartData.products[index].quantity+=1
+                console.log('saving to local storage')
+                localStorage.setItem("cartData",JSON.stringify(state.cartData))
+            }
+        },
+        setQuantity(state,action){
+            const {productId,quantity} = action.payload
+            
+            const index = state.cartData.products.findIndex((item)=>{
+                return item.productId == productId
+            })
+            if (index>=0){
+                state.cartData.products[index].quantity=quantity
                 localStorage.setItem("cartData",JSON.stringify(state.cartData))
             }
         },
@@ -82,7 +94,7 @@ const cartSlice = createSlice({
         })
         .addCase(updateCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload
-            localStorage.setItem(cartData,action.payload.output.payload)
+            localStorage.setItem(state.cartData,action.payload.output.payload)
             state.isLoadingCart=false
         })
         .addCase(updateCart.rejected,(state,action)=>{
@@ -92,6 +104,6 @@ const cartSlice = createSlice({
     }
 })
 
-export const { setError,addItem,removeItem } = cartSlice.actions
+export const { setError,addItem,setQuantity,removeItem } = cartSlice.actions
 
 export default cartSlice.reducer
