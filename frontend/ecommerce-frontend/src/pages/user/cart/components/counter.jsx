@@ -1,41 +1,49 @@
 import { useDispatch, useSelector } from "react-redux"
-import { removeItem, setQuantity,updateCart } from "../../../../redux/slices/cart"
+import { removeItem, updateItem,updateCart } from "../../../../redux/slices/cart"
+import axios from 'axios'
+import env from "../../../../../../env"
+
 
 const Counter = ({product})=>{
     const dispatch = useDispatch()
-    const {cartData} = useSelector((state)=>{
-        return state.cart
-    })
+    
 
     return (<div className="input-group">
         <span className="input-group-btn">
-            <button type="button" className="btn btn-default btn-number" onClick={() => {
+            <button type="button" className="btn btn-default btn-number" onClick={async () => {
                 if(product.quantity<=1){
                     dispatch(removeItem(product.productId))
                 }else{
-                    dispatch(setQuantity({
-                        productId: product.productId,
-                        quantity: product.quantity - 1
+                    dispatch(updateItem({
+                        ...product,
+                        quantity: product.quantity - 1,
                     }))
-                    dispatch(updateCart(JSON.parse(localStorage.getItem('cartData')).products))
+                    const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')).products,{withCredentials:true})
                 }
             }}>
                 <span className="">-</span>
             </button>
         </span>
         <input 
-            value={product.quantity}
-            type="text" 
-            className="input-number border border-0" 
+            value={product.quantity==""? 1 : product.quantity}
+            type="number" 
+            className="border border-0 text-center form-control-small" 
             style={{'width':'30px'}}
-            onChange={()=>{console.log('value')}}/>
-        <span className="input-group-btn">
-            <button type="button" className="btn btn-default btn-number" onClick={() => {
-                dispatch(setQuantity({
-                    productId: product.productId,
-                    quantity: product.quantity + 1
+            onChange={async (event)=>{
+                dispatch(updateItem({
+                    ...product,
+                    quantity: event.target.value,
                 }))
-                dispatch(updateCart(JSON.parse(localStorage.getItem('cartData')).products))
+                const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')).products,{withCredentials:true})
+                console.log(JSON.parse(localStorage.getItem('cartData')).products)
+            }}/>
+        <span className="input-group-btn">
+            <button type="button" className="btn btn-default btn-number" onClick={async () => {
+                dispatch(updateItem({
+                    ...product,
+                    quantity: product.quantity + 1,
+                }))
+                const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')).products,{withCredentials:true})
             }}>
                 <span className="">+</span>
             </button>

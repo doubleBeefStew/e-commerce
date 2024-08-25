@@ -9,6 +9,7 @@ const cartSchema = new Schema({
             productName:String,
             productPrice:Number,
             quantity:Number,
+            isChecked:Boolean
         }],
         default:[]
     }

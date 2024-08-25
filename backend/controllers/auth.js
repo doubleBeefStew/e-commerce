@@ -84,7 +84,6 @@ export const login = asyncHandler(async(req,res,next)=>{
     }
     
     res.cookie('token',token,options)
-    console.log('login response sent')
     res.status(200)
         .json({output:{message:'login successful',payload:userData}})
         

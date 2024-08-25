@@ -43,11 +43,13 @@ const ProductDetail = () => {
                 "productUrl":product.images[0].url,
                 "productName":product.name,
                 "productPrice":product.initialPrice,
-                "quantity":1
+                "quantity":1,
+                "isChecked":false
             }))
             // TODO: make react lottie to confirm add cart
-            console.log(cartData.products)
-            const response = await axios.patch(`${env.API_URL}/cart/update`,cartData.products,{withCredentials:true})
+            
+            const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')).products,{withCredentials:true})
+            console.log(response)
         }
 
     }

@@ -46,20 +46,22 @@ const cartSlice = createSlice({
                 state.cartData.products.push(product)  
             }else{
                 state.cartData.products[index].quantity+=1
-                console.log('saving to local storage')
-                localStorage.setItem("cartData",JSON.stringify(state.cartData))
             }
+            localStorage.setItem("cartData",JSON.stringify(state.cartData))
         },
-        setQuantity(state,action){
-            const {productId,quantity} = action.payload
+        updateItem(state,action){
+            const product = action.payload
             
             const index = state.cartData.products.findIndex((item)=>{
-                return item.productId == productId
+                return item.productId == product.productId
             })
             if (index>=0){
-                state.cartData.products[index].quantity=quantity
+                state.cartData.products[index]=product
+                
                 localStorage.setItem("cartData",JSON.stringify(state.cartData))
+
             }
+            
         },
         removeItem(state,action){
             const id = action.payload
@@ -104,6 +106,6 @@ const cartSlice = createSlice({
     }
 })
 
-export const { setError,addItem,setQuantity,removeItem } = cartSlice.actions
+export const { setError,addItem,updateItem,removeItem } = cartSlice.actions
 
 export default cartSlice.reducer

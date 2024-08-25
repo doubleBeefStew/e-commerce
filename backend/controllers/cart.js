@@ -44,8 +44,6 @@ export const updateCart = asyncHandler(async (req,res,next)=>{
     const {user} = req
     const products = req.body
 
-    console.log(products)
-
     const cart = await cartModel.findOne({userId:user._id})
     if(!cart)
         throw new badRequestError('Cart not found','CRT-404')
