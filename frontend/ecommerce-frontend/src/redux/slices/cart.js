@@ -24,7 +24,7 @@ export const updateCart = createAsyncThunk('cart/update', async(data)=>{
 })
 
 const initialState = {
-    cartData:localStorage.getItem('cartData')? JSON.parse(localStorage.getItem('cartData')):[],
+    cartData:JSON.parse(localStorage.getItem('cartData'))? JSON.parse(localStorage.getItem('cartData')):[],
     isLoadingCart:true,
     error:null
 }
@@ -92,7 +92,7 @@ const cartSlice = createSlice({
             state.error=action.error.message
         })
         .addCase(updateCart.pending,(state)=>{
-            state.isLoadingCart=true
+            console.log('update cart in progress')
         })
         .addCase(updateCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload

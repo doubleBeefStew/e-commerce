@@ -1,3 +1,21 @@
-- activation page
-- login
-- dashboard
+send productid & quantity to order page
+order page display the summary & payment method
+order button sends productid, quantity & voucher code to server
+
+server:
+- create: 
+	reads & check productid, quantity & voucher code
+	check & compare voucher code
+	sends an OK to frontend
+	frontend redirect to payment
+	user input pin on payment page
+	send & compare pin data to server
+	server mark order as paid & deduct user balance
+	how does the payment gateway works? 
+	
+
+
+todo:
+- create order schema
+- create endpoints: CRUD order
+- create order page
