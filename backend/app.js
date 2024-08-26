@@ -15,6 +15,7 @@ import auth from './routes/auth.js'
 import user from './routes/user.js'
 import cart from './routes/cart.js'
 import products from './routes/products.js'
+import orders from './routes/orders.js'
 // ERROR HANDLERS
 import customErrorHandler from './errors/customErrorHandler.js'
 import notFoundHandler from './errors/notFoundHandler.js'
@@ -49,6 +50,7 @@ app.use('/api/v1/auth', auth) //validated
 app.use('/api/v1/products',products)
 app.use('/api/v1/user',isAuthenticated,user) //validated
 app.use('/api/v1/cart',cart)
+app.use('/api/v1/orders',isAuthenticated,orders)
 
 // ERRORS
 app.use(notFoundHandler)

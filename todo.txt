@@ -16,6 +16,6 @@ server:
 
 
 todo:
-- create order schema
+- DONE create order schema
 - create endpoints: CRUD order
 - create order page
