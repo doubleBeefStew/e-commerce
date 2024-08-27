@@ -98,7 +98,6 @@ const cartSlice = createSlice({
         })
         .addCase(updateCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload
-            console.log(state.cartData)
             
             localStorage.setItem(state.cartData,action.payload.output.payload)
             state.isLoadingCart=false

@@ -6,12 +6,12 @@ const orderSchema = new Schema({
     address:String,
     products:{
         type:[{
+            isChecked:Boolean,
             productId:Schema.ObjectId,
-            productUrl:String,
             productName:String,
             productPrice:Number,
+            productUrl:String,
             quantity:Number,
-            isChecked:Boolean
         }],
     },
     status:{
@@ -29,8 +29,8 @@ const orderSchema = new Schema({
     }
 })
 
-const orderModel = new model('orders',orderSchema)
+const orderModel = model('orders',orderSchema)
 
-orderModel.createIndexes()
+// orderModel.createIndexes()
 
 export default orderModel

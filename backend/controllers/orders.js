@@ -21,6 +21,8 @@ export const getOrder = asyncHandler(async (req,res,next)=>{
 })
 
 export const createOrder = asyncHandler(async (req,res,next)=>{
+    console.log(req.user)
+    
     if(req.user.role!='admin' && req.user.role!='user')
         throw new unauthorizedError('please login to create order','ODR-401')
 
