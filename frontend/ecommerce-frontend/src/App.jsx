@@ -14,7 +14,8 @@ import {
     Events,
     Products,
     ProductDetail,
-    Protected
+    Protected,
+    Checkout
 } from './pages'
 
 import { useDispatch } from 'react-redux'
@@ -71,6 +72,9 @@ const router = createBrowserRouter([{
                     }, {
                         path: 'cart',
                         element: <Protected><Cart/></Protected>,
+                    },, {
+                        path: 'checkout',
+                        element: <Protected><Checkout/></Protected>,
                     }
                 ]
             }

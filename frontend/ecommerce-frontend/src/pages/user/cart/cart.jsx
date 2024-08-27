@@ -1,5 +1,5 @@
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/esm/Col'
+import Col from 'react-bootstrap/Col'
 import { useSelector,useDispatch } from "react-redux"
 import { removeItem, updateItem, updateCart } from "../../../redux/slices/cart"
 import { FaRegTrashCan } from "react-icons/fa6"
@@ -7,7 +7,6 @@ import priceFormat from '../../../utils/priceFormat'
 import Counter from './components/counter'
 import { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
-
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
@@ -23,21 +22,22 @@ const Cart = ()=>{
             ...item,
             isChecked: !item.isChecked
         }))
+        dispatch(updateCart())
     }
 
     const checkAllItems = (event)=>{
-        console.log(event.target.checked)
-        
         cartData.products.forEach((item)=>{
             dispatch(updateItem({
                 ...item,
                 isChecked: event.target.checked
             }))
         })
+        dispatch(updateCart())
     }
 
-    const deleteAllItems = ()=>{
-        dispatch(updateCart({...cartData,products:[]}))
+    const deleteAllItems = async ()=>{
+        dispatch(removeItem())
+        dispatch(updateCart())
     }
 
     const calculateTotal = ()=>{
@@ -109,7 +109,11 @@ const Cart = ()=>{
                                     </Row>
                                     </Col>
                                     <Col className='col-1 text-center'>
-                                        <FaRegTrashCan color='#ee4d2d' onClick={()=>{dispatch(removeItem(item.productId))}}/>
+                                        <FaRegTrashCan color='#ee4d2d' onClick={async ()=>{
+                                            dispatch(removeItem(item.productId))
+                                            dispatch(updateCart())
+                                            }
+                                        }/>
                                     </Col>
                                 </Row>
                             </Col>)
@@ -117,11 +121,13 @@ const Cart = ()=>{
                 }
                 <Col className='p-4 bg-light'>
                     <Row className='align-items-center justify-content-end px-3'>
-                        <Col className='col-auto text-start'>
-                            <p className="m-0">Total: <small>Rp</small>{priceFormat(total)}</p>
+                        <Col className='col-auto text-end'>
+                            <small>Total Payment</small>
+                            <br/>
+                            <small>Rp{priceFormat(total)}</small>
                         </Col>
                         <Col className='col-auto text-center'>
-                            <Link className="w-100 btn btn-primary" to={'/'}>Checkout</Link>
+                            <Link className="w-100 btn btn-primary" to={'/checkout'}>Checkout</Link>
                         </Col>
                     </Row>
                 </Col>

@@ -12,10 +12,9 @@ export const loadCart = createAsyncThunk('cart/', async()=>{
     }
 })
 
-export const updateCart = createAsyncThunk('cart/update', async(data)=>{
+export const updateCart = createAsyncThunk('cart/update', async()=>{
     try{
-        console.log(data)
-        const response = await axios.patch(`${env.API_URL}/cart/update`,data,{withCredentials:true})
+        const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')),{withCredentials:true})
         return response.data
     }catch(err){
         console.log(err.response.data.error.message)
@@ -65,12 +64,15 @@ const cartSlice = createSlice({
         },
         removeItem(state,action){
             const id = action.payload
-            
-            const list = state.cartData.products.filter((item)=>{
-                return item.productId != id
-            })
+            if(id){
+                const list = state.cartData.products.filter((item)=>{
+                    return item.productId != id
+                })
+                state.cartData.products=list  
+            }else{
+                state.cartData.products=[]  
+            }
 
-            state.cartData.products=list  
             localStorage.setItem("cartData",JSON.stringify(state.cartData))
         },
         setState(state,action){
@@ -96,6 +98,8 @@ const cartSlice = createSlice({
         })
         .addCase(updateCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload
+            console.log(state.cartData)
+            
             localStorage.setItem(state.cartData,action.payload.output.payload)
             state.isLoadingCart=false
         })

@@ -1,12 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import { removeItem, updateItem,updateCart } from "../../../../redux/slices/cart"
-import axios from 'axios'
-import env from "../../../../../../env"
-
 
 const Counter = ({product})=>{
     const dispatch = useDispatch()
-    
 
     return (<div className="input-group">
         <span className="input-group-btn">
@@ -18,7 +14,7 @@ const Counter = ({product})=>{
                         ...product,
                         quantity: product.quantity - 1,
                     }))
-                    const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')).products,{withCredentials:true})
+                    dispatch(updateCart())
                 }
             }}>
                 <span className="">-</span>
@@ -34,8 +30,7 @@ const Counter = ({product})=>{
                     ...product,
                     quantity: event.target.value,
                 }))
-                const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')).products,{withCredentials:true})
-                console.log(JSON.parse(localStorage.getItem('cartData')).products)
+                dispatch(updateCart())
             }}/>
         <span className="input-group-btn">
             <button type="button" className="btn btn-default btn-number" onClick={async () => {
@@ -43,7 +38,7 @@ const Counter = ({product})=>{
                     ...product,
                     quantity: product.quantity + 1,
                 }))
-                const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')).products,{withCredentials:true})
+                dispatch(updateCart())
             }}>
                 <span className="">+</span>
             </button>

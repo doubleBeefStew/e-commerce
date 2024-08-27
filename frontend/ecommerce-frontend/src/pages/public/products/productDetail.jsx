@@ -48,7 +48,7 @@ const ProductDetail = () => {
             }))
             // TODO: make react lottie to confirm add cart
             
-            const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')).products,{withCredentials:true})
+            const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')),{withCredentials:true})
         }
 
     }

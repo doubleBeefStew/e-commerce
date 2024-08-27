@@ -20,3 +20,4 @@ export {default as ProductDetail} from './public/products/productDetail'
 
 export {default as Cart} from './user/cart/cart'
 export {default as AccountLayout} from './user/account/layout'
+export {default as Checkout} from './user/checkout/checkout'

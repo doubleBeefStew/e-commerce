@@ -42,14 +42,19 @@ export const deleteCart = asyncHandler(async (req,res,next)=>{
 
 export const updateCart = asyncHandler(async (req,res,next)=>{
     const {user} = req
-    const data = req.body
-    console.log(data.products)
+    const cartData = req.body
+
+
+    console.log('received update cart');
+    console.log(cartData);
+    
 
     const cart = await cartModel.findOne({userId:user._id})
+    
     if(!cart)
         throw new badRequestError('Cart not found','CRT-404')
 
-    data && (cart.products = data.products)
+    cartData._id && (cart.products = cartData.products)
     cart.save()
 
     res.status(200).json({output:{message:'OK',payload:cart}})
