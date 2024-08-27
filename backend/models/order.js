@@ -4,6 +4,10 @@ const orderSchema = new Schema({
     userId:Schema.ObjectId,
     totalPrice:Number,
     address:String,
+    paymentMethod:{
+        type:String,
+        enum: ['SHEEPOPAY','CREDITCARD','PAYPAL'],
+    },
     products:{
         type:[{
             isChecked:Boolean,

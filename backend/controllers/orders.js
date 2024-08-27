@@ -26,9 +26,9 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
     if(req.user.role!='admin' && req.user.role!='user')
         throw new unauthorizedError('please login to create order','ODR-401')
 
-    const {userId,totalPrice,address,products} = req.body
+    const {userId,totalPrice,address,paymentMethod,products} = req.body
 
-    const createdOrder = await orderModel.create({userId,totalPrice,address,products})
+    const createdOrder = await orderModel.create({userId,totalPrice,address,paymentMethod,products})
     res.status(201).json({output:{message:'OK',payload:createdOrder}})
 })
 
@@ -38,12 +38,13 @@ export const updateOrder = asyncHandler(async (req,res,next)=>{
     
     const {id} = req.params
     const options = {}
-    const {totalPrice,address,products,status,paidAt,shippedAt,deliveredAt,returnedAt} = req.body
+    const {totalPrice,address,paymentMethod,products,status,paidAt,shippedAt,deliveredAt,returnedAt} = req.body
 
     const updatedOrder = await orderModel.findById(id)
 
     totalPrice && (updatedOrder.totalPrice = totalPrice)
     address && (updatedOrder.address = address)
+    paymentMethod && (updatedOrder.paymentMethod = paymentMethod)
     products && (updatedOrder.products = products)
     status && (updatedOrder.status = status)
     paidAt && (updatedOrder.paidAt = paidAt)

@@ -16,6 +16,8 @@ server:
 
 
 todo:
-- DONE create order schema
-- create endpoints: CRUD order
-- create order page
+- create order page:
+	- payment method
+	- payment details
+	- voucher code
+	- 

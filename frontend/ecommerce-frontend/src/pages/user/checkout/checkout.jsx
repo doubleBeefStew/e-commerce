@@ -2,11 +2,10 @@ import { useEffect, useState } from "react"
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import priceFormat from "../../../utils/priceFormat"
-import { createOrder } from "../../../../../../backend/controllers/orders"
 import { createOrders } from "../../../redux/slices/order"
+import Dropdown from "react-bootstrap/Dropdown"
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
@@ -15,9 +14,13 @@ const Cart = ()=>{
 
     const [phoneError,setPhoneError] = useState('')
     const [addressError,setAddressError] = useState('')
+    const [paymentError,setPaymentError] = useState('')
     const [errorMessage,setErrorMessage] = useState('')
 
     const [total,setTotal] = useState(0)
+    const [productTotal,setProductTotal] = useState(0)
+    const [discountTotal,setDiscountTotal] = useState(0)
+    const [paymentMethod,setPaymentMethod] = useState('SheepoPay')
     const [shippingFee,setShippingFee] = useState(8000)
     const [shippingMethod,setshippingMethod] = useState("shopee Express")
     const [discount,setDiscount] = useState({
@@ -27,8 +30,8 @@ const Cart = ()=>{
 
     useEffect(()=>{
         console.log(user)
-        
         if(!user.userData.phoneNumber){
+            
             setPhoneError(true)
             setErrorMessage('Please fill in your phone number before payment')
         }
@@ -40,38 +43,49 @@ const Cart = ()=>{
 
 
     useEffect(()=>{
-        console.log(user)
         calculateTotal()
     },[shippingFee,discount])
 
     const calculateTotal = ()=>{
         let newTotal = 0
-        let discountAmount = 0
         cartData.products?.forEach((item)=>{
             if(item.isChecked){
                 newTotal+= Number(item.productPrice)*Number(item.quantity)
             }
         })
 
+        setProductTotal(newTotal)
+
         if(discount.type=='amount') 
-            discountAmount=discount.value
+            setDiscountTotal(discount.value)
         else if(discount.type=='percentage') 
-            discountAmount=(discount.value/100)*newTotal
+            setDiscountTotal((discount.value/100)*newTotal)
 
         setTotal(()=>{
-            return (newTotal + shippingFee - discountAmount)
+            return (newTotal + shippingFee - discountTotal)
         })
     }
 
     const createOrder = ()=>{
-        const orderData = {
-            userId: user.userData._id,
-            totalPrice:total,
-            address:user.userData.address,
-            products:cartData.products.filter((item)=>{return item.isChecked==true})
+        const method = 
+            paymentMethod == 'SheepoPay' ? 'SHEEPOPAY' :
+            paymentMethod == 'Credit Card' ? 'CREDITCARD' : 
+            paymentMethod == 'PayPal' ? 'PAYPAL' : setPaymentError(true)
+        
+        if(!phoneError && !addressError && !paymentError){
+            const orderData = {
+                userId: user.userData._id,
+                totalPrice:total,
+                address:user.userData.address,
+                paymentMethod:method,
+                products:cartData.products.filter((item)=>{return item.isChecked==true})
+            }
+            dispatch(createOrders(orderData))
         }
+    }
 
-        dispatch(createOrders(orderData))
+    const changePaymentMethod = (value)=>{
+        setPaymentMethod(value)
     }
 
     return (<>
@@ -82,7 +96,7 @@ const Cart = ()=>{
             <Col className='py-4 bg-light'>
                 <Row className='align-items-center justify-content-between px-3'>
                     <Col className='col-12 text-start'>
-                        <small > {user.userData._id}
+                        <small > {user.userData.name}
                             <span className={'px-3 '+(phoneError && 'text-danger')}>
                                 {phoneError? 'No phone number' : user.userData.phoneNumber}
                             </span>
@@ -103,6 +117,7 @@ const Cart = ()=>{
                     </Col>
                 </Row>
             </Col>
+
             <Col className='py-4 bg-light' >
                 <Row className='align-items-center flex-column justify-content-between px-3 gy-3'>
                 {
@@ -131,13 +146,67 @@ const Cart = ()=>{
                 }
                 </Row>
             </Col>
+
+            <Col className='py-4 bg-light'>
+                <Row className='align-items-center justify-content-between px-3'>
+                    <Col className='col-6 text-start'>
+                        <span>
+                            <small>Payment Method</small>
+                        </span>
+                    </Col>
+                    <Col className='col-6 text-end'>
+                        <span>
+                            <Dropdown>
+                                <Dropdown.Toggle>
+                                    {paymentMethod}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item onClick={()=>{changePaymentMethod('SheepoPay')}}>SheepoPay</Dropdown.Item>
+                                    <Dropdown.Item onClick={()=>{changePaymentMethod('Credit Card')}}>Credit Card</Dropdown.Item>
+                                    <Dropdown.Item onClick={()=>{changePaymentMethod('PayPal')}}>PayPal</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </span>
+                    </Col>
+                </Row>
+            </Col>
+
+            <Col className='py-4 bg-light'>
+                <Row className='align-items-center justify-content-between px-3'>
+                    <Col className='col-12 text-start'>
+                        <span>
+                            <small>Payment Details</small>
+                        </span>
+                        <hr/>
+                    </Col>
+                    <Col className='col-12 text-start'>
+                    <Row className='flex-column'>
+                        <Col className='d-flex justify-content-between'>
+                            <small>Product Subtotal</small>
+                            <small>Rp{priceFormat(productTotal)}</small>
+                        </Col>
+                        <Col className='d-flex justify-content-between'>
+                            <small>Shipment Subtotal</small>
+                            <small>Rp{priceFormat(shippingFee)}</small>
+                        </Col>
+                        { 
+                            discount && 
+                            <Col className='d-flex justify-content-between'>
+                                <small>Discount</small>
+                                <small>Rp{priceFormat(discountTotal)}</small>
+                            </Col> 
+                            }
+                    </Row>
+                        
+                    </Col>
+                </Row>
+            </Col>
             
-            <Col className='py-3 px-4 bg-light'>
-                <Row className='align-items-center justify-content-end'>
+            <Col className='py-4 bg-light'>
+                <Row className='align-items-center justify-content-end px-3'>
                     <Col className='col-auto text-end'>
                         <small>Total Payment</small>
-                        <br/>
-                        <small>Rp{priceFormat(total)}</small>
+                        <p>Rp{priceFormat(total)}</p>
                     </Col>
                     <Col className='col-auto text-center'>
                         <Button onClick={()=>{createOrder()}}>Order</Button>
