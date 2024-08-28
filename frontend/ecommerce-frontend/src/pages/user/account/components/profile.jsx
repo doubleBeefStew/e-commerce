@@ -114,7 +114,8 @@ const Profile = ()=>{
                         <tr>
                             <td className='w-25 text-end text-secondary'>Phone Numbers</td>
                             <td><Form.Control 
-                            name="phoneNumber" 
+                            name="phoneNumber"
+                            type='number'
                             value={values.phoneNumber}
                             onBlur={handleBlur} 
                             onChange={handleChange} />

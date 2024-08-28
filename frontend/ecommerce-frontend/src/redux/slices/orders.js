@@ -14,7 +14,7 @@ export const loadOrders = createAsyncThunk('orders/',async(id)=>{
 
 export const createOrders = createAsyncThunk('orders/create',async(orderData)=>{
     try{
-        const response = await axios.post(`${env.API_URL}/orders/create`,orderData,{withCredentials:true})        
+        const response = await axios.post(`${env.API_URL}/orders/create`,orderData,{withCredentials:true})  
         return response.data
     }catch(err){
         console.log(err.response.data.error.message)
@@ -25,6 +25,7 @@ export const createOrders = createAsyncThunk('orders/create',async(orderData)=>{
 const initialState = {
     ordersData:null,
     isLoadingOrders:true,
+    redirectToPayment:false,
     error:null,
 }
 
@@ -53,11 +54,10 @@ const orderSlice = createSlice({
             state.error=action.error.message
         })
         .addCase(createOrders.pending,(state)=>{
-            // state.isLoadingOrders=true
         })
         .addCase(createOrders.fulfilled,(state,action)=>{
-            state.ordersData = action.payload.output.payload
-            state.isLoadingOrders=false
+            console.log(action.payload.output.payload)
+            state.redirectToPayment=true
         })
         .addCase(createOrders.rejected,(state,action)=>{
             state.isLoadingOrders=false

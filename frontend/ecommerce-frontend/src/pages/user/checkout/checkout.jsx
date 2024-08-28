@@ -4,13 +4,17 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useDispatch, useSelector } from "react-redux"
 import priceFormat from "../../../utils/priceFormat"
-import { createOrders } from "../../../redux/slices/order"
+import { createOrders } from "../../../redux/slices/orders"
 import Dropdown from "react-bootstrap/Dropdown"
+import Alert from "react-bootstrap/Alert"
+import { useNavigate } from "react-router-dom"
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
+    const {redirectToPayment} = useSelector((state)=>{ return state.orders })
     const user = useSelector((state)=>{return state.user})
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [phoneError,setPhoneError] = useState('')
     const [addressError,setAddressError] = useState('')
@@ -29,15 +33,20 @@ const Cart = ()=>{
     })
 
     useEffect(()=>{
-        console.log(user)
+        console.log(redirectToPayment)
+        
+        if(redirectToPayment)
+            navigate('/')
+    },[redirectToPayment])
+
+    useEffect(()=>{
         if(!user.userData.phoneNumber){
-            
             setPhoneError(true)
-            setErrorMessage('Please fill in your phone number before payment')
+            setErrorMessage('Please fill in your information details before checking out')
         }
         if(!user.userData.address){
             setAddressError(true)
-            setErrorMessage('Please fill in shipment address before payment')
+            setErrorMessage('Please fill in your information details before checking out')
         }
     },[phoneError,addressError])
 
@@ -67,10 +76,17 @@ const Cart = ()=>{
     }
 
     const createOrder = ()=>{
-        const method = 
-            paymentMethod == 'SheepoPay' ? 'SHEEPOPAY' :
-            paymentMethod == 'Credit Card' ? 'CREDITCARD' : 
-            paymentMethod == 'PayPal' ? 'PAYPAL' : setPaymentError(true)
+        let method
+        if(paymentMethod == 'SheepoPay')
+            method = 'SHEEPOPAY'
+        else if(paymentMethod == 'Credit Card')
+            method = 'CREDITCARD'
+        else if(paymentMethod == 'PayPal')
+            method = 'PAYPAL'
+        else{
+            setPaymentError(true)
+            setErrorMessage('Please choose a payment method before checking out')
+        }
         
         if(!phoneError && !addressError && !paymentError){
             const orderData = {
@@ -90,11 +106,13 @@ const Cart = ()=>{
 
     return (<>
     {
-        isLoadingCart?
-        <p>loading..</p>:
+        isLoadingCart? <p>loading..</p> :
         <Row className="flex-column py-5 px- px-sm-5 gy-2">
             <Col className='py-4 bg-light'>
                 <Row className='align-items-center justify-content-between px-3'>
+                    <Col className='col-12 text-start'>
+                        {errorMessage && <Alert className="mb-3" variant='danger'>{errorMessage}</Alert>}
+                    </Col>
                     <Col className='col-12 text-start'>
                         <small > {user.userData.name}
                             <span className={'px-3 '+(phoneError && 'text-danger')}>
@@ -204,6 +222,8 @@ const Cart = ()=>{
             
             <Col className='py-4 bg-light'>
                 <Row className='align-items-center justify-content-end px-3'>
+            
+
                     <Col className='col-auto text-end'>
                         <small>Total Payment</small>
                         <p>Rp{priceFormat(total)}</p>
