@@ -38,6 +38,10 @@ const orderSlice = createSlice({
         },
         setState(state,action){
             state = action.payload
+        },
+        setRedirect(state,action){
+            state.redirectToPayment=action.payload
+            console.log(state.redirectToPayment)
         }
     },
     extraReducers:(builder)=>{
@@ -66,6 +70,6 @@ const orderSlice = createSlice({
     }
 })
 
-export const { setError } = orderSlice.actions
+export const { setError,setRedirect } = orderSlice.actions
 
 export default orderSlice.reducer

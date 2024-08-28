@@ -4,14 +4,14 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { useDispatch, useSelector } from "react-redux"
 import priceFormat from "../../../utils/priceFormat"
-import { createOrders } from "../../../redux/slices/orders"
+import { createOrders,setRedirect } from "../../../redux/slices/orders"
 import Dropdown from "react-bootstrap/Dropdown"
 import Alert from "react-bootstrap/Alert"
 import { useNavigate } from "react-router-dom"
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
-    const {redirectToPayment} = useSelector((state)=>{ return state.orders })
+    let {redirectToPayment} = useSelector((state)=>{ return state.orders })
     const user = useSelector((state)=>{return state.user})
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -33,10 +33,10 @@ const Cart = ()=>{
     })
 
     useEffect(()=>{
-        console.log(redirectToPayment)
-        
-        if(redirectToPayment)
+        if(redirectToPayment){
+            dispatch(setRedirect(false))
             navigate('/')
+        }
     },[redirectToPayment])
 
     useEffect(()=>{
