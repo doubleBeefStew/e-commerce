@@ -15,9 +15,9 @@ import {
     Products,
     ProductDetail,
     Protected,
-    Checkout
+    Checkout,
+    Payment
 } from './pages'
-
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { loadUser } from './redux/slices/user'
@@ -72,9 +72,12 @@ const router = createBrowserRouter([{
                     }, {
                         path: 'cart',
                         element: <Protected><Cart/></Protected>,
-                    },, {
+                    }, {
                         path: 'checkout',
                         element: <Protected><Checkout/></Protected>,
+                    }, {
+                        path: 'payment',
+                        element: <Protected><Payment/></Protected>,
                     }
                 ]
             }

@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col"
 
 const Error = ({message})=>{
     const error = useRouteError()
-    console.log(error)
     return (
         <Container>
         <Row className="vh-100">

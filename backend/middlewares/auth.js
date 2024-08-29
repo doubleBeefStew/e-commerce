@@ -8,6 +8,7 @@ dotenv.config()
 
 const isAuthenticated = asyncHandler(async (req,res,next)=>{
     const {token} = req.cookies
+    
     if(!token)
         throw new badRequestError('token is invalid or not provided','AUT-401')
     const {userData} = validateToken(token)

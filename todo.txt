@@ -1,23 +1,8 @@
-send productid & quantity to order page
-order page display the summary & payment method
-order button sends productid, quantity & voucher code to server
+after order creation:
+- delete items on cart
+- move to payment to input PIN
 
-server:
-- create: 
-	reads & check productid, quantity & voucher code
-	check & compare voucher code
-	sends an OK to frontend
-	frontend redirect to payment
-	user input pin on payment page
-	send & compare pin data to server
-	server mark order as paid & deduct user balance
-	how does the payment gateway works? 
-	
-
-
-todo:
-- create order page:
-	- payment method
-	- payment details
-	- voucher code
-	- 
+after PIN verification:
+- change order status to paid
+- deduct user balance
+- deduct product stock

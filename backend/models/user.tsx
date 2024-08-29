@@ -7,6 +7,7 @@ interface User {
   email: string;
   password: string;
   phoneNumber: string;
+  sheepoPayBalance: Number;
   address: Address[];
   role: string;
   avatar: Avatar;
@@ -43,6 +44,10 @@ const userSchema = new Schema<User>({
     select: false
   },
   phoneNumber: String,
+  sheepoPayBalance: {
+    type:Number,
+    default:500000
+  },
   address:String,
     // [
     //   {

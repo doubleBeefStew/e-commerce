@@ -26,6 +26,7 @@ const initialState = {
     ordersData:null,
     isLoadingOrders:true,
     redirectToPayment:false,
+    currentCheckout:null,
     error:null,
 }
 
@@ -40,32 +41,32 @@ const orderSlice = createSlice({
             state = action.payload
         },
         setRedirect(state,action){
-            state.redirectToPayment=action.payload
-            console.log(state.redirectToPayment)
+            state.redirectToPayment = action.payload
         }
     },
     extraReducers:(builder)=>{
         builder
         .addCase(loadOrders.pending,(state)=>{
-            state.isLoadingOrders=true
+            state.isLoadingOrders = true
         })
         .addCase(loadOrders.fulfilled,(state,action)=>{
             state.ordersData = action.payload.output.payload
-            state.isLoadingOrders=false
+            state.isLoadingOrders = false
         })
         .addCase(loadOrders.rejected,(state,action)=>{
-            state.isLoadingOrders=false
-            state.error=action.error.message
+            state.isLoadingOrders = false
+            state.error = action.error.message
         })
         .addCase(createOrders.pending,(state)=>{
         })
         .addCase(createOrders.fulfilled,(state,action)=>{
-            console.log(action.payload.output.payload)
-            state.redirectToPayment=true
+            state.currentCheckout = action.payload.output.payload
+            console.log(state.currentCheckout)
+            state.redirectToPayment = true
         })
         .addCase(createOrders.rejected,(state,action)=>{
-            state.isLoadingOrders=false
-            state.error=action.error.message
+            state.isLoadingOrders = false
+            state.error = action.error.message
         })
     }
 })

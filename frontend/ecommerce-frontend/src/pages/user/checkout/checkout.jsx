@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
-    let {redirectToPayment} = useSelector((state)=>{ return state.orders })
+    const {redirectToPayment,error} = useSelector((state)=>{ return state.orders })
     const user = useSelector((state)=>{return state.user})
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -35,7 +35,7 @@ const Cart = ()=>{
     useEffect(()=>{
         if(redirectToPayment){
             dispatch(setRedirect(false))
-            navigate('/')
+            navigate('/payment')
         }
     },[redirectToPayment])
 
@@ -49,7 +49,6 @@ const Cart = ()=>{
             setErrorMessage('Please fill in your information details before checking out')
         }
     },[phoneError,addressError])
-
 
     useEffect(()=>{
         calculateTotal()
