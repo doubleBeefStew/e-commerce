@@ -12,9 +12,11 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.2",
     "axios": "^1.6.7",
+    "core-js": "^3.38.1",
     "dotenv": "^16.4.5",
     "formik": "^2.4.5",
     "js-cookie": "^3.0.5",
+    "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",

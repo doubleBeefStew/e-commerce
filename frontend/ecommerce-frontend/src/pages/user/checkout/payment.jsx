@@ -21,7 +21,7 @@ const Payment = ({data})=>{
     useEffect(()=>{
         if(redirect){
             dispatch(setRedirect(false))
-            navigate('/')
+            navigate('/payment/success')
         }
     },[redirect])
 

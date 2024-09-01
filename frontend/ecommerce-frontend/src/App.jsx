@@ -23,6 +23,7 @@ import { useEffect } from 'react'
 import { loadUser } from './redux/slices/user'
 import Profile from './pages/user/account/components/profile'
 import { loadCart } from './redux/slices/cart'
+import SuccessPage from './components/successPage/SuccessPage'
 
 const router = createBrowserRouter([{
         path: 'login',
@@ -78,6 +79,9 @@ const router = createBrowserRouter([{
                     }, {
                         path: 'payment',
                         element: <Protected><Payment/></Protected>,
+                    }, {
+                        path: 'payment/success',
+                        element: <Protected><SuccessPage/></Protected>,
                     }
                 ]
             }
