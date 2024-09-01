@@ -13,8 +13,6 @@ import ProfilePicture from "../profilePicture/profilePicture"
 //TODO: make header sticky when scrolling
 const Header = ()=>{
     const user = useSelector((state)=>{return state.user})
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     const imageUrl= 'https://www.thesprucepets.com/thmb/3ABKoAPm0Hu4PcWsDH1giawq7ck=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/chinese-dog-breeds-4797219-hero-2a1e9c5ed2c54d00aef75b05c5db399c.jpg'
 
@@ -24,18 +22,18 @@ const Header = ()=>{
         <Row className='bg-orange  justify-content-end py-1'>
             <Col className='col-auto d-flex align-items-center justify-content-center no-wrap'>
                 {
-                    user.isAuthenticated?
+                    user.isAuthenticated &&
                         (user.userData.avatar?
                             <ProfilePicture className='d-inline' image={imageUrl} size={'1rem'}/>:
                             <CgProfile color='white' size='20'/>
-                        ):''
+                        )
 
                 }
                 <span className="text-white px-1">
                     {
                         user.isAuthenticated?(
                             <>
-                            <Link className="text-decoration-none text-white " to={'user/account'}>
+                            <Link className="text-decoration-none text-white " to={'user/'}>
                                 
                                 <span>{user.userData.name}</span>
                             </Link> | 

@@ -1,8 +1,12 @@
+
+import { Link } from "react-router-dom"
+
 const AccountSideBar = ()=>{
     return(<>
-        <p className="fw-bold">Account</p>
-        <p> My Shop</p>
-    </>)
+        
+        <Link className="text-decoration-none text-dark" to={'/'}>Profile</Link>
+        <Link className="text-decoration-none text-dark" to={'order/'}>Orders</Link>
+        </>)
 }
 
 export default AccountSideBar

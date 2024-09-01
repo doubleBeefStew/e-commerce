@@ -50,7 +50,7 @@ const router = createBrowserRouter([{
                         index: true,
                         element: <HomePage />
                     }, {
-                        path: 'user/account',
+                        path: 'user/',
                         element: <Protected><AccountLayout /></Protected>,//protected route + account page(sidebar & outlet)
                         children:[
                             {
