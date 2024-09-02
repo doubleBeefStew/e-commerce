@@ -2,7 +2,7 @@ import {Logo} from "../index"
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
-import Button from "react-bootstrap/esm/Button"
+import Button from "react-bootstrap/Button"
 import { Link, useNavigate } from "react-router-dom"
 import styles from "./header.module.css"
 import { BsSearch,BsCart3 } from "react-icons/bs";

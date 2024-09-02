@@ -41,8 +41,6 @@ const paymentSlice = createSlice({
             state.isLoadingPayment = true
         })
         .addCase(createPayment.fulfilled,(state,action)=>{
-            console.log(action.payload.output.payload)
-            
             state.redirect = true
             state.isLoadingPayment = false
         })

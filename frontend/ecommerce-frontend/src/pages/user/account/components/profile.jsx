@@ -44,7 +44,6 @@ const Profile = ()=>{
 
         axios.patch(`${env.API_URL}/user/update/info`,formData,{withCredentials:true})
         .then(function(res){
-            console.log(res)
             dispatch(loadUser())
             // TODO: alert message not showing because of change in redux state
             setAlert({message:`Your profile information is successfully updated.`,type:'success'})

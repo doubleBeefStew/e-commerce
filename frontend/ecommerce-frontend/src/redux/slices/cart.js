@@ -94,7 +94,6 @@ const cartSlice = createSlice({
             state.error=action.error.message
         })
         .addCase(updateCart.pending,(state)=>{
-            console.log('update cart in progress')
         })
         .addCase(updateCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload

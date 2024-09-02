@@ -44,11 +44,6 @@ export const updateCart = asyncHandler(async (req,res,next)=>{
     const {user} = req
     const cartData = req.body
 
-
-    console.log('received update cart');
-    console.log(cartData);
-    
-
     const cart = await cartModel.findOne({userId:user._id})
     
     if(!cart)

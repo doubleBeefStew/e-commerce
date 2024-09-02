@@ -16,7 +16,6 @@ export const loadUser = createAsyncThunk('user/fetch',async()=>{
 export const logout = createAsyncThunk('user/logout',async()=>{
     try{
         const response = await axios.get(`${env.API_URL}/auth/logout`,{withCredentials:true})
-        console.log(response.data)
         return response.data
     }catch(err){
         throw new Error(err.message)

@@ -52,7 +52,6 @@ export const activation = asyncHandler(async(req,res,next)=>{
     }
 
     const user = await userModel.create({name,email,password,phoneNumber,address,avatar})
-    console.log(user)
     
     res.status(201).json({output:{message:'user registered successfully',payload:user}})
 })

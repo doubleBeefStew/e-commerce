@@ -22,6 +22,26 @@ export const createOrders = createAsyncThunk('orders/create',async(orderData)=>{
     }
 })
 
+export const updateOrders = createAsyncThunk('orders/update',async(id,orderData)=>{
+    try{
+        const response = await axios.post(`${env.API_URL}/orders/update/${id}`,orderData,{withCredentials:true})  
+        return response.data
+    }catch(err){
+        console.log(err.response.data.error.message)
+        throw new Error(err.response.data.error.message)
+    }
+})
+
+export const deleteOrders = createAsyncThunk('orders/delete',async(id)=>{
+    try{
+        const response = await axios.delete(`${env.API_URL}/orders/delete/${id}`,{withCredentials:true})  
+        return response.data
+    }catch(err){
+        console.log(err.response.data.error.message)
+        throw new Error(err.response.data.error.message)
+    }
+})
+
 const initialState = {
     ordersData:JSON.parse(localStorage.getItem('ordersData'))? JSON.parse(localStorage.getItem('ordersData')):[],
     isLoadingOrders:true,
@@ -54,6 +74,16 @@ const orderSlice = createSlice({
                 state.ordersData[index]=order
                 localStorage.setItem("ordersData",JSON.stringify(state.ordersData))
             }
+        },
+        deleteOrder(state,action){
+            const id = action.payload
+            
+            const newOrderList = state.ordersData.filter((item)=>{
+                return item._id != id
+            })
+
+            state.ordersData = newOrderList
+            localStorage.setItem("ordersData",JSON.stringify(state.ordersData))
         }
     },
     extraReducers:(builder)=>{
@@ -80,9 +110,23 @@ const orderSlice = createSlice({
             state.isLoadingOrders = false
             state.error = action.error.message
         })
+        .addCase(updateOrders.pending,(state)=>{
+        })
+        .addCase(updateOrders.fulfilled,(state,action)=>{
+        })
+        .addCase(updateOrders.rejected,(state,action)=>{
+            state.error = action.error.message
+        })
+        .addCase(deleteOrders.pending,(state)=>{
+        })
+        .addCase(deleteOrders.fulfilled,(state,action)=>{
+        })
+        .addCase(deleteOrders.rejected,(state,action)=>{
+            state.error = action.error.message
+        })
     }
 })
 
-export const { setError,setRedirect } = orderSlice.actions
+export const { setError,setRedirect,updateOrder,deleteOrder } = orderSlice.actions
 
 export default orderSlice.reducer

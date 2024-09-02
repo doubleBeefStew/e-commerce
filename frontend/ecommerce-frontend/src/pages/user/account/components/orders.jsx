@@ -1,11 +1,11 @@
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import { useEffect, useState } from 'react'
+import Button from "react-bootstrap/Button"
+import { useEffect,useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { loadOrders } from '../../../../redux/slices/orders'
+import { deleteOrder,deleteOrders,loadOrders } from '../../../../redux/slices/orders'
 import priceFormat from '../../../../utils/priceFormat'
 import {Link} from 'react-router-dom'
-
 
 const Orders = ()=>{
     const {ordersData,isLoadingOrders} = useSelector((state)=>{return state.orders})
@@ -16,12 +16,13 @@ const Orders = ()=>{
         dispatch(loadOrders())
     },[])
 
-    useEffect(()=>{
-        console.log(status)
-    },[status])
-
     const changeFilter = (status)=>{
         setStatus(status)
+    }
+
+    const cancelOrder = (id)=>{
+        dispatch(deleteOrder(id))
+        dispatch(deleteOrders(id))
     }
 
     return(
@@ -106,7 +107,9 @@ const Orders = ()=>{
                             }
                             <hr/>
                             <Row className='align-items-center justify-content-between px-3'>
-                                <Col className='col-6 text-start'></Col>
+                                <Col className='col-6 text-start'>
+                                    <Button onClick={()=>{cancelOrder(item._id)}}>Cancel</Button>
+                                </Col>
                                 <Col className='col-6 text-end'>
                                     <small className='m-0'>Total Rp{priceFormat(item.totalPrice || 0)}</small>
                                 </Col>

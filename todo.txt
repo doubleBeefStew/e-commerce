@@ -1,8 +1,0 @@
-after order creation:
-- delete items on cart
-- move to payment to input PIN
-
-after PIN verification:
-- change order status to paid
-- deduct user balance
-- deduct product stock

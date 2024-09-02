@@ -8,6 +8,7 @@ import { createOrders,setRedirect } from "../../../redux/slices/orders"
 import Dropdown from "react-bootstrap/Dropdown"
 import Alert from "react-bootstrap/Alert"
 import { useNavigate } from "react-router-dom"
+import { removeItem, updateCart } from "../../../redux/slices/cart"
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
@@ -74,7 +75,16 @@ const Cart = ()=>{
         })
     }
 
+    const clearCheckedItems = ()=>{
+        cartData.products.forEach((item)=>{
+            item.isChecked &&
+            dispatch(removeItem(item.productId))
+        })
+        dispatch(updateCart())
+    }
+
     const createOrder = ()=>{
+        //TODO:validate when no item is checked, dont continue the process
         let method
         if(paymentMethod == 'SheepoPay')
             method = 'SHEEPOPAY'
@@ -96,6 +106,7 @@ const Cart = ()=>{
                 products:cartData.products.filter((item)=>{return item.isChecked==true})
             }
             dispatch(createOrders(orderData))
+            clearCheckedItems()
         }
     }
 

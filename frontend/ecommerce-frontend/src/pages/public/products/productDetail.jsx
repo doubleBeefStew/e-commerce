@@ -46,7 +46,7 @@ const ProductDetail = () => {
                 "quantity":1,
                 "isChecked":false
             }))
-            // TODO: make react lottie to confirm add cart
+            // TODO: make react toast to confirm add cart
             
             const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')),{withCredentials:true})
         }
@@ -76,6 +76,7 @@ const ProductDetail = () => {
                                     >Add to Basket</button>
                                 </Col>
                                 <Col>
+                                    {/* TODO: make buy now feature */}
                                     <button className='w-100 btn btn-primary'>Buy Now</button>
                                 </Col>
                             </Row>

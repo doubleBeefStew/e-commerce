@@ -41,7 +41,6 @@ export const updateOrder = asyncHandler(async (req,res,next)=>{
         throw new unauthorizedError('only admin can update orders','UPDT-401')
     
     const {id} = req.params
-    const options = {}
     const {totalPrice,address,paymentMethod,products,status,paidAt,shippedAt,deliveredAt,returnedAt} = req.body
 
     const updatedOrder = await orderModel.findById(id)
