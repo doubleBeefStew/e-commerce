@@ -20,8 +20,9 @@ import {
 } from './pages'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { loadUser } from './redux/slices/user'
 import Profile from './pages/user/account/components/profile'
+import Orders from './pages/user/account/components/orders'
+import { loadUser } from './redux/slices/user'
 import { loadCart } from './redux/slices/cart'
 import SuccessPage from './components/successPage/SuccessPage'
 
@@ -56,6 +57,10 @@ const router = createBrowserRouter([{
                             {
                                 index: true,
                                 element: <Profile />
+                            },
+                            {
+                                path:'orders',
+                                element: <Orders />
                             }
                         ]
                     }, {

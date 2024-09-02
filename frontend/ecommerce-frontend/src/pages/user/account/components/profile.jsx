@@ -83,7 +83,7 @@ const Profile = ()=>{
 
     return(<>
         <Form onSubmit={handleSubmit}>
-        <Row>
+        <Row className='bg-white p-4'>
             <Col className='col-12 col-md-8 order-2 order-md-1'>
                 <p className='fs-5 text-center text-sm-start fw-bold'>My Profile</p>
                 {

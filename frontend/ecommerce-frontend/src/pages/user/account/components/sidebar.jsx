@@ -5,7 +5,7 @@ const AccountSideBar = ()=>{
     return(<>
         
         <Link className="text-decoration-none text-dark" to={'/'}>Profile</Link>
-        <Link className="text-decoration-none text-dark" to={'order/'}>Orders</Link>
+        <Link className="text-decoration-none text-dark" to={'/'}>Orders</Link>
         </>)
 }
 

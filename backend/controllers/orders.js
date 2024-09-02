@@ -6,15 +6,21 @@ export const getOrder = asyncHandler(async (req,res,next)=>{
     if(req.user.role!='admin' && req.user.role!='user')
         throw new unauthorizedError('please login to view order data','ODR-401')
 
-    const {id} = req.params
+    const userId = req.user._id
+    
+    const {orderId} = req.params
     let foundOrder
 
-    if(!id)
-        foundOrder = await orderModel.find({})
+    if(!orderId){
+        foundOrder = await orderModel.find({userId})
+    }
     else{
-        foundOrder = await orderModel.findById(id)
+        foundOrder = await orderModel.findById(orderId)
         if (!foundOrder)
             throw new notFoundError('order not found','ODR-404')
+
+        if(foundOrder.userId.toString() != userId && req.user.role!='admin')
+            throw new unauthorizedError('you cannot access this order','ODR-401')
     }
 
     res.status(200).json({output:{message:'OK',payload:foundOrder}})

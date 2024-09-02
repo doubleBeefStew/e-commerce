@@ -65,18 +65,18 @@ const Cart = ()=>{
                         <Col className='col-auto'>
                             <input type='checkbox' onChange={(event)=>{checkAllItems(event)}}></input>
                         </Col>
-                        <Col className='col-2 text-start'>
+                        <Col className='col text-start'>
                             <small>Product</small>
                         </Col>
                         <Col className='col-3'>
                         </Col>
-                        <Col className='col-2 text-center'>
+                        <Col className='col text-center'>
                             <small className='m-0'>Price</small>
                         </Col>
-                        <Col className='col-3 text-center'>
+                        <Col className='col text-center'>
                             <small className='m-0'>Quantity</small>
                         </Col>
-                        <Col className='col-1 text-center'>
+                        <Col className='col-auto text-center'>
                             <FaRegTrashCan color='#ee4d2d' onClick={()=>{deleteAllItems()}}/>
                         </Col>
                     </Row>
@@ -92,13 +92,13 @@ const Cart = ()=>{
                                             calculateTotal()
                                         }}/>
                                     </Col>
-                                    <Col className='col-2 text-center'>
-                                        <img className='object-fit-cover w-100' height={100} width={100} src={item.productUrl} />
+                                    <Col className='col-auto text-center'>
+                                        <img className='object-fit-cover' height={100} width={100} src={item.productUrl} />
                                     </Col>
-                                    <Col className='col-3'>
+                                    <Col className='col'>
                                         <small className='m-0'>{item.productName}</small>
                                     </Col>
-                                    <Col className='col-2 text-center'>
+                                    <Col className='col-auto text-center'>
                                         <small className='m-0'>Rp{priceFormat(item.productPrice)}</small>
                                     </Col>
                                     <Col className='col-3'>
@@ -108,7 +108,7 @@ const Cart = ()=>{
                                         </Col>
                                     </Row>
                                     </Col>
-                                    <Col className='col-1 text-center'>
+                                    <Col className='col-auto text-center'>
                                         <FaRegTrashCan color='#ee4d2d' onClick={async ()=>{
                                             dispatch(removeItem(item.productId))
                                             dispatch(updateCart())

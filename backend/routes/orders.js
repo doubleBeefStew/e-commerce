@@ -3,7 +3,7 @@ import { getOrder, createOrder, updateOrder, deleteOrder } from "../controllers/
 
 const router = express.Router()
 
-router.route("/:id?")
+router.route("/:orderId?")
     .get(getOrder)
 
 router.route("/create")

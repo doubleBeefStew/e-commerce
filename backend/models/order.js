@@ -20,7 +20,7 @@ const orderSchema = new Schema({
     },
     status:{
         type:String,
-        enum: ['WAITING FOR PAYMENT','PAID','SHIPPING','DELIVERED','RETURNED'],
+        enum: ['WAITING FOR PAYMENT','PAID','SHIPPING','DELIVERED','RETURNED','CANCELLED'],
         default:'WAITING FOR PAYMENT'
     },
     paidAt:Date,

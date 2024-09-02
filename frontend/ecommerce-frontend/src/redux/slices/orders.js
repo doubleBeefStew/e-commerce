@@ -23,7 +23,7 @@ export const createOrders = createAsyncThunk('orders/create',async(orderData)=>{
 })
 
 const initialState = {
-    ordersData:null,
+    ordersData:JSON.parse(localStorage.getItem('ordersData'))? JSON.parse(localStorage.getItem('ordersData')):[],
     isLoadingOrders:true,
     redirectToPayment:false,
     currentCheckout:null,
@@ -42,6 +42,18 @@ const orderSlice = createSlice({
         },
         setRedirect(state,action){
             state.redirectToPayment = action.payload
+        },
+        updateOrder(state,action){
+            const order = action.payload
+            
+            const index = state.ordersData.findIndex((item)=>{
+                return item.orderId == product.orderId
+            })
+
+            if (index>=0){
+                state.ordersData[index]=order
+                localStorage.setItem("ordersData",JSON.stringify(state.ordersData))
+            }
         }
     },
     extraReducers:(builder)=>{
@@ -50,8 +62,9 @@ const orderSlice = createSlice({
             state.isLoadingOrders = true
         })
         .addCase(loadOrders.fulfilled,(state,action)=>{
-            state.ordersData = action.payload.output.payload
             state.isLoadingOrders = false
+            state.ordersData = action.payload.output.payload
+            localStorage.setItem("ordersData",JSON.stringify(state.ordersData))
         })
         .addCase(loadOrders.rejected,(state,action)=>{
             state.isLoadingOrders = false
@@ -61,7 +74,6 @@ const orderSlice = createSlice({
         })
         .addCase(createOrders.fulfilled,(state,action)=>{
             state.currentCheckout = action.payload.output.payload
-            console.log(state.currentCheckout)
             state.redirectToPayment = true
         })
         .addCase(createOrders.rejected,(state,action)=>{
