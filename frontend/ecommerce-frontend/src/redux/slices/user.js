@@ -2,9 +2,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import env from '../../../../env'
 
-export const loadUser = createAsyncThunk('user/fetch',async()=>{
+export const loadUser = createAsyncThunk('user',async()=>{
     try{
         const response = await axios.get(`${env.API_URL}/user`,{withCredentials:true})
+        return response.data
+    }catch(err){
+        console.log(err.response.data.error.message)
+        throw new Error(err.response.data.error.message)
+    }
+})
+
+export const updateUser = createAsyncThunk('user/update',async(data)=>{
+    try{
+        const response = await axios.patch(`${env.API_URL}/user/update/info`,data,{withCredentials:true})
         return response.data
     }catch(err){
         console.log(err.response.data.error.message)
@@ -22,12 +32,12 @@ export const logout = createAsyncThunk('user/logout',async()=>{
     }
 })
 
-
 const initialState = {
     isAuthenticated:false,
-    userData:null,
+    userData:JSON.parse(localStorage.getItem('userData'))? JSON.parse(localStorage.getItem('userData')):[],
     isLoadingUser:true,
     error:null,
+    message:null
 }
 
 const userSlice = createSlice({
@@ -36,6 +46,9 @@ const userSlice = createSlice({
     reducers:{
         setError(state,action){
             state.error = action.payload
+        },
+        setMessage(state,action){
+            state.message = action.payload
         },
         setState(state,action){
             state = action.payload
@@ -52,15 +65,31 @@ const userSlice = createSlice({
         .addCase(loadUser.fulfilled,(state,action)=>{
             state.isAuthenticated=true
             state.userData = action.payload.output.payload
+            localStorage.setItem("userData",JSON.stringify(state.userData))
             state.isLoadingUser=false
         })
         .addCase(loadUser.rejected,(state,action)=>{
             state.isLoadingUser=false
-            state.error=action.error.message
+            state.error={message:action.error.message,type:'danger'}
+        })
+        .addCase(updateUser.pending,(state)=>{
+        })
+        .addCase(updateUser.fulfilled,(state,action)=>{
+            console.log(action)
+            
+            state.isAuthenticated=true
+            state.userData = action.payload.output.payload
+            localStorage.setItem("userData",JSON.stringify(state.userData))
+            state.message={message:'Profile information is updated successfully',type:'success'}
+            state.isLoadingUser=false
+        })
+        .addCase(updateUser.rejected,(state,action)=>{
+            state.isLoadingUser=false
+            state.error={message:action.error.message,type:'danger'}
         })
     }
 })
 
-export const { setError } = userSlice.actions
+export const { setError,setMessage } = userSlice.actions
 
 export default userSlice.reducer

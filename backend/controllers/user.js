@@ -28,8 +28,10 @@ export const updateUser = asyncHandler(async(req,res,next)=>{
 
     if(id && req.user.role=='admin')
         updatedUser = id
-    else
-        updatedUser = req.user._id
+    else{
+        updatedUser = req.user._id.toString()
+    }
+
     
     const foundUser = await userModel.findById(updatedUser)
     if(!foundUser)
@@ -57,5 +59,5 @@ export const updateUser = asyncHandler(async(req,res,next)=>{
 
     await foundUser.save()
     clearStorage()
-    res.status(200).json({output:{message:'OK',payload:{id,foundUser}}})
+    res.status(200).json({output:{message:'OK',payload:foundUser}})
 })
