@@ -27,6 +27,9 @@ import { loadCart } from './redux/slices/cart'
 import SuccessPage from './components/successPage/SuccessPage'
 
 const router = createBrowserRouter([{
+    path: '/',
+    errorElement: <Error />,
+    children: [{
         path: 'login',
         element: <Login />,
     },{
@@ -41,7 +44,6 @@ const router = createBrowserRouter([{
     },{
         path: '/',
         element: <AppContainer />,
-        errorElement: <Error />,
         children: [
             {
                 path: '/',
@@ -91,11 +93,13 @@ const router = createBrowserRouter([{
                 ]
             }
         ]
-    }])
+    }]
+}])
 
 const App = () => {
     const dispatch = useDispatch()
 
+    //TODO: fix missing cart
     useEffect(() => {
             dispatch(loadUser())
             dispatch(loadCart())
