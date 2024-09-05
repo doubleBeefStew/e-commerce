@@ -3,29 +3,27 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useSelector } from "react-redux"
 import Button from 'react-bootstrap/Button'
-import axios from 'axios'
 import Alert from "react-bootstrap/Alert"
 import profileSchema from '../../../../validationSchema/profileSchema'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
-import env from '../../../../../../env'
 import { BiSolidEditAlt } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg"
 import ProfilePicture from '../../../../components/profilePicture/profilePicture'
 import styles from '../account.module.css'
-import {loadUser,setError,setMessage,updateUser} from '../../../../redux/slices/user'
+import {setAlert,updateUser} from '../../../../redux/slices/user'
 
 const Profile = ()=>{
-    const {userData,error,message} = useSelector((state)=>{ return state.user })
+    const {userData,alert} = useSelector((state)=>{ return state.user })
     const [displayedImage,setDisplayedImage] = useState(userData.avatar||'')
     const [selectedImage,setSelectedImage] = useState(null)
     const selectPicture = useRef(null)
     const dispatch = useDispatch()
 
     useEffect(()=>{
-        dispatch(setError(null))
-        dispatch(setMessage(null))
+        dispatch(setAlert(null))
+        console.log(userData)
     },[])
 
     const initialValues = {
@@ -72,10 +70,7 @@ const Profile = ()=>{
             <Col className='col-12 col-md-8 order-2 order-md-1'>
                 <p className='fs-5 text-center text-sm-start fw-bold'>My Profile</p>
                 {
-                    error && <Alert className="mb-3" variant={error.type}>{error.message}</Alert>
-                }
-                {
-                    message && <Alert className="mb-3" variant={message.type}>{message.message}</Alert>
+                    alert && <Alert className="mb-3" variant={alert.type}>{alert.message}</Alert>
                 }
                     <table className='w-100 table table-borderless align-middle'>
                         <tbody>
@@ -108,7 +103,7 @@ const Profile = ()=>{
                             onBlur={handleBlur} 
                             onChange={handleChange} />
                             <small className="text-danger fw-light">{ 
-                                    errors.phoneNumber && touched.phoneNumber? errors.phoneNumber:'' 
+                                    (errors.phoneNumber && touched.phoneNumber)? errors.phoneNumber:'' 
                             }</small>
                             </td>
                         </tr>

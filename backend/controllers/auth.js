@@ -72,6 +72,8 @@ export const login = asyncHandler(async(req,res,next)=>{
         cartId:user.cartId,
         name:user.name,
         email:user.email,
+        avatar:user.avatar,
+        phoneNumber:user.phoneNumber,
         role:user.role,
         address:user.address,
         createdAt:user.createdAt
@@ -85,8 +87,7 @@ export const login = asyncHandler(async(req,res,next)=>{
     }
     
     res.cookie('token',token,options)
-    res.status(200)
-        .json({output:{message:'login successful',payload:userData}})
+    res.status(200).json({output:{message:'login successful',payload:userData}})
         
 })
 

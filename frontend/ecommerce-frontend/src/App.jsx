@@ -51,6 +51,7 @@ const router = createBrowserRouter([{
                 children: [
                     {
                         index: true,
+                        path: '/',
                         element: <HomePage />
                     }, {
                         path: 'user/',
@@ -101,6 +102,7 @@ const App = () => {
 
     //TODO: fix missing cart
     useEffect(() => {
+        
             dispatch(loadUser())
             dispatch(loadCart())
     }, [])
