@@ -6,16 +6,28 @@ import { FaRegTrashCan } from "react-icons/fa6"
 import priceFormat from '../../../utils/priceFormat'
 import Counter from './components/counter'
 import { useEffect, useState } from 'react'
-import { Link } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
+import Button from 'react-bootstrap/Button'
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const [total,setTotal] = useState(0)
+    const [checkoutProcess,setCheckoutProcess] = useState(false)
+    const [products,setProducts] = useState([])
+
 
     useEffect(()=>{
         calculateTotal()
     },[cartData.products])
+
+    useEffect(()=>{
+        if(checkoutProcess){
+            navigate('/checkout',{state:{products}})
+        }
+    },[checkoutProcess])
     
     const checkItem = async (item)=>{
         dispatch(updateItem({
@@ -50,6 +62,22 @@ const Cart = ()=>{
         setTotal(()=>{
             return newTotal
         })
+    }
+
+    const checkOut = ()=>{
+        const updatedProducts = cartData.products?.filter((item) => item.isChecked).map((item)=>{
+            const obj = {
+                productId : item.productId,
+                productName : item.productName,
+                productPrice : item.productPrice,
+                productUrl : item.productUrl,
+                quantity : item.quantity
+            }
+            return obj
+        })
+        console.log(updatedProducts)
+        setProducts(updatedProducts)
+        setCheckoutProcess(true)
     }
     
     return (<>
@@ -127,7 +155,11 @@ const Cart = ()=>{
                             <small>Rp{priceFormat(total)}</small>
                         </Col>
                         <Col className='col-auto text-center'>
-                            <Link className="w-100 btn btn-primary" to={'/checkout'}>Checkout</Link>
+                            <Button 
+                                className="w-100 btn btn-primary" 
+                                state={{products}}
+                                onClick={()=>{checkOut()}}
+                            >Checkout</Button>
                         </Col>
                     </Row>
                 </Col>

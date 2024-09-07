@@ -8,11 +8,13 @@ import { useDispatch,useSelector } from 'react-redux'
 import env from '../../../../../env'
 import ProductCarousel from '../../../components/Carousel/productCarousel'
 import priceFormat from '../../../utils/priceFormat'
+import React from 'react'
 
 const ProductDetail = () => {
     const { id } = useParams()
     const [productData,setProductData] = useState(null)
     const [isLoading,setIsLoading] = useState(true)
+    const [amount,setAmount] = useState(1)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -47,10 +49,26 @@ const ProductDetail = () => {
                 "isChecked":false
             }))
             // TODO: make react toast to confirm add cart
+
+            dispatch(updateCart())
             
-            const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')),{withCredentials:true})
+            const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')??''),{withCredentials:true})
         }
 
+    }
+
+    const buyNow = ()=>{
+        const product ={
+            productId : productData._id,
+            productName : productData.name,
+            productPrice : productData.initialPrice,
+            productUrl : productData.images[0].url,
+            quantity : amount,
+        }
+        
+        navigate('/checkout',{state:{
+            products:[product]
+        }})
     }
 
     return (
@@ -77,7 +95,7 @@ const ProductDetail = () => {
                                 </Col>
                                 <Col>
                                     {/* TODO: make buy now feature */}
-                                    <button className='w-100 btn btn-primary'>Buy Now</button>
+                                    <button className='w-100 btn btn-primary' onClick={()=>{buyNow()}}>Buy Now</button>
                                 </Col>
                             </Row>
                         </Col>

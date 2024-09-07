@@ -23,7 +23,6 @@ const Profile = ()=>{
 
     useEffect(()=>{
         dispatch(setAlert(null))
-        console.log(userData)
     },[])
 
     const initialValues = {

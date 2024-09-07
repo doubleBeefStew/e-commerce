@@ -7,19 +7,35 @@ import priceFormat from "../../../utils/priceFormat"
 import { createOrders,setRedirect } from "../../../redux/slices/orders"
 import Dropdown from "react-bootstrap/Dropdown"
 import Alert from "react-bootstrap/Alert"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { removeItem, updateCart } from "../../../redux/slices/cart"
 
-const Cart = ()=>{
+// export interface checkedOutProducts {
+//     productId : String;
+//     productName : String;
+//     productPrice : Number;
+//     productUrl : String;
+//     quantity : Number;
+// }
+
+const Checkout = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
     const {redirectToPayment,error} = useSelector((state)=>{ return state.orders })
     const user = useSelector((state)=>{return state.user})
+    const [productList,setProductsList] = useState([])
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
 
-    const [phoneError,setPhoneError] = useState('')
-    const [addressError,setAddressError] = useState('')
-    const [paymentError,setPaymentError] = useState('')
+    useEffect(()=>{
+        setProductsList(location.state.products)
+        console.log(location.state.products)
+    },[])
+
+
+    const [phoneError,setPhoneError] = useState(false)
+    const [addressError,setAddressError] = useState(false)
+    const [paymentError,setPaymentError] = useState(false)
     const [errorMessage,setErrorMessage] = useState('')
 
     const [total,setTotal] = useState(0)
@@ -149,27 +165,25 @@ const Cart = ()=>{
             <Col className='py-4 bg-light' >
                 <Row className='align-items-center flex-column justify-content-between px-3 gy-3'>
                 {
-                    cartData.products?.map((item)=>{
-                        if(item.isChecked){
-                            return (
-                                    <Col className='align-items-center px-3' key={item.productId}>
-                                        <Row className='justify-content-between'>
-                                            <Col className='col-2'>
-                                                <img className='object-fit-cover w-100' height={100} width={100} src={item.productUrl} />
-                                            </Col>
-                                            <Col className='col-6'>
-                                                <small className='m-0 text-start'>{item.productName}</small>
-                                            </Col>
-                                            <Col className='col-2 text-center'>
-                                                <small className='m-0'>Rp{priceFormat(item.productPrice)}</small>
-                                            </Col>
-                                            <Col className='col-2 text-end'>
-                                                <small className='m-0'>x {item.quantity}</small>
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                            )
-                        }
+                    productList?.map((item)=>{
+                        return (
+                                <Col className='align-items-center px-3' key={item.productId}>
+                                    <Row className='justify-content-between'>
+                                        <Col className='col-2'>
+                                            <img className='object-fit-cover w-100' height={100} width={100} src={item.productUrl} />
+                                        </Col>
+                                        <Col className='col-6'>
+                                            <small className='m-0 text-start'>{item.productName}</small>
+                                        </Col>
+                                        <Col className='col-2 text-center'>
+                                            <small className='m-0'>Rp{priceFormat(item.productPrice)}</small>
+                                        </Col>
+                                        <Col className='col-2 text-end'>
+                                            <small className='m-0'>x {item.quantity}</small>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                        )
                     })
                 }
                 </Row>
@@ -248,4 +262,4 @@ const Cart = ()=>{
     </>)
 }
 
-export default Cart
+export default Checkout

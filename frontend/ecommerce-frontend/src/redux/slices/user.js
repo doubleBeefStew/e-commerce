@@ -98,7 +98,6 @@ const userSlice = createSlice({
             state.isAuthenticated=true
             state.userData = action.payload.output.payload
             localStorage.setItem("userData",JSON.stringify(state.userData))
-            console.log(state.userData)
             
             state.isLoadingUser=false
         })

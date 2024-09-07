@@ -13,8 +13,6 @@ import ProfilePicture from "../profilePicture/profilePicture"
 //TODO: make header sticky when scrolling
 const Header = ()=>{
     const {userData,isAuthenticated} = useSelector((state)=>{return state.user})
-    console.log(userData)
-    
 
     const imageUrl= userData.avatar
 

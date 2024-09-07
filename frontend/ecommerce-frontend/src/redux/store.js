@@ -10,6 +10,7 @@ const store = configureStore({
         user:userReducer,
         products:productReducer,
         cart:cartReducer,
+        // checkout:cartReducer,
         orders:orderReducer,
         payment:paymentReducer,
     }

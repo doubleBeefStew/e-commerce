@@ -18,12 +18,12 @@ import {
     Checkout,
     Payment
 } from './pages'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import Profile from './pages/user/account/components/profile'
 import Orders from './pages/user/account/components/orders'
-import { loadUser } from './redux/slices/user'
-import { loadCart } from './redux/slices/cart'
+import { loadUser, updateUser } from './redux/slices/user'
+import { createCart, loadCart } from './redux/slices/cart'
 import SuccessPage from './components/successPage/SuccessPage'
 
 const router = createBrowserRouter([{
@@ -99,13 +99,26 @@ const router = createBrowserRouter([{
 
 const App = () => {
     const dispatch = useDispatch()
+    const {cartError,cartData} = useSelector((state)=>{return state.cart})
+    const {userData} = useSelector((state)=>{return state.user})
 
     //TODO: fix missing cart
     useEffect(() => {
-        
             dispatch(loadUser())
             dispatch(loadCart())
-    }, [])
+    }, [cartData._id,userData._id])
+
+    useEffect(()=>{
+        if(cartError=='Cart not found'){
+            dispatch(createCart(userData._id))
+        }
+        if(cartData._id && !userData.cartId){
+            console.log('adding cart to user')
+            
+            dispatch(updateUser({cartId:cartData._id}))
+        }
+            
+    },[cartData._id,userData._id,cartError])
 
     return <RouterProvider router={router} />
 }

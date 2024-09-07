@@ -2,6 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import env from '../../../../env'
 
+export const createCart = createAsyncThunk('cart/create', async(id)=>{
+    try{
+        const response = await axios.post(`${env.API_URL}/cart/create/${id}`,{withCredentials:true})
+        return response.data
+    }catch(err){
+        console.log(err.response.data.error.message)
+        throw new Error(err.response.data.error.message)
+    }
+})
+
 export const loadCart = createAsyncThunk('cart/', async()=>{
     try{
         const response = await axios.get(`${env.API_URL}/cart`,{withCredentials:true})
@@ -25,7 +35,7 @@ export const updateCart = createAsyncThunk('cart/update', async()=>{
 const initialState = {
     cartData:JSON.parse(localStorage.getItem('cartData'))? JSON.parse(localStorage.getItem('cartData')):[],
     isLoadingCart:true,
-    error:null
+    cartError:null
 }
 
 const cartSlice = createSlice({
@@ -33,10 +43,11 @@ const cartSlice = createSlice({
     initialState,
     reducers:{
         setError(state,action){
-            state.error = action.payload
+            state.cartError = action.payload
         },
         addItem(state,action){
             const product = action.payload
+            console.log(product)
             
             const index = state.cartData.products.findIndex((item)=>{
                 return item.productId == product.productId
@@ -81,17 +92,33 @@ const cartSlice = createSlice({
     },
     extraReducers:(builder)=>{
         builder
+        .addCase(createCart.pending,(state)=>{
+            state.isLoadingCart=true
+        })
+        .addCase(createCart.fulfilled,(state,action)=>{
+            state.cartData = action.payload.output.payload
+            localStorage.setItem("cartData",JSON.stringify(state.cartData))
+            state.cartError=null
+            state.isLoadingCart=false
+        })
+        .addCase(createCart.rejected,(state,action)=>{
+            state.isLoadingCart=false
+            state.cartError=action.error.message
+        })
         .addCase(loadCart.pending,(state)=>{
             state.isLoadingCart=true
         })
         .addCase(loadCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload
             localStorage.setItem("cartData",JSON.stringify(state.cartData))
+            console.log('cart is set')
+            
             state.isLoadingCart=false
         })
         .addCase(loadCart.rejected,(state,action)=>{
             state.isLoadingCart=false
-            state.error=action.error.message
+            console.log(action.error.message)
+            state.cartError=action.error.message
         })
         .addCase(updateCart.pending,(state)=>{
         })
@@ -103,7 +130,7 @@ const cartSlice = createSlice({
         })
         .addCase(updateCart.rejected,(state,action)=>{
             state.isLoadingCart=false
-            state.error=action.error.message
+            state.cartError=action.error.message
         })
     }
 })
