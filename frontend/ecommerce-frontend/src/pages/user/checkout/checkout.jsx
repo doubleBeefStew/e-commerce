@@ -99,7 +99,6 @@ const Checkout = ()=>{
     }
 
     const createOrder = ()=>{
-        //TODO:validate when no item is checked, dont continue the process
         let method
         if(paymentMethod == 'SheepoPay')
             method = 'SHEEPOPAY'

@@ -100,9 +100,8 @@ const router = createBrowserRouter([{
 const App = () => {
     const dispatch = useDispatch()
     const {cartError,cartData} = useSelector((state)=>{return state.cart})
-    const {userData} = useSelector((state)=>{return state.user})
+    const {userData,isAuthenticated} = useSelector((state)=>{return state.user})
 
-    //TODO: fix missing cart
     useEffect(() => {
             dispatch(loadUser())
             dispatch(loadCart())

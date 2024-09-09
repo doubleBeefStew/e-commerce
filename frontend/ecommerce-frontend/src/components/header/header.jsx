@@ -3,10 +3,10 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/Button"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import styles from "./header.module.css"
 import { BsSearch,BsCart3 } from "react-icons/bs";
-import { useSelector,useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import { CgProfile } from "react-icons/cg"
 import ProfilePicture from "../profilePicture/profilePicture"
 

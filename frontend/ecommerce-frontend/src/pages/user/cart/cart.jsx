@@ -6,7 +6,7 @@ import { FaRegTrashCan } from "react-icons/fa6"
 import priceFormat from '../../../utils/priceFormat'
 import Counter from './components/counter'
 import { useEffect, useState } from 'react'
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Button from 'react-bootstrap/Button'
 
 const Cart = ()=>{
@@ -64,6 +64,7 @@ const Cart = ()=>{
         })
     }
 
+    //TODO:validate when no item is checked, dont continue the process
     const checkOut = ()=>{
         const updatedProducts = cartData.products?.filter((item) => item.isChecked).map((item)=>{
             const obj = {

@@ -25,6 +25,11 @@ const Login = ()=>{
     }
 
     useEffect(()=>{
+        console.log('login page called')
+        
+    },[])
+
+    useEffect(()=>{
         if(isAuthenticated){
             navigate('/')
         }
