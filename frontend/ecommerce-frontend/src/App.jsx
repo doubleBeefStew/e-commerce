@@ -113,8 +113,6 @@ const App = () => {
             dispatch(createCart(userData._id))
         }
         if(cartData._id && !userData.cartId){
-            console.log('adding cart to user')
-            
             dispatch(updateUser({cartId:cartData._id}))
         }
             

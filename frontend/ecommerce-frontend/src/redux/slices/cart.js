@@ -47,7 +47,6 @@ const cartSlice = createSlice({
         },
         addItem(state,action){
             const product = action.payload
-            console.log(product)
             
             const index = state.cartData.products.findIndex((item)=>{
                 return item.productId == product.productId
@@ -111,13 +110,10 @@ const cartSlice = createSlice({
         .addCase(loadCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload
             localStorage.setItem("cartData",JSON.stringify(state.cartData))
-            console.log('cart is set')
-            
             state.isLoadingCart=false
         })
         .addCase(loadCart.rejected,(state,action)=>{
             state.isLoadingCart=false
-            console.log(action.error.message)
             state.cartError=action.error.message
         })
         .addCase(updateCart.pending,(state)=>{

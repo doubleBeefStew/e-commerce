@@ -29,7 +29,6 @@ const Checkout = ()=>{
 
     useEffect(()=>{
         setProductsList(location.state.products)
-        console.log(location.state.products)
     },[])
 
 

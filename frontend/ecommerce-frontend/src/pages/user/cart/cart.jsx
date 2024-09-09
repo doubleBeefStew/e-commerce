@@ -75,7 +75,6 @@ const Cart = ()=>{
             }
             return obj
         })
-        console.log(updatedProducts)
         setProducts(updatedProducts)
         setCheckoutProcess(true)
     }
