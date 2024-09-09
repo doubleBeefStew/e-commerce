@@ -27,11 +27,6 @@ const Checkout = ()=>{
     const navigate = useNavigate()
     const location = useLocation()
 
-    useEffect(()=>{
-        setProductsList(location.state.products)
-    },[])
-
-
     const [phoneError,setPhoneError] = useState(false)
     const [addressError,setAddressError] = useState(false)
     const [paymentError,setPaymentError] = useState(false)
@@ -47,6 +42,10 @@ const Checkout = ()=>{
         value:8000,
         type:'amount'
     })
+
+    useEffect(()=>{
+        setProductsList(location.state.products)
+    },[])
 
     useEffect(()=>{
         if(redirectToPayment){
@@ -90,14 +89,6 @@ const Checkout = ()=>{
         })
     }
 
-    const clearCheckedItems = ()=>{
-        cartData.products.forEach((item)=>{
-            item.isChecked &&
-            dispatch(removeItem(item.productId))
-        })
-        dispatch(updateCart())
-    }
-
     const createOrder = ()=>{
         let method
         if(paymentMethod == 'SheepoPay')
@@ -120,7 +111,6 @@ const Checkout = ()=>{
                 products:cartData.products.filter((item)=>{return item.isChecked==true})
             }
             dispatch(createOrders(orderData))
-            clearCheckedItems()
         }
     }
 

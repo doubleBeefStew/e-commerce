@@ -111,7 +111,8 @@ const App = () => {
         if(cartError=='Cart not found'){
             dispatch(createCart(userData._id))
         }
-        if(cartData._id && !userData.cartId){
+        if(cartData._id && isAuthenticated && !userData.cartId){
+            console.log('adding cart to user')            
             dispatch(updateUser({cartId:cartData._id}))
         }
             

@@ -7,11 +7,6 @@ import { useEffect } from "react"
 const Error = ({message})=>{
     const error = useRouteError()
 
-    useEffect(()=>{
-        console.log('error triggered')
-        
-    },[])
-
     return (
         <Container>
         <Row className="vh-100">

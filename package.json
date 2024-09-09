@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.6.0",
     "bootstrap": "^5.3.3"
   }
 }

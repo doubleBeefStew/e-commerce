@@ -48,7 +48,6 @@ export const updateProduct = asyncHandler(async (req,res,next)=>{
         throw new unauthorizedError('only admin can update products','UPDT-401')
     
     const {id} = req.params
-    const options = {}
     const {name,description,initialPrice,discountPrice,images,stock} = req.body
     const updatedProduct = await productModel.findById(id)
 
