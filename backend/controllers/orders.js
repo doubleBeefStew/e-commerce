@@ -30,7 +30,15 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
     if(req.user.role!='admin' && req.user.role!='user')
         throw new unauthorizedError('please login to create order','ODR-401')
 
+    console.log(req.body)
     const {userId,totalPrice,address,paymentMethod,products} = req.body
+
+    // const productList = 
+
+
+
+
+
 
     const createdOrder = await orderModel.create({userId,totalPrice,address,paymentMethod,products})
     res.status(201).json({output:{message:'OK',payload:createdOrder}})

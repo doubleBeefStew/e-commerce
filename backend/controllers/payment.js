@@ -3,7 +3,7 @@ import {badRequestError, unauthorizedError} from "../errors/customErrors.js"
 import productModel from "../models/products.js"
 import orderModel from "../models/order.js"
 import userModel from "../models/user.tsx"
-import generatePaypalToken from '../utils/token.js'
+import {generatePaypalToken} from '../utils/token.js'
 import dotenv from 'dotenv'
 dotenv.config()
 

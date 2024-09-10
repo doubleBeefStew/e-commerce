@@ -24,8 +24,12 @@ const Cart = ()=>{
     },[cartData.products])
 
     useEffect(()=>{
-        if(checkoutProcess){
-            navigate('/checkout',{state:{products}})
+        
+        if(checkoutProcess && products.length > 0){
+                navigate('/checkout',{state:{products}})
+        }else{
+            console.log('please choose items to checkout')
+            setCheckoutProcess(false)
         }
     },[checkoutProcess])
     
@@ -67,14 +71,13 @@ const Cart = ()=>{
     //TODO:validate when no item is checked, dont continue the process
     const checkOut = ()=>{
         const updatedProducts = cartData.products?.filter((item) => item.isChecked).map((item)=>{
-            const obj = {
+            return {
                 productId : item.productId,
                 productName : item.productName,
                 productPrice : item.productPrice,
                 productUrl : item.productUrl,
                 quantity : item.quantity
             }
-            return obj
         })
         setProducts(updatedProducts)
         setCheckoutProcess(true)

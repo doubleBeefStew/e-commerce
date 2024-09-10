@@ -8,7 +8,6 @@ import { createOrders,setRedirect } from "../../../redux/slices/orders"
 import Dropdown from "react-bootstrap/Dropdown"
 import Alert from "react-bootstrap/Alert"
 import { useLocation, useNavigate } from "react-router-dom"
-import { removeItem, updateCart } from "../../../redux/slices/cart"
 
 // export interface checkedOutProducts {
 //     productId : String;
@@ -103,14 +102,27 @@ const Checkout = ()=>{
         }
         
         if(!phoneError && !addressError && !paymentError){
-            const orderData = {
-                userId: user.userData._id,
-                totalPrice:total,
-                address:user.userData.address,
-                paymentMethod:method,
-                products:cartData.products.filter((item)=>{return item.isChecked==true})
+            const checkedProducts = cartData.products.filter((item)=>{return item.isChecked==true}).map((item)=>{
+                return item ? {
+                    productId:item.productId,
+                    productName:item.productName,
+                    quantity:item.quantity,
+                } : null
+            })
+
+            if (checkedProducts){
+                const orderData = {
+                    userId: user.userData._id,
+                    totalPrice:total,
+                    address:user.userData.address,
+                    paymentMethod:method,
+                    products: checkedProducts
+                }
+                dispatch(createOrders(orderData))
+            } else {
+                setPaymentError(true)
+                setErrorMessage('Please choose a payment method before checking out')
             }
-            dispatch(createOrders(orderData))
         }
     }
 

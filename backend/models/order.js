@@ -10,11 +10,8 @@ const orderSchema = new Schema({
     },
     products:{
         type:[{
-            isChecked:Boolean,
             productId:Schema.ObjectId,
             productName:String,
-            productPrice:Number,
-            productUrl:String,
             quantity:Number,
         }],
     },
