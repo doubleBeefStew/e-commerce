@@ -81,20 +81,22 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
 //TODO: create cancel order
 
 export const updateOrder = asyncHandler(async (req,res,next)=>{
-    if(req.user.role!='admin')
-        throw new unauthorizedError('only admin can update orders','UPDT-401')
+    if(req.user.role!='admin' && req.user.role!='user')
+        throw new unauthorizedError('please login to update order','ODR-401')
     
     const {id} = req.params
-    console.log(id)
     
     const {totalPrice,address,paymentMethod,products,shippingFee,shippingMethod,voucherCode,discount,status,paidAt,shippedAt,deliveredAt,returnedAt} = req.body
 
     const updatedOrder = await orderModel.findById(id)
+    console.log(req.body)
+    console.log(id, status)
+    
 
     totalPrice && (updatedOrder.totalPrice = totalPrice)
     address && (updatedOrder.address = address)
     paymentMethod && (updatedOrder.paymentMethod = paymentMethod)
-    products && (updatedOrder.products = products)
+    products?.length > 0 && (updatedOrder.products = products)
     status && (updatedOrder.status = status)
     paidAt && (updatedOrder.paidAt = paidAt)
     shippedAt && (updatedOrder.shippedAt = shippedAt)

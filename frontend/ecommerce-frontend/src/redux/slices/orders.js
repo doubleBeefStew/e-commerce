@@ -22,9 +22,9 @@ export const createOrders = createAsyncThunk('orders/create',async(orderData)=>{
     }
 })
 
-export const updateOrders = createAsyncThunk('orders/update',async(id,orderData)=>{
+export const updateOrders = createAsyncThunk('orders/update',async(data)=>{
     try{
-        const response = await axios.patch(`${env.API_URL}/orders/update/${id}`,orderData,{withCredentials:true})  
+        const response = await axios.patch(`${env.API_URL}/orders/update/${data.id}`,data.orderData,{withCredentials:true})  
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -65,8 +65,6 @@ const orderSlice = createSlice({
         },
         updateOrder(state,action){
             const order = action.payload
-            console.log(order)
-            
             const index = state.ordersData.findIndex((item)=>{
                 return item.orderId == order.orderId
             })
@@ -117,7 +115,6 @@ const orderSlice = createSlice({
         })
         .addCase(updateOrders.fulfilled,(state,action)=>{
             state.isLoadingOrders = false
-            console.log('order updated')
         })
         .addCase(updateOrders.rejected,(state,action)=>{
             state.isLoadingOrders = false

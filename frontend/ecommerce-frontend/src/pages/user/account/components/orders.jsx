@@ -21,7 +21,10 @@ const Orders = ()=>{
     }
 
     const cancelOrder = (item)=>{
-        dispatch(updateOrders(item._id,{...item, status:'CANCELLED'}))
+        dispatch(updateOrders({
+            id:item._id,
+            orderData:{ status:'CANCELLED' }
+        }))
         dispatch(updateOrder({...item, status:'CANCELLED'}))
     }
 
