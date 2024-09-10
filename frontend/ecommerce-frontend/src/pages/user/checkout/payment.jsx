@@ -70,7 +70,13 @@ const Payment = ()=>{
                         <h1>PAYPAL</h1>
                         <br/>
                         <div className='d-flex'>
-                            <p>Please wait..</p>
+                            <PayPalButtons
+                                style={{
+                                    shape: "rect",
+                                    layout: "vertical",
+                                    color: "gold",
+                                    label: "paypal",
+                                }} />
                         </div>
                     </>
                 ) :

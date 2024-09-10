@@ -3,6 +3,26 @@ import {badRequestError, unauthorizedError} from "../errors/customErrors.js"
 import productModel from "../models/products.js"
 import orderModel from "../models/order.js"
 import userModel from "../models/user.tsx"
+import generatePaypalToken from '../utils/token.js'
+import dotenv from 'dotenv'
+dotenv.config()
+
+const handleResponse = async (response)=>{
+    try {
+        const jsonResponse = await response.json();
+        return {
+            jsonResponse,
+            httpStatusCode: response.status,
+        };
+    } catch (err) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+    }
+}
+
+export const createPaypalOrder = asyncHandler(async (req,res,next)=>{
+
+})
 
 export const payment = asyncHandler(async (req,res,next)=>{
     const {data,pin} = req.body

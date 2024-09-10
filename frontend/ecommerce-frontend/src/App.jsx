@@ -19,12 +19,13 @@ import {
     Payment
 } from './pages'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Profile from './pages/user/account/components/profile'
 import Orders from './pages/user/account/components/orders'
 import { loadUser, updateUser } from './redux/slices/user'
 import { createCart, loadCart } from './redux/slices/cart'
 import SuccessPage from './components/successPage/SuccessPage'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 const router = createBrowserRouter([{
     path: '/',
@@ -99,6 +100,7 @@ const router = createBrowserRouter([{
 
 const App = () => {
     const dispatch = useDispatch()
+    const [message, setMessage] = useState("")
     const {cartError,cartData} = useSelector((state)=>{return state.cart})
     const {userData,isAuthenticated} = useSelector((state)=>{return state.user})
 
@@ -118,7 +120,11 @@ const App = () => {
             
     },[cartData._id,userData._id,cartError])
 
-    return <RouterProvider router={router} />
+    return (<>
+        <PayPalScriptProvider options={{ clientId: "test", components: "buttons", currency: "USD" }}>
+            <RouterProvider router={router} />
+        </PayPalScriptProvider>
+    </>)
 }
 
 export default App
