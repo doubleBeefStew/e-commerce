@@ -58,7 +58,7 @@ const ProductDetail = () => {
     }
 
     const buyNow = ()=>{
-        const product ={
+        const product = {
             productId : productData._id,
             productName : productData.name,
             productPrice : productData.initialPrice,

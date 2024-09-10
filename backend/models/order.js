@@ -14,6 +14,7 @@ const orderSchema = new Schema({
         type:[{
             productId:Schema.ObjectId,
             productName:String,
+            productUrl:String,
             quantity:Number,
         }],
     },

@@ -36,9 +36,6 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
 
     const productIds = products.map(product => product.productId)
     const dbProducts = await productModel.find({ _id: { $in: productIds } })
-    console.log(dbProducts)
-    
-
     
     recalculatedTotal += shippingFee
     products.forEach(product => {
@@ -60,8 +57,9 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
         shippingMethod})
 
     const productUpdates = products.map((product)=>{
-        return{
-            UpdateOne:{
+        
+        return {
+            updateOne:{
                 filter:{
                     _id: product.productId
                 },
@@ -73,6 +71,8 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
             }
         }
     })
+    console.log(productUpdates)
+    
     const result = await productModel.bulkWrite(productUpdates)
 
     res.status(201).json({output:{message:'OK',payload:createdOrder}})
