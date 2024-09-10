@@ -18,7 +18,6 @@ import { useLocation, useNavigate } from "react-router-dom"
 // }
 
 const Checkout = ()=>{
-    const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
     const {redirectToPayment,error} = useSelector((state)=>{ return state.orders })
     const user = useSelector((state)=>{return state.user})
     const [productList,setProductsList] = useState([])
@@ -37,14 +36,19 @@ const Checkout = ()=>{
     const [paymentMethod,setPaymentMethod] = useState('SheepoPay')
     const [shippingFee,setShippingFee] = useState(8000)
     const [shippingMethod,setshippingMethod] = useState("shopee Express")
+    //discount=voucher on the backend:
     const [discount,setDiscount] = useState({
-        value:8000,
+        value:0,
         type:'amount'
     })
 
     useEffect(()=>{
         setProductsList(location.state.products)
     },[])
+
+    useEffect(()=>{
+        calculateTotal()
+    },[productList])
 
     useEffect(()=>{
         if(redirectToPayment){
@@ -70,12 +74,10 @@ const Checkout = ()=>{
 
     const calculateTotal = ()=>{
         let newTotal = 0
-        cartData.products?.forEach((item)=>{
-            if(item.isChecked){
-                newTotal+= Number(item.productPrice)*Number(item.quantity)
-            }
+        productList.forEach((item)=>{
+            console.log(item)
+            newTotal+= Number(item.productPrice)*Number(item.quantity)
         })
-
         setProductTotal(newTotal)
 
         if(discount.type=='amount') 
@@ -102,27 +104,25 @@ const Checkout = ()=>{
         }
         
         if(!phoneError && !addressError && !paymentError){
-            const checkedProducts = cartData.products.filter((item)=>{return item.isChecked==true}).map((item)=>{
-                return item ? {
-                    productId:item.productId,
-                    productName:item.productName,
-                    quantity:item.quantity,
-                } : null
-            })
-
-            if (checkedProducts){
-                const orderData = {
-                    userId: user.userData._id,
-                    totalPrice:total,
-                    address:user.userData.address,
-                    paymentMethod:method,
-                    products: checkedProducts
-                }
-                dispatch(createOrders(orderData))
-            } else {
-                setPaymentError(true)
-                setErrorMessage('Please choose a payment method before checking out')
+            const orderData = {
+                userId: user.userData._id,
+                totalPrice:total,
+                address:user.userData.address,
+                paymentMethod:method,
+                voucherCode:null,
+                shippingFee,
+                shippingMethod,
+                products: productList.map((item)=>{
+                    return {
+                        productId:item.productId,
+                        productName:item.productName,
+                        quantity:item.quantity,
+                    }
+                })
             }
+            console.log(orderData)
+            
+            dispatch(createOrders(orderData))
         }
     }
 
@@ -132,7 +132,6 @@ const Checkout = ()=>{
 
     return (<>
     {
-        isLoadingCart? <p>loading..</p> :
         <Row className="flex-column py-5 px- px-sm-5 gy-2">
             <Col className='py-4 bg-light'>
                 <Row className='align-items-center justify-content-between px-3'>

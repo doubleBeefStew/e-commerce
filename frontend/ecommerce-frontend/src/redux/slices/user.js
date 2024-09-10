@@ -7,7 +7,7 @@ export const login = createAsyncThunk('user/login',async(data)=>{
         const response = await axios.post(`${env.API_URL}/auth/login`,data,{withCredentials:true})
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })
@@ -17,7 +17,7 @@ export const loadUser = createAsyncThunk('user',async()=>{
         const response = await axios.get(`${env.API_URL}/user`,{withCredentials:true})
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })
@@ -27,7 +27,7 @@ export const updateUser = createAsyncThunk('user/update',async(data)=>{
         const response = await axios.patch(`${env.API_URL}/user/update/info`,data,{withCredentials:true})
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })

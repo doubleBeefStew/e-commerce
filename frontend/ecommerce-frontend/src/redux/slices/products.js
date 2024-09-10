@@ -7,7 +7,7 @@ export const loadProducts = createAsyncThunk('products/',async(id)=>{
         const response = await axios.get(`${env.API_URL}/products`,{withCredentials:true})
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })

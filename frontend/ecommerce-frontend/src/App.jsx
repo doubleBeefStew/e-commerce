@@ -51,8 +51,8 @@ const router = createBrowserRouter([{
                 element: <MainLayout />,
                 children: [
                     {
-                        index: true,
-                        path: '/',
+                        // index:true,
+                        path:'/',
                         element: <HomePage />
                     }, {
                         path: 'user/',
@@ -73,8 +73,11 @@ const router = createBrowserRouter([{
                     }, {
                         path: 'events',
                         element: <Events />
-                    }, {
+                    },{
                         path: 'products',
+                        element: <Products />
+                    },{
+                        index:true,
                         element: <Products />
                     }, {
                         path: 'products/:id',

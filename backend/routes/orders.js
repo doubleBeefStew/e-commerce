@@ -1,5 +1,6 @@
 import express from "express"
 import { getOrder, createOrder, updateOrder, deleteOrder } from "../controllers/orders"
+import { validateCreateOrder, validateUpdateOrder } from "../middlewares/validations"
 
 const router = express.Router()
 
@@ -7,10 +8,10 @@ router.route("/:orderId?")
     .get(getOrder)
 
 router.route("/create")
-    .post(createOrder)
+    .post(validateCreateOrder,createOrder)
 
 router.route("/update/:id")
-    .patch(updateOrder)
+    .patch(validateUpdateOrder,updateOrder)
 
 router.route("/delete/:id")
     .delete(deleteOrder)

@@ -3,6 +3,8 @@ import {Schema, model} from "mongoose"
 const orderSchema = new Schema({
     userId:Schema.ObjectId,
     totalPrice:Number,
+    shippingFee:Number,
+    shippingMethod:String,
     address:String,
     paymentMethod:{
         type:String,
@@ -14,6 +16,14 @@ const orderSchema = new Schema({
             productName:String,
             quantity:Number,
         }],
+    },
+    voucherCode:{
+        type:String,
+        default:null
+    },
+    discount:{
+        type:Number,
+        default:0
     },
     status:{
         type:String,

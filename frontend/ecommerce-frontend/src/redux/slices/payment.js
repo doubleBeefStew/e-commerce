@@ -7,7 +7,7 @@ export const createPayment = createAsyncThunk('payment/',async(data)=>{
         const response = await axios.post(`${env.API_URL}/payment`,data,{withCredentials:true})
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })

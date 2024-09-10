@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler"
 import orderModel from "../models/order"
-import { notFoundError, unauthorizedError } from "../errors/customErrors"
+import productModel from "../models/products"
+import { badRequestError, notFoundError, unauthorizedError } from "../errors/customErrors"
 
 export const getOrder = asyncHandler(async (req,res,next)=>{
     if(req.user.role!='admin' && req.user.role!='user')
@@ -30,17 +31,50 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
     if(req.user.role!='admin' && req.user.role!='user')
         throw new unauthorizedError('please login to create order','ODR-401')
 
-    console.log(req.body)
-    const {userId,totalPrice,address,paymentMethod,products} = req.body
+    let recalculatedTotal = 0
+    const {userId,totalPrice,address,paymentMethod,products,voucherCode,shippingFee,shippingMethod} = req.body
 
-    // const productList = 
+    const productIds = products.map(product => product.productId)
+    const dbProducts = await productModel.find({ _id: { $in: productIds } })
+    console.log(dbProducts)
+    
 
+    
+    recalculatedTotal += shippingFee
+    products.forEach(product => {
+        const dbProduct = dbProducts.find(p => p._id.toString() === product.productId)
+        if(product.quantity > dbProduct.stock){
+            throw new badRequestError(`insufficient stock for product ${product.productName}`, 'ODR-400')
+        }
+        
+        if (dbProduct) {
+            recalculatedTotal += dbProduct.initialPrice * product.quantity
+        }
+    });
 
+    if (recalculatedTotal !== totalPrice) {
+        throw new badRequestError(`total price mismatch:${recalculatedTotal} & ${totalPrice}`,'ODR-400')
+    }
 
+    const createdOrder = await orderModel.create({userId,totalPrice,address,paymentMethod,products,voucherCode,shippingFee,
+        shippingMethod})
 
+    const productUpdates = products.map((product)=>{
+        return{
+            UpdateOne:{
+                filter:{
+                    _id: product.productId
+                },
+                update: {
+                    $inc: {
+                        stock: -product.quantity
+                    }
+                }
+            }
+        }
+    })
+    const result = await productModel.bulkWrite(productUpdates)
 
-
-    const createdOrder = await orderModel.create({userId,totalPrice,address,paymentMethod,products})
     res.status(201).json({output:{message:'OK',payload:createdOrder}})
 })
 
@@ -49,7 +83,7 @@ export const updateOrder = asyncHandler(async (req,res,next)=>{
         throw new unauthorizedError('only admin can update orders','UPDT-401')
     
     const {id} = req.params
-    const {totalPrice,address,paymentMethod,products,status,paidAt,shippedAt,deliveredAt,returnedAt} = req.body
+    const {totalPrice,address,paymentMethod,products,shippingFee,shippingMethod,voucherCode,discount,status,paidAt,shippedAt,deliveredAt,returnedAt} = req.body
 
     const updatedOrder = await orderModel.findById(id)
 

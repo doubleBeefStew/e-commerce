@@ -2,6 +2,9 @@ import { body,validationResult } from "express-validator"
 import { badRequestError } from "../errors/customErrors"
 import { validationData } from "../errors/validationData"
 import { roles } from "../errors/validationData"
+import { shippingMethod } from "../errors/validationData"
+import { paymentMethod } from "../errors/validationData"
+import { status } from "../errors/validationData"
 
 const validateValues = (validations)=>{
     return [validations,(req,res,next)=>{
@@ -54,4 +57,39 @@ export const validateProductInfo = validateValues([
         .isInt({gt:99}).withMessage(validationData.product_disc_price_limit),
     body('stock').escape().trim()
         .isInt({gt:0}).withMessage(validationData.stock_amount)
+])
+
+export const validateCreateOrder = validateValues([
+    // products,voucherCode,shippingFee,shippingMethod,discount
+    body('totalPrice')
+        .notEmpty().withMessage(validationData.total_price_required)
+        .isNumeric().withMessage(validationData.total_price_numeric),
+    body('address').escape().trim()
+        .notEmpty().withMessage(validationData.address_required),
+    body('paymentMethod').escape().trim()
+        .notEmpty().withMessage(validationData.payment_method_required)
+        .isIn(paymentMethod).withMessage(`Payment method must be one of these options: ${paymentMethod}`),
+    body('shippingFee')
+        .notEmpty().withMessage(validationData.shipping_fee_required)
+        .isNumeric().withMessage(validationData.shipping_fee_numeric),
+    // body('shippingMethod').escape().trim().optional()
+        // .notEmpty().withMessage(validationData.shipping_method_required)
+        // .isIn(shippingMethod).withMessage(`Shipping method must be one of these options: ${shippingMethod}`),
+    body('discount').optional()
+        .isNumeric().withMessage(validationData.discount_numeric),
+])
+
+export const validateUpdateOrder = validateValues([
+    body('totalPrice').optional()
+        .isNumeric().withMessage(validationData.total_price_numeric),
+    body('paymentMethod').escape().trim().optional()
+        .isIn(paymentMethod).withMessage(`Payment method must be one of these options: ${paymentMethod}`),
+    body('shippingFee').optional()
+        .isNumeric().withMessage(validationData.shipping_fee_numeric),
+    body('shippingMethod').escape().trim().optional()
+        .isIn(shippingMethod).withMessage(`Shipping method must be one of these options: ${shippingMethod}`),
+    body('discount').optional()
+        .isNumeric().withMessage(validationData.discount_numeric),
+    body('status').escape().trim().optional()
+        .isIn(status).withMessage(`Status must be one of these options: ${status}`),
 ])

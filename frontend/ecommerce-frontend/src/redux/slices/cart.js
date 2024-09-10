@@ -7,7 +7,7 @@ export const createCart = createAsyncThunk('cart/create', async(id)=>{
         const response = await axios.post(`${env.API_URL}/cart/create/${id}`,{withCredentials:true})
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })
@@ -17,7 +17,7 @@ export const loadCart = createAsyncThunk('cart/', async()=>{
         const response = await axios.get(`${env.API_URL}/cart`,{withCredentials:true})
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })
@@ -27,7 +27,7 @@ export const updateCart = createAsyncThunk('cart/update', async()=>{
         const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')),{withCredentials:true})
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })

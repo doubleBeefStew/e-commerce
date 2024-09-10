@@ -7,7 +7,7 @@ export const loadOrders = createAsyncThunk('orders/',async(id)=>{
         const response = await axios.get(`${env.API_URL}/orders`,{withCredentials:true})
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })
@@ -17,7 +17,7 @@ export const createOrders = createAsyncThunk('orders/create',async(orderData)=>{
         const response = await axios.post(`${env.API_URL}/orders/create`,orderData,{withCredentials:true})  
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })
@@ -27,7 +27,7 @@ export const updateOrders = createAsyncThunk('orders/update',async(id,orderData)
         const response = await axios.post(`${env.API_URL}/orders/update/${id}`,orderData,{withCredentials:true})  
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })
@@ -37,7 +37,7 @@ export const deleteOrders = createAsyncThunk('orders/delete',async(id)=>{
         const response = await axios.delete(`${env.API_URL}/orders/delete/${id}`,{withCredentials:true})  
         return response.data
     }catch(err){
-        console.log(err.response.data.error.message)
+        console.error(err.response.data.error.message)
         throw new Error(err.response.data.error.message)
     }
 })
