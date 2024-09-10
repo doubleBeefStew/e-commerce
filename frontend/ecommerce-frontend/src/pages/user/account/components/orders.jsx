@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col'
 import Button from "react-bootstrap/Button"
 import { useEffect,useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { deleteOrder,deleteOrders,loadOrders } from '../../../../redux/slices/orders'
+import { loadOrders, updateOrder, updateOrders } from '../../../../redux/slices/orders'
 import priceFormat from '../../../../utils/priceFormat'
 import {Link} from 'react-router-dom'
 
@@ -20,16 +20,16 @@ const Orders = ()=>{
         setStatus(status)
     }
 
-    const cancelOrder = (id)=>{
-        dispatch(deleteOrder(id))
-        dispatch(deleteOrders(id))
+    const cancelOrder = (item)=>{
+        dispatch(updateOrders(item._id,{...item, status:'CANCELLED'}))
+        dispatch(updateOrder({...item, status:'CANCELLED'}))
     }
 
     return(
     <Row className='flex-column gy-2'>
         {/* Tabs */}
         <Col>
-            <Row className='flex-nowrap justify-content-start overflow-auto bg-light'>
+            <Row className='flex-nowrap justify-content-start overflow-scroll bg-light'>
                 <Col 
                     className={'col-auto me-3 text-nowrap p-3 ' + (status=='ALL' && 'border-bottom border-3')} 
                     onClick={()=>{changeFilter('ALL')}}>
@@ -108,7 +108,7 @@ const Orders = ()=>{
                             <hr/>
                             <Row className='align-items-center justify-content-between px-3'>
                                 <Col className='col-6 text-start'>
-                                    <Button onClick={()=>{cancelOrder(item._id)}}>Cancel</Button>
+                                    <Button onClick={()=>{cancelOrder(item)}}>Cancel</Button>
                                 </Col>
                                 <Col className='col-6 text-end'>
                                     <small className='m-0'>Total Rp{priceFormat(item.totalPrice || 0)}</small>

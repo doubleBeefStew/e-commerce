@@ -24,7 +24,7 @@ export const createOrders = createAsyncThunk('orders/create',async(orderData)=>{
 
 export const updateOrders = createAsyncThunk('orders/update',async(id,orderData)=>{
     try{
-        const response = await axios.post(`${env.API_URL}/orders/update/${id}`,orderData,{withCredentials:true})  
+        const response = await axios.patch(`${env.API_URL}/orders/update/${id}`,orderData,{withCredentials:true})  
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -65,13 +65,14 @@ const orderSlice = createSlice({
         },
         updateOrder(state,action){
             const order = action.payload
+            console.log(order)
             
             const index = state.ordersData.findIndex((item)=>{
-                return item.orderId == product.orderId
+                return item.orderId == order.orderId
             })
 
             if (index>=0){
-                state.ordersData[index]=order
+                state.ordersData[index] = order
                 localStorage.setItem("ordersData",JSON.stringify(state.ordersData))
             }
         },
@@ -101,6 +102,7 @@ const orderSlice = createSlice({
             state.error = action.error.message
         })
         .addCase(createOrders.pending,(state)=>{
+            state.isLoadingOrders = false
         })
         .addCase(createOrders.fulfilled,(state,action)=>{
             state.currentCheckout = action.payload.output.payload
@@ -111,17 +113,24 @@ const orderSlice = createSlice({
             state.error = action.error.message
         })
         .addCase(updateOrders.pending,(state)=>{
+            state.isLoadingOrders = true
         })
         .addCase(updateOrders.fulfilled,(state,action)=>{
+            state.isLoadingOrders = false
+            console.log('order updated')
         })
         .addCase(updateOrders.rejected,(state,action)=>{
+            state.isLoadingOrders = false
             state.error = action.error.message
         })
         .addCase(deleteOrders.pending,(state)=>{
+            state.isLoadingOrders = true
         })
         .addCase(deleteOrders.fulfilled,(state,action)=>{
+            state.isLoadingOrders = false
         })
         .addCase(deleteOrders.rejected,(state,action)=>{
+            state.isLoadingOrders = false
             state.error = action.error.message
         })
     }

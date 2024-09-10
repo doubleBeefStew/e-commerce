@@ -78,11 +78,15 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
     res.status(201).json({output:{message:'OK',payload:createdOrder}})
 })
 
+//TODO: create cancel order
+
 export const updateOrder = asyncHandler(async (req,res,next)=>{
     if(req.user.role!='admin')
         throw new unauthorizedError('only admin can update orders','UPDT-401')
     
     const {id} = req.params
+    console.log(id)
+    
     const {totalPrice,address,paymentMethod,products,shippingFee,shippingMethod,voucherCode,discount,status,paidAt,shippedAt,deliveredAt,returnedAt} = req.body
 
     const updatedOrder = await orderModel.findById(id)
