@@ -10,7 +10,6 @@ const ProductCard = ({product})=>{
     return (
         <Link className='text-decoration-none' to={`/products/${product._id}`}>
             <Card>
-                {/* TODO: set height in rem */}
                 <Card.Img 
                     className='overflow-hidden object-fit-cover' height={'200px'}
                     variant="top" 

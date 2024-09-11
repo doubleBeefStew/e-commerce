@@ -45,7 +45,7 @@ const initialState = {
     isAuthenticated:false,
     userData:JSON.parse(localStorage.getItem('userData'))? JSON.parse(localStorage.getItem('userData')):[],
     isLoadingUser:false,
-    alert:null,
+    isUserError:false,
 }
 
 const userSlice = createSlice({
@@ -68,28 +68,27 @@ const userSlice = createSlice({
             state.isLoadingUser=true
         })
         .addCase(login.fulfilled,(state,action)=>{
-            state.isAuthenticated=true
             state.isLoadingUser=false
+            state.isAuthenticated=true
             state.userData = action.payload.output.payload
             localStorage.setItem("userData",JSON.stringify(state.userData))
         })
         .addCase(login.rejected,(state,action)=>{
             state.isLoadingUser=false
-            state.alert={message:action.error.message,type:'danger'}
+            state.isUserError=true
         })
         .addCase(logout.pending,(state)=>{
             state.isLoadingUser=true
         })
         .addCase(logout.fulfilled,(state,action)=>{
-            state.isAuthenticated = false;
-            state.userData = [];
-            state.isLoadingUser = false;
-            state.alert = null;
+            state.isAuthenticated = false
+            state.userData = []
+            state.isLoadingUser = false
             localStorage.clear()
         })
         .addCase(logout.rejected,(state,action)=>{
             state.isLoadingUser=false
-            state.alert={message:action.error.message,type:'danger'}
+            state.isUserError = true
         })
         .addCase(loadUser.pending,(state)=>{
             state.isLoadingUser=true
@@ -98,25 +97,25 @@ const userSlice = createSlice({
             state.isAuthenticated=true
             state.userData = action.payload.output.payload
             localStorage.setItem("userData",JSON.stringify(state.userData))
-            
             state.isLoadingUser=false
         })
         .addCase(loadUser.rejected,(state,action)=>{
             state.isLoadingUser=false
-            state.alert={message:action.error.message,type:'danger'}
+            if(!action.error.message.includes('token'))
+                state.isUserError = true
         })
         .addCase(updateUser.pending,(state)=>{
+            state.isLoadingUser=true
         })
         .addCase(updateUser.fulfilled,(state,action)=>{
             state.isAuthenticated=true
             state.userData = action.payload.output.payload
             localStorage.setItem("userData",JSON.stringify(state.userData))
-            state.alert={message:'Profile information is updated successfully',type:'success'}
             state.isLoadingUser=false
         })
         .addCase(updateUser.rejected,(state,action)=>{
             state.isLoadingUser=false
-            state.alert={message:action.error.message,type:'danger'}
+            state.isUserError=true
         })
     }
 })

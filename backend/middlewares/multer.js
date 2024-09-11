@@ -1,7 +1,6 @@
 import multer from "multer"
 import fs from 'fs'
 
-//TODO: 1. fix multer enoent error
 const storage = multer.diskStorage({
     // disable local storage
     destination:(req,file,cb)=>{

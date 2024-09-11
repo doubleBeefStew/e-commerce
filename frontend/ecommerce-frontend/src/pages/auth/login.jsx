@@ -10,13 +10,15 @@ import { useFormik } from 'formik'
 import loginSchema from "../../validationSchema/loginSchema"
 import { useDispatch, useSelector } from "react-redux"
 import { login } from "../../redux/slices/user"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { errorMessages } from "../../errors/errorMessages"
 
 //TODO: remove token not provided error
 const Login = ()=>{
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {isAuthenticated,isLoadingUser,userData,alert} = useSelector((state)=>{return state.user})
+    const [alert,setAlert]=useState('')
+    const {isAuthenticated,isLoadingUser,userData,isUserError} = useSelector((state)=>{return state.user})
     
     const initialValues = {
         email:'',
@@ -47,7 +49,7 @@ const Login = ()=>{
                     <Card.Body>
                         <Card.Title className='text-center mb-4'>Login</Card.Title>
                         {
-                            alert && <Alert className="mb-3" variant={alert.type}>{alert.message}</Alert>
+                            isUserError && <Alert className="mb-3" variant='danger'>{errorMessages.general_error}</Alert>
                         }
                         <Form onSubmit={handleSubmit}>
                             <Form.Group className="mt-3" controlId="email">
@@ -56,13 +58,13 @@ const Login = ()=>{
                                     type="email" 
                                     name="email"
                                     placeholder="name@example.com"
-                                    className = { errors.email&&touched.email? 'border-danger':'' }
+                                    className = { (errors.email && touched.email) && 'border-danger' }
                                     value={values.email}
                                     onBlur={handleBlur}
                                     onChange={handleChange} />
                             </Form.Group>
                             <small className="text-danger fw-light">{ 
-                                        errors.email && touched.email? errors.email:'' 
+                                        (errors.email && touched.email) && errors.email
                                     }</small>
                             <Form.Group className="mt-3" controlId="password">
                                 <Form.Label >Password</Form.Label>
@@ -70,14 +72,14 @@ const Login = ()=>{
                                     type="password" 
                                     name="password" 
                                     placeholder="John@123"
-                                    className = { errors.password&&touched.password? 'border-danger':'' }
+                                    className = { (errors.password && touched.password) && 'border-danger' }
                                     value={values.password}
                                     onBlur={handleBlur}
                                     onChange={handleChange} />
                             </Form.Group>
                             <small className="text-danger fw-light">{ 
-                                        errors.password && touched.password? errors.password:'' 
-                                    }</small>
+                                (errors.password && touched.password) && errors.password 
+                            }</small>
                             <Form.Check className='mt-3'
                                 type="checkbox"
                                 id="rememberMe"
