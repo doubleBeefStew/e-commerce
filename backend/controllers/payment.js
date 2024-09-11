@@ -1,32 +1,64 @@
 import asyncHandler from "express-async-handler"
+import axios from 'axios'
 import {badRequestError, unauthorizedError} from "../errors/customErrors.js"
-import productModel from "../models/products.js"
 import orderModel from "../models/order.js"
 import userModel from "../models/user.tsx"
 import {generatePaypalToken} from '../utils/token.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const handleResponse = async (response)=>{
-    try {
-        const jsonResponse = await response.json();
-        return {
-            jsonResponse,
-            httpStatusCode: response.status,
-        };
-    } catch (err) {
-        const errorMessage = await response.text();
-        throw new Error(errorMessage);
-    }
-}
-
 //need orderId, userId
 export const createPaypalPayment = asyncHandler(async (req,res,next)=>{
-    res.status(200).json({message:'create paypal order'})
+    const { orderId }= req.body
+    const foundOrder = await orderModel.findById(orderId)
+    const accessToken = await generatePaypalToken()
+
+    const payload = {
+        intent: "CAPTURE",
+        purchase_units: [
+            {
+                amount: {
+                    currency_code: "USD",
+                    value: "10",
+                },
+            },
+        ],
+    }
+
+    const response  = await axios.post(`${process.env.PAYPAL_BASE_URL}/v2/checkout/orders`, payload, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+            // Uncomment one of these to force an error for negative testing (in sandbox mode only).
+            // "PayPal-Mock-Response": '{"mock_application_codes": "MISSING_REQUIRED_PARAMETER"}'
+            // "PayPal-Mock-Response": '{"mock_application_codes": "PERMISSION_DENIED"}'
+            // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
+        }
+    })
+    res.status(response.status).json(response.data)
 })
 
 export const capturePaypalPayment = asyncHandler(async (req,res,next)=>{
-    res.status(200).json({message:'capture paypal order'})
+    const { orderID }= req.body
+    // const foundOrder = await orderModel.findById(orderId)
+    const accessToken = await generatePaypalToken()
+    
+    try{
+        const response  = await axios.post(`${process.env.PAYPAL_BASE_URL}/v2/checkout/orders/${orderID}/capture`,{},{
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+                // Uncomment one of these to force an error for negative testing (in sandbox mode only).
+                // "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
+                // "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
+                // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
+            }
+        })
+        res.status(response.status).json(response.data)
+    }catch(err){
+        console.log(err)
+    }
+
 })
 
 export const sheepopayPayment = asyncHandler(async (req,res,next)=>{

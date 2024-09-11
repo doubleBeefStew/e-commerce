@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import axios from 'axios'
+import asyncHandler from "express-async-handler"
 
 dotenv.config()
 
-export const generatePaypalToken = async ()=>{
+export const generatePaypalToken = asyncHandler(async ()=>{
     const BASE64_ENCODED_CLIENT_ID_AND_SECRET = Buffer.from(
-        `${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`
+        `${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`
     ).toString("base64");
 
     const response = await axios.post(
@@ -16,13 +17,15 @@ export const generatePaypalToken = async ()=>{
             response_type: "id_token",
             intent: "sdk_init",
         }),
-        { Authorization: `Basic ${BASE64_ENCODED_CLIENT_ID_AND_SECRET}` }
+        { 
+            headers:{ 
+                Authorization: `Basic ${BASE64_ENCODED_CLIENT_ID_AND_SECRET}` 
+            } 
+        }
     )
-    const json = await request.json();
-    console.log(json)
     
-    return json.access_token;
-}
+    return response.data.access_token
+})
 
 export const generateToken = (data)=>{
     return jwt.sign(data,process.env.JWT_KEY,{expiresIn:process.env.JWT_EXPIRES})

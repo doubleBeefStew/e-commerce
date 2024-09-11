@@ -88,9 +88,6 @@ export const updateOrder = asyncHandler(async (req,res,next)=>{
     const {totalPrice,address,paymentMethod,products,shippingFee,shippingMethod,voucherCode,discount,status,paidAt,shippedAt,deliveredAt,returnedAt} = req.body
 
     const updatedOrder = await orderModel.findById(id)
-    console.log(req.body)
-    console.log(id, status)
-    
 
     totalPrice && (updatedOrder.totalPrice = totalPrice)
     address && (updatedOrder.address = address)

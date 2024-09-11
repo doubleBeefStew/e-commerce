@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import env from '../../../../env'
 
-export const sheepopayPayment = createAsyncThunk('payment/',async(data)=>{
+export const sheepopayPayment = createAsyncThunk('payment/sheepopay',async(data)=>{
     try{
         const response = await axios.post(`${env.API_URL}/payment/sheepopay`,data,{withCredentials:true})
         return response.data
@@ -13,6 +13,7 @@ export const sheepopayPayment = createAsyncThunk('payment/',async(data)=>{
 })
 
 const initialState = {
+
     isLoadingPayment:false,
     redirect:false,
     error:null,

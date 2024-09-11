@@ -42,7 +42,7 @@ export const validateUserInfo = validateValues([
         .isIn(roles).withMessage(`role must be one of these options: ${roles}`),
 ])
 
-export const validateProductInfo = validateValues([
+export const validateCreateProduct = validateValues([
     body('name').escape().trim()
         .notEmpty().withMessage(validationData.product_name_required)
         .isLength({min:5,max:150}).withMessage(validationData.product_name_length),
@@ -52,10 +52,22 @@ export const validateProductInfo = validateValues([
     body('initialPrice').escape().trim()
         .notEmpty().withMessage(validationData.product_init_price_required)
         .isInt({gt:99}).withMessage(validationData.product_init_price_limit),
-    body('discountPrice').escape().trim()
-        .optional()
+    body('discountPrice').escape().trim().optional()
         .isInt({gt:99}).withMessage(validationData.product_disc_price_limit),
     body('stock').escape().trim()
+        .isInt({gt:0}).withMessage(validationData.stock_amount)
+])
+
+export const validateUpdateProduct = validateValues([
+    body('name').escape().trim().optional()
+        .isLength({min:5,max:150}).withMessage(validationData.product_name_length),
+    body('description').escape().trim().optional()
+        .isLength({max:1500}).withMessage(validationData.product_description_length),
+    body('initialPrice').escape().trim().optional()
+        .isInt({gt:99}).withMessage(validationData.product_init_price_limit),
+    body('discountPrice').escape().trim().optional()
+        .isInt({gt:99}).withMessage(validationData.product_disc_price_limit),
+    body('stock').escape().trim().optional()
         .isInt({gt:0}).withMessage(validationData.stock_amount)
 ])
 

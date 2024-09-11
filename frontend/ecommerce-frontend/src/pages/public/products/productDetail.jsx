@@ -77,16 +77,21 @@ const ProductDetail = () => {
                 isLoading ? 
                     <p>loading..</p> :
                     <Row className='bg-white p-3 gx-5'>
-                        <Col className='col-12 col-md-5 pb-5 px-0'>
+                        <Col className='col-12 col-md-5 px-0'>
                             <ProductCarousel images={productData.images}/>
                         </Col>
                         <Col className='d-flex flex-column justify-content-between col-12 col-md-7'>
-                            <div>
-                                <h5>{productData.name}</h5>
-                                <h1 className='text-orange'>Rp{priceFormat(productData.initialPrice)}</h1>
-                                <small>{productData.description}</small>
-                            </div>
                             <Row>
+                                <Col>
+                                    <h5>{productData.name}</h5>
+                                    <h1 className='text-orange'>Rp{priceFormat(productData.initialPrice)}</h1>
+                                    <small>{productData.description}</small>
+                                </Col>
+                            </Row>
+                            <Row className='gy-3'>
+                                <Col className='col-12 text-center'>
+                                <small className='text-muted'>{productData.stock} units left</small>
+                                </Col>
                                 <Col>
                                     <button 
                                         className='w-100 btn btn-outline-primary'
@@ -94,7 +99,6 @@ const ProductDetail = () => {
                                     >Add to Basket</button>
                                 </Col>
                                 <Col>
-                                    {/* TODO: make buy now feature */}
                                     <button className='w-100 btn btn-primary' onClick={()=>{buyNow()}}>Buy Now</button>
                                 </Col>
                             </Row>

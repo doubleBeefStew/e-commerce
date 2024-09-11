@@ -124,7 +124,10 @@ const App = () => {
     },[cartData._id,userData._id,cartError])
 
     return (<>
-        <PayPalScriptProvider options={{ clientId: "test", components: "buttons", currency: "USD" }}>
+        <PayPalScriptProvider options={{ 
+            clientId: "AQvyqBwM3U7jRILb7xxUnDYTdou3kFj8z-KvEWey2bJTV10AfZdi_VdR3YlEMbiG0Y4PZR-dxrAH1utn", 
+            components: "buttons", 
+            currency: "USD" }}>
             <RouterProvider router={router} />
         </PayPalScriptProvider>
     </>)
