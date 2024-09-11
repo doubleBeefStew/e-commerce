@@ -71,7 +71,6 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
             }
         }
     })
-    console.log(productUpdates)
     
     const result = await productModel.bulkWrite(productUpdates)
 

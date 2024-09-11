@@ -20,54 +20,42 @@ const handleResponse = async (response)=>{
     }
 }
 
-export const createPaypalOrder = asyncHandler(async (req,res,next)=>{
-
+//need orderId, userId
+export const createPaypalPayment = asyncHandler(async (req,res,next)=>{
+    res.status(200).json({message:'create paypal order'})
 })
 
-export const payment = asyncHandler(async (req,res,next)=>{
-    const {data,pin} = req.body
-    const foundItems = []
+export const capturePaypalPayment = asyncHandler(async (req,res,next)=>{
+    res.status(200).json({message:'capture paypal order'})
+})
+
+export const sheepopayPayment = asyncHandler(async (req,res,next)=>{
+    const {orderId,pin} = req.body
+    const user = req.user
     
     if(req.user.role!='user')
         throw new unauthorizedError('please login as user to pay','ODR-401')
 
     if(pin.toString()=='123456'){
-        if(!data.products)
-            throw new badRequestError('no products','PAY-400')
 
         //update user balance
-        const foundUser = await userModel.findById(data.userId)
+        const foundUser = await userModel.findById(user._id)
+        const foundOrder = await orderModel.findById(orderId)
+
         if(foundUser.sheepoPayBalance){
-            if(foundUser.sheepoPayBalance - data.totalPrice < 0)
-                throw new badRequestError('insufficient balance','PAY-400')
+            if(foundUser.sheepoPayBalance - foundOrder.totalPrice < 0)
+                throw new badRequestError('insufficient SheepoPay balance','PAY-400')
             else{
-                foundUser.sheepoPayBalance -= data.totalPrice
+                foundUser.sheepoPayBalance -= foundOrder.totalPrice
             }
         }
         else
             throw new badRequestError(`SheepoPay is not available for this user`, 'PAY-400')
         
-        //update order status
-        const foundOrder = await orderModel.findById(data._id)
         foundOrder.status='PAID'
         
-        //update stock
-        for (const item of data.products) {
-            const foundItem = await productModel.findById(item.productId)
-            if (!foundItem)
-                throw new badRequestError(`Product with ID ${item.productId} not found`, 'PAY-404')
-            if (foundItem.stock - item.quantity < 0) {
-                throw new badRequestError(`Insufficient stock for product ${item.productId}`, 'PAY-400')
-            }
-            foundItems.push({foundItem,quantity: item.quantity})
-        }
-
         foundUser.save()
         foundOrder.save()
-        for (const { foundItem, quantity } of foundItems) {
-            foundItem.stock -= quantity
-            foundItem.save()
-        }
             
         res.status(200).json({output:{message:'OK',payload:'payment successful'}})
     }else

@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import env from '../../../../env'
 
-export const createPayment = createAsyncThunk('payment/',async(data)=>{
+export const sheepopayPayment = createAsyncThunk('payment/',async(data)=>{
     try{
-        const response = await axios.post(`${env.API_URL}/payment`,data,{withCredentials:true})
+        const response = await axios.post(`${env.API_URL}/payment/sheepopay`,data,{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -37,14 +37,14 @@ const paymentSlice = createSlice({
     },
     extraReducers:(builder)=>{
         builder
-        .addCase(createPayment.pending,(state)=>{
+        .addCase(sheepopayPayment.pending,(state)=>{
             state.isLoadingPayment = true
         })
-        .addCase(createPayment.fulfilled,(state,action)=>{
+        .addCase(sheepopayPayment.fulfilled,(state,action)=>{
             state.redirect = true
             state.isLoadingPayment = false
         })
-        .addCase(createPayment.rejected,(state,action)=>{
+        .addCase(sheepopayPayment.rejected,(state,action)=>{
             state.isLoadingPayment = false
             state.error = action.error.message
         })
