@@ -39,26 +39,25 @@ export const createPaypalPayment = asyncHandler(async (req,res,next)=>{
 })
 
 export const capturePaypalPayment = asyncHandler(async (req,res,next)=>{
-    const { orderID }= req.body
-    // const foundOrder = await orderModel.findById(orderId)
+    const { paypalOrderId, orderId }= req.body
+    const foundOrder = await orderModel.findById(orderId)
     const accessToken = await generatePaypalToken()
-    
-    try{
-        const response  = await axios.post(`${process.env.PAYPAL_BASE_URL}/v2/checkout/orders/${orderID}/capture`,{},{
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
-                // Uncomment one of these to force an error for negative testing (in sandbox mode only).
-                // "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
-                // "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
-                // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
-            }
-        })
-        res.status(response.status).json(response.data)
-    }catch(err){
-        console.log(err)
-    }
 
+    const response  = await axios.post(`${process.env.PAYPAL_BASE_URL}/v2/checkout/orders/${paypalOrderId}/capture`,{},{
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+            // "PayPal-Mock-Response": '{"mock_application_codes": "INSTRUMENT_DECLINED"}'
+            // "PayPal-Mock-Response": '{"mock_application_codes": "TRANSACTION_REFUSED"}'
+            // "PayPal-Mock-Response": '{"mock_application_codes": "INTERNAL_SERVER_ERROR"}'
+        }
+    })
+    if(response.data.status=='COMPLETED'){
+        foundOrder.status='PAID'
+        foundOrder.save()
+        
+        res.status(response.status).json(response.data)
+    }
 })
 
 export const sheepopayPayment = asyncHandler(async (req,res,next)=>{
