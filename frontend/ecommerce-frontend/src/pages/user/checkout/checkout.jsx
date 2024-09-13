@@ -116,6 +116,7 @@ const Checkout = ()=>{
                     return {
                         productId:item.productId,
                         productName:item.productName,
+                        productPrice:item.productPrice,
                         productUrl:item.productUrl,
                         quantity:item.quantity,
                     }

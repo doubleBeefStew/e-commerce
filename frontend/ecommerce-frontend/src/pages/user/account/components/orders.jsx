@@ -3,14 +3,18 @@ import Col from 'react-bootstrap/Col'
 import Button from "react-bootstrap/Button"
 import { useEffect,useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { loadOrders, updateOrder, updateOrders } from '../../../../redux/slices/orders'
+import { cancelOrder,cancelOrders,loadOrders,setCurrentCheckout } from '../../../../redux/slices/orders'
 import priceFormat from '../../../../utils/priceFormat'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 const Orders = ()=>{
-    const {ordersData,isLoadingOrders} = useSelector((state)=>{return state.orders})
+    const {ordersData,currentCheckout,isLoadingOrders} = useSelector((state)=>{return state.orders})
     const [status,setStatus] = useState('WAITING FOR PAYMENT')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    useEffect(()=>{
+    },[currentCheckout])
 
     useEffect(()=>{
         dispatch(loadOrders())
@@ -20,12 +24,14 @@ const Orders = ()=>{
         setStatus(status)
     }
 
-    const cancelOrder = (item)=>{
-        dispatch(updateOrders({
-            id:item._id,
-            orderData:{ status:'CANCELLED' }
-        }))
-        dispatch(updateOrder({...item, status:'CANCELLED'}))
+    const cancel = (item)=>{
+        dispatch(cancelOrders(item._id))
+        dispatch(cancelOrder(item._id))
+    }
+
+    const pay = (item)=>{
+        dispatch(setCurrentCheckout(item))
+        navigate('/payment')
     }
 
     return(
@@ -103,7 +109,7 @@ const Orders = ()=>{
                                             <small>x {product.quantity || 0}</small>
                                         </Col>
                                         <Col className='col-auto text-center'>
-                                            <small className='m-0'>Rp{priceFormat(item.products[0]?.productPrice || 0)}</small>
+                                            <small className='m-0'>Rp{priceFormat(product.price || 0)}</small>
                                         </Col>
                                     </Row>)
                                 })
@@ -111,7 +117,13 @@ const Orders = ()=>{
                             <hr/>
                             <Row className='align-items-center justify-content-between px-3'>
                                 <Col className='col-6 text-start'>
-                                    <Button onClick={()=>{cancelOrder(item)}}>Cancel</Button>
+                                {
+                                    item.status == 'WAITING FOR PAYMENT' && 
+                                    (<>
+                                        <Button className='me-2' onClick={()=>{pay(item)}}>Pay</Button>
+                                        <Button onClick={()=>{cancel(item)}}>Cancel</Button>
+                                    </>)
+                                }
                                 </Col>
                                 <Col className='col-6 text-end'>
                                     <small className='m-0'>Total Rp{priceFormat(item.totalPrice || 0)}</small>

@@ -24,7 +24,7 @@ import Profile from './pages/user/account/components/profile'
 import Orders from './pages/user/account/components/orders'
 import { loadUser, updateUser } from './redux/slices/user'
 import { createCart, loadCart } from './redux/slices/cart'
-import SuccessPage from './components/successPage/SuccessPage'
+import SuccessPage from './components/notifPages/successPage'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 
 const router = createBrowserRouter([{
@@ -42,6 +42,10 @@ const router = createBrowserRouter([{
     },{
         path: 'register/activation/:token',
         element: <Activation />,
+    }, {
+        path: 'payment/success',
+        element: <SuccessPage/>,
+        // element: <Protected><SuccessPage/></Protected>,
     },{
         path: '/',
         element: <AppContainer />,
@@ -91,9 +95,6 @@ const router = createBrowserRouter([{
                     }, {
                         path: 'payment',
                         element: <Protected><Payment/></Protected>,
-                    }, {
-                        path: 'payment/success',
-                        element: <Protected><SuccessPage/></Protected>,
                     }
                 ]
             }

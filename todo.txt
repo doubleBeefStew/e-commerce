@@ -1,7 +1,8 @@
-- create lottie modal: negative, positive, loading
+- create pay & cancel button on order list page
 
-- create pay button on order list page
 - create cancel order endpoint
 - revert stock when cancel order
-- fix error message on login
+
+- create lottie modal: negative, positive, loading
+
 - create category

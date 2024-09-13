@@ -57,7 +57,6 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
         shippingMethod})
 
     const productUpdates = products.map((product)=>{
-        
         return {
             updateOne:{
                 filter:{
@@ -65,7 +64,8 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
                 },
                 update: {
                     $inc: {
-                        stock: -product.quantity
+                        stock: -product.quantity,
+                        sold_out: product.quantity
                     }
                 }
             }
@@ -73,11 +73,49 @@ export const createOrder = asyncHandler(async (req,res,next)=>{
     })
     
     const result = await productModel.bulkWrite(productUpdates)
-
     res.status(201).json({output:{message:'OK',payload:createdOrder}})
 })
 
-//TODO: create cancel order
+export const cancelOrder = asyncHandler(async (req,res,next)=>{
+    const userId = req.user._id
+    const {id} = req.params
+
+    if(req.user.role!='admin' && req.user.role!='user')
+        throw new unauthorizedError('please login to cancel order','ODR-401')
+
+    const foundOrder = await orderModel.findById(id)
+    if (!foundOrder)
+        throw new notFoundError('order not found','ODR-404')
+
+    if(foundOrder.userId.toString() != userId && req.user.role!='admin')
+        throw new unauthorizedError('you cannot access this order','ODR-401')
+
+    if(foundOrder.status == 'CANCELLED')
+        throw new badRequestError('order is already cancelled','ODR-400')
+
+    foundOrder.status = 'CANCELLED'
+    foundOrder.save()
+
+    const productUpdates = foundOrder.products.map((item)=>{
+        return {
+            updateOne:{
+                filter:{
+                    _id: item.productId
+                },
+                update: {
+                    $inc: {
+                        stock: item.quantity,
+                        sold_out: -item.quantity
+                    }
+                }
+            }
+        }
+    })
+
+    const result = await productModel.bulkWrite(productUpdates)
+
+    res.status(200).json({output:{message:'OK',payload:result}})
+})
 
 export const updateOrder = asyncHandler(async (req,res,next)=>{
     if(req.user.role!='admin' && req.user.role!='user')

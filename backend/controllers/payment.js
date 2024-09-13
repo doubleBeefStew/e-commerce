@@ -9,8 +9,13 @@ dotenv.config()
 
 //need orderId, userId
 export const createPaypalPayment = asyncHandler(async (req,res,next)=>{
+    
     const { orderId }= req.body
+    console.log(orderId)
     const foundOrder = await orderModel.findById(orderId)
+    if(foundOrder.status=='PAID')
+        throw badRequestError('order already paid','400')
+
     const accessToken = await generatePaypalToken()
 
     const payload = {

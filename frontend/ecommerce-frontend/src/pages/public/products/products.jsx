@@ -10,7 +10,7 @@ const Products = ()=>{
     const products = useSelector((state)=>{return state.products})
 
     useEffect(()=>{
-        !products.productsData && (dispatch(loadProducts()))
+        dispatch(loadProducts())
     },[])
     
     return (

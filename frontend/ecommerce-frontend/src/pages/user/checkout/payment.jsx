@@ -81,7 +81,7 @@ const Payment = ()=>{
                                 }} 
                                 createOrder={async ()=>{
                                     try{
-                                        const response = await axios.post(`${env.API_URL}/payment/paypal/create`,currentCheckout._id,{withCredentials:true})
+                                        const response = await axios.post(`${env.API_URL}/payment/paypal/create`,{ orderId:currentCheckout._id },{withCredentials:true})
                                         
                                         const id = response.data.id
                                         if(id)

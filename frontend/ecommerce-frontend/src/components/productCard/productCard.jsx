@@ -28,7 +28,7 @@ const ProductCard = ({product})=>{
                                     </>)
                                 }
                             </div>    
-                            <div className='col-6 text-end'>0 sold</div>    
+                            <div className='col-6 text-end'>{product.sold_out} sold</div>    
                         </div>
                 </Card.Body>
             </Card>
