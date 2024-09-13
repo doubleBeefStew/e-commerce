@@ -34,7 +34,7 @@ export const updateCart = createAsyncThunk('cart/update', async()=>{
 
 const initialState = {
     cartData:JSON.parse(localStorage.getItem('cartData'))? JSON.parse(localStorage.getItem('cartData')):[],
-    isLoadingCart:true,
+    isLoadingCart:false,
     cartError:null
 }
 
@@ -121,7 +121,6 @@ const cartSlice = createSlice({
         })
         .addCase(updateCart.fulfilled,(state,action)=>{
             state.cartData = action.payload.output.payload
-            
             localStorage.setItem(state.cartData,action.payload.output.payload)
             state.isLoadingCart=false
         })

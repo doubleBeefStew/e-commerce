@@ -56,7 +56,7 @@ export const deleteOrders = createAsyncThunk('orders/delete',async(id)=>{
 
 const initialState = {
     ordersData:JSON.parse(localStorage.getItem('ordersData'))? JSON.parse(localStorage.getItem('ordersData')):[],
-    isLoadingOrders:true,
+    isLoadingOrders:false,
     redirectToPayment:false,
     currentCheckout:null,
     error:null,
@@ -128,6 +128,7 @@ const orderSlice = createSlice({
             state.error = action.error.message
         })
         .addCase(createOrders.pending,(state)=>{
+            state.isLoadingOrders = true
         })
         .addCase(createOrders.fulfilled,(state,action)=>{
             state.isLoadingOrders = false

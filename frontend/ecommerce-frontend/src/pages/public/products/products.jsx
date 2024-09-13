@@ -7,7 +7,7 @@ import ProductCard from '../../../components/productCard/productCard'
 
 const Products = ()=>{
     const dispatch = useDispatch()
-    const products = useSelector((state)=>{return state.products})
+    const {isLoadingProducts,productsData} = useSelector((state)=>{return state.products})
 
     useEffect(()=>{
         dispatch(loadProducts())
@@ -16,8 +16,7 @@ const Products = ()=>{
     return (
         <Row className='vh-auto py-5 px-2 px-sm-5'>
         {
-            products.isLoadingProducts? 'Loading':
-            products.productsData.map((item)=>{
+            productsData && productsData.map((item)=>{
                 return (<Col className='col-6 col-md-4 col-lg-3 col-xl-2 py-2' key={item._id}>
                         <ProductCard product={item}></ProductCard>
                 </Col>)

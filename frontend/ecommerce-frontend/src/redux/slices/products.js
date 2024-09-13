@@ -14,7 +14,7 @@ export const loadProducts = createAsyncThunk('products/',async(id)=>{
 
 const initialState = {
     productsData:null,
-    isLoadingProducts:true,
+    isLoadingProducts:false,
     error:null,
 }
 

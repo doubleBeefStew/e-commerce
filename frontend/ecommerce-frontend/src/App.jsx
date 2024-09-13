@@ -26,6 +26,7 @@ import { loadUser, updateUser } from './redux/slices/user'
 import { createCart, loadCart } from './redux/slices/cart'
 import SuccessPage from './components/notifPages/successPage'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { loadProducts } from './redux/slices/products'
 
 const router = createBrowserRouter([{
     path: '/',

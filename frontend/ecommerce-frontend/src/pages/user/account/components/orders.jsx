@@ -77,8 +77,7 @@ const Orders = ()=>{
         </Col>
             {
                 // Products
-                isLoadingOrders? 'Loading..' :
-                ordersData.map((item)=>{
+                ordersData && ordersData.map((item)=>{
                     return (
                         (item.status == status || status == 'ALL') &&
                         <Col className='bg-light py-4 pt-2' key={item._id}>

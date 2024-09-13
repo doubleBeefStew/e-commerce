@@ -13,7 +13,6 @@ export const sheepopayPayment = createAsyncThunk('payment/sheepopay',async(data)
 })
 
 const initialState = {
-
     isLoadingPayment:false,
     redirect:false,
     error:null,
