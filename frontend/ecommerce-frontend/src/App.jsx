@@ -44,8 +44,7 @@ const router = createBrowserRouter([{
         element: <Activation />,
     }, {
         path: 'payment/success',
-        element: <SuccessPage/>,
-        // element: <Protected><SuccessPage/></Protected>,
+        element: <Protected><SuccessPage/></Protected>,
     },{
         path: '/',
         element: <AppContainer />,

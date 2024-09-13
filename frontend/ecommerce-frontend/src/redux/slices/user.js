@@ -2,6 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import env from '../../../../env'
 
+export const register = createAsyncThunk('user/register',async(data)=>{
+    try{
+        const response = await axios.post(`${env.API_URL}/auth/register`,data,{withCredentials:true})
+        return response.data
+    }catch(err){
+        console.error(err.response.data.error.message)
+        throw new Error(err.response.data.error.message)
+    }
+})
+
 export const login = createAsyncThunk('user/login',async(data)=>{
     try{
         const response = await axios.post(`${env.API_URL}/auth/login`,data,{withCredentials:true})
@@ -64,6 +74,16 @@ const userSlice = createSlice({
     },
     extraReducers:(builder)=>{
         builder
+        .addCase(register.pending,(state)=>{
+            state.isLoadingUser=true
+        })
+        .addCase(register.fulfilled,(state,action)=>{
+            state.isLoadingUser=false
+        })
+        .addCase(register.rejected,(state,action)=>{
+            state.isLoadingUser=false
+            state.isUserError=true
+        })
         .addCase(login.pending,(state)=>{
             state.isLoadingUser=true
         })
