@@ -8,7 +8,6 @@ const MainLayout = ()=>{
             <Header/>
             <div className="pt-3">
                 <Outlet/>
-
             </div>
         </>
     )

@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadProducts } from '../../../redux/slices/products'
 import ProductCard from '../../../components/productCard/productCard'
+import Loading from '../../../components/notifPages/loading'
 
 const Products = ()=>{
     const dispatch = useDispatch()
@@ -13,7 +14,9 @@ const Products = ()=>{
         dispatch(loadProducts())
     },[])
     
-    return (
+    return (<>
+    {
+        isLoadingProducts ? <Loading /> : 
         <Row className='vh-auto py-5 px-2 px-sm-5'>
         {
             productsData && productsData.map((item)=>{
@@ -23,7 +26,8 @@ const Products = ()=>{
             })
         }
         </Row>
-)
+    }
+    </>)
 }
 
 export default Products

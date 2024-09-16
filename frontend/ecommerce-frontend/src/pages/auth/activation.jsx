@@ -48,27 +48,29 @@ const Activation = ()=>{
     },[])
 
     return (<>
+    {
+        loading? <Loading/> : 
         <Container>
-        <Row className='vh-100'>
-        <Col className='d-flex flex-column align-items-center justify-content-center text-center'>
-            {
-                loading? <Loading/> : 
-                error?
-                    (<>
-                        <Lottie style={style} animationData={error} loop={false}/>
-                        <h1>Verification Failed.</h1>
-                        <p>Please <Link to={'/register'}>re-register</Link> your account.</p>
-                    </>)
-                    :
-                    (<>
-                        <Lottie style={style} animationData={error} loop={false}/>
-                        <h1>Verification Successful.</h1>
-                        <p>You will be automatically redirected to login page or click <Link to={'/login'}>here</Link> to continue.</p>
-                    </>)
-            }
-        </Col>
-        </Row>
+            <Row className='vh-100'>
+                <Col className='d-flex flex-column align-items-center justify-content-center text-center'>
+                    {
+                        error?
+                            (<>
+                                <Lottie style={style} animationData={error} loop={false}/>
+                                <h1>Verification Failed.</h1>
+                                <p>Please <Link to={'/register'}>re-register</Link> your account.</p>
+                            </>)
+                            :
+                            (<>
+                                <Lottie style={style} animationData={error} loop={false}/>
+                                <h1>Verification Successful.</h1>
+                                <p>You will be automatically redirected to login page or click <Link to={'/login'}>here</Link> to continue.</p>
+                            </>)
+                    }
+                </Col>
+            </Row>
         </Container>
+    }
     </>)
 }
 

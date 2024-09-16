@@ -2,6 +2,7 @@ import Col from "react-bootstrap/Col"
 import Row from "react-bootstrap/Row"
 import { useSelector } from "react-redux"
 import { useNavigate,Navigate, Outlet, Link } from "react-router-dom"
+import Loading from "../../../components/notifPages/loading"
 
 const AccountLayout = ()=>{
     const navigate = useNavigate()
@@ -12,9 +13,9 @@ const AccountLayout = ()=>{
     return (<>
         {
             isLoadingUser?
-                <p>loading..</p>: //make loader component
+                <Loading /> :
             (!userData ?
-                <Navigate to={'/'} replace/>:
+                <Navigate to={'/'} replace/> :
                 (<>
                     <Row className="vh-auto py-5 px-2 px-sm-5 gx-2">
                         <Col className="col-12 col-sm-2 vh-auto p-4 py-0">

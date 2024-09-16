@@ -26,7 +26,6 @@ import { loadUser, updateUser } from './redux/slices/user'
 import { createCart, loadCart } from './redux/slices/cart'
 import SuccessPage from './components/notifPages/successPage'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
-import { loadProducts } from './redux/slices/products'
 
 const router = createBrowserRouter([{
     path: '/',
@@ -60,7 +59,7 @@ const router = createBrowserRouter([{
                         element: <HomePage />
                     }, {
                         path: 'user/',
-                        element: <Protected><AccountLayout /></Protected>,//protected route + account page(sidebar & outlet)
+                        element: <Protected><AccountLayout /></Protected>,
                         children:[
                             {
                                 index: true,

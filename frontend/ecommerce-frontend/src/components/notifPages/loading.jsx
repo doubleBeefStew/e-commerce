@@ -8,10 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 const Loading = ()=>{
     const style = { height: '30%' }
-    const navigate = useNavigate()
-
-    console.log('loading page is called')
-    
 
     return (<>
     <Container>

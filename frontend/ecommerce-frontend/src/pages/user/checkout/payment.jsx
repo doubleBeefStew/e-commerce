@@ -10,12 +10,13 @@ import { sheepopayPayment, setRedirect } from "../../../redux/slices/payment"
 import { removeItem, updateCart } from "../../../redux/slices/cart"
 import axios from "axios"
 import env from "../../../../../env"
+import Loading from "../../../components/notifPages/loading"
 
 
 const Payment = ()=>{
-    const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
+    const {cartData} = useSelector((state)=>{ return state.cart })
     const {currentCheckout} = useSelector((state)=>{ return state.orders })
-    const {isLoadingPayment,redirect,error} = useSelector((state)=>{ return state.payment })
+    const {isLoadingPayment,redirect} = useSelector((state)=>{ return state.payment })
     const [pin,setPin] = useState('')
     const pinLength = 6
     const dispatch = useDispatch()
@@ -49,6 +50,8 @@ const Payment = ()=>{
     }
 
     return (<>
+    {
+        isLoadingPayment ? <Loading /> : 
         <Container>
         <Row className='vh-100'>
             <Col className='d-flex flex-column align-items-center justify-content-center text-center'>
@@ -128,6 +131,7 @@ const Payment = ()=>{
             </Col>
         </Row>
         </Container>
+    }
     </>)
 }
 

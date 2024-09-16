@@ -8,6 +8,7 @@ import Counter from './components/counter'
 import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import Button from 'react-bootstrap/Button'
+import Loading from '../../../components/notifPages/loading'
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
@@ -85,8 +86,7 @@ const Cart = ()=>{
     
     return (<>
     {
-        isLoadingCart?
-        <p>loading..</p>:
+        isLoadingCart? <Loading /> :
         <Row className="flex-column py-5 px-0 px-sm-5 gy-2">
             {
                 cartData.products?
@@ -168,7 +168,8 @@ const Cart = ()=>{
                 </Col>
                 </> : 
                 <Col>
-                    <p>Cart is Empty!</p>
+                    <p>Cart is Empty!</p> 
+                    {/* make empty cart lottie */}
                 </Col>
             }
         </Row>

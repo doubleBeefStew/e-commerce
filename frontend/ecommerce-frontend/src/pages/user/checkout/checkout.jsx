@@ -8,6 +8,7 @@ import { createOrders,setRedirect } from "../../../redux/slices/orders"
 import Dropdown from "react-bootstrap/Dropdown"
 import Alert from "react-bootstrap/Alert"
 import { useLocation, useNavigate } from "react-router-dom"
+import Loading from "../../../components/notifPages/loading"
 
 // export interface checkedOutProducts {
 //     productId : String;
@@ -18,7 +19,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 // }
 
 const Checkout = ()=>{
-    const {redirectToPayment,error} = useSelector((state)=>{ return state.orders })
+    const {isLoadingOrders,redirectToPayment,error} = useSelector((state)=>{ return state.orders })
     const user = useSelector((state)=>{return state.user})
     const [productList,setProductsList] = useState([])
     const dispatch = useDispatch()
@@ -134,6 +135,7 @@ const Checkout = ()=>{
 
     return (<>
     {
+        isLoadingOrders ? <Loading /> : 
         <Row className="flex-column py-5 px- px-sm-5 gy-2">
             <Col className='py-4 bg-light'>
                 <Row className='align-items-center justify-content-between px-3'>

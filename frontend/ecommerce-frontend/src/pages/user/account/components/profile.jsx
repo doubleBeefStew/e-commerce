@@ -13,9 +13,10 @@ import { CgProfile } from "react-icons/cg"
 import ProfilePicture from '../../../../components/profilePicture/profilePicture'
 import styles from '../account.module.css'
 import {setAlert,updateUser} from '../../../../redux/slices/user'
+import Loading from '../../../../components/notifPages/loading'
 
 const Profile = ()=>{
-    const {userData,alert} = useSelector((state)=>{ return state.user })
+    const {userData,isLoadingUser,alert} = useSelector((state)=>{ return state.user })
     const [displayedImage,setDisplayedImage] = useState(userData.avatar||'')
     const [selectedImage,setSelectedImage] = useState(null)
     const selectPicture = useRef(null)
@@ -64,6 +65,8 @@ const Profile = ()=>{
     }
 
     return(<>
+    {
+        isLoadingUser ? <Loading /> : 
         <Form onSubmit={handleSubmit}>
         <Row className='bg-white p-4'>
             <Col className='col-12 col-md-8 order-2 order-md-1'>
@@ -149,6 +152,7 @@ const Profile = ()=>{
             </Col>
         </Row>
         </Form>
+    }
     </>)
 }
 

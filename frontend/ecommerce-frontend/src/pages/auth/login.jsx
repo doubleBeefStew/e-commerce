@@ -44,6 +44,8 @@ const Login = ()=>{
     })
 
     return (<>
+        {
+            isLoadingUser ? <Loading/> :
             <Row className='vh-100'>
                 <Col className='col-12 col-sm-6 d-flex flex-column justify-content-center px-sm-5'>
                     <Card>
@@ -105,6 +107,7 @@ const Login = ()=>{
                     </Card>
                 </Col>
             </Row>
+        } 
     </>)
 }
 

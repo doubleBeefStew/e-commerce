@@ -11,9 +11,12 @@ import axios from 'axios'
 import {useFormik} from 'formik'
 import registerSchema from "../../validationSchema/registerSchema"
 import { useState } from "react"
+import Loading from "../../components/notifPages/loading"
+import { useSelector } from "react-redux"
 
 const Register = ()=>{
     const [alert, setAlert] = useState({ message:'', type:'' })
+    const {isLoadingUser} = useSelector((state)=>{return state.user})
 
     const initialValues= {
         email:'',
@@ -47,7 +50,9 @@ const Register = ()=>{
     })
 
     return (<>
-            <Row className='vh-100'>
+    {
+        isLoadingUser ? <Loading /> : 
+        <Row className='vh-100'>
             <Col className='col-12 col-sm-6 d-flex flex-column justify-content-center px-sm-5'>
                 <Card className='border-sm-0'>
                     <Card.Body>
@@ -116,7 +121,8 @@ const Register = ()=>{
                     </Card.Body>
                 </Card>
             </Col>
-            </Row>
+        </Row>
+    }
     </>)
 }
 

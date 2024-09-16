@@ -15,8 +15,6 @@ export const loadOrders = createAsyncThunk('orders/',async(id)=>{
 export const cancelOrders = createAsyncThunk('orders/cancel',async(id)=>{
     try{
         const response = await axios.post(`${env.API_URL}/orders/cancel/${id}`,{},{withCredentials:true})
-        console.log(response)
-         
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -95,8 +93,6 @@ const orderSlice = createSlice({
             const foundOrder = state.ordersData.find((item)=>{
                 return item._id == id
             })
-            console.log(foundOrder)
-
             if(foundOrder){
                 foundOrder.status = 'CANCELLED'
             }
