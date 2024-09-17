@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler"
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import userModel from "../models/user"
+import userModel from "../models/user.js"
 import { validateToken } from "../utils/token"
 import { badRequestError } from "../errors/customErrors"
 dotenv.config()

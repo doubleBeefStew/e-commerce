@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler"
-import orderModel from "../models/order"
-import productModel from "../models/products"
+import orderModel from "../models/order.js"
+import productModel from "../models/products.js"
 import { badRequestError, notFoundError, unauthorizedError } from "../errors/customErrors"
 
 export const getOrder = asyncHandler(async (req,res,next)=>{

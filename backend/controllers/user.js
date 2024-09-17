@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler"
-import userModel from "../models/user"
+import userModel from "../models/user.js"
 import cloudinary from "../middlewares/cloudinary"
 import { clearStorage } from "../middlewares/multer"
 import { notFoundError } from "../errors/customErrors"
