@@ -1,4 +1,4 @@
-import cloudinary from "../middlewares/cloudinary"
+import cloudinary from "../middlewares/cloudinary.js"
 
 const uploadCloudinary = async (files,folderPath)=>{
     const imageData = await Promise.all(files.map(async (file)=>{

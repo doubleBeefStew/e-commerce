@@ -1,10 +1,10 @@
 import { body,validationResult } from "express-validator"
-import { badRequestError } from "../errors/customErrors"
-import { validationData } from "../errors/validationData"
-import { roles } from "../errors/validationData"
-import { shippingMethod } from "../errors/validationData"
-import { paymentMethod } from "../errors/validationData"
-import { status } from "../errors/validationData"
+import { badRequestError } from "../errors/customErrors.js"
+import { validationData } from "../errors/validationData.js"
+import { roles } from "../errors/validationData.js"
+import { shippingMethod } from "../errors/validationData.js"
+import { paymentMethod } from "../errors/validationData.js"
+import { status } from "../errors/validationData.js"
 
 const validateValues = (validations)=>{
     return [validations,(req,res,next)=>{

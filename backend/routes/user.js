@@ -1,7 +1,7 @@
 import Express from "express"
-import { getUser,updateUser as updateUser } from "../controllers/user"
-import { validateUserInfo } from "../middlewares/validations"
-import parseImage from "../middlewares/multer"
+import { getUser,updateUser as updateUser } from "../controllers/user.js"
+import { validateUserInfo } from "../middlewares/validations.js"
+import parseImage from "../middlewares/multer.js"
 
 const router = Express.Router()
 

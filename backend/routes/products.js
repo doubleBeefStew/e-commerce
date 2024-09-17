@@ -1,8 +1,8 @@
 import Express from "express"
-import parseImage from "../middlewares/multer"
-import { validateCreateProduct,validateUpdateProduct } from "../middlewares/validations"
-import isAuthenticated from "../middlewares/auth"
-import {getProduct,createProduct,updateProduct,deleteProduct} from "../controllers/products"
+import parseImage from "../middlewares/multer.js"
+import { validateCreateProduct,validateUpdateProduct } from "../middlewares/validations.js"
+import isAuthenticated from "../middlewares/auth.js"
+import {getProduct,createProduct,updateProduct,deleteProduct} from "../controllers/products.js"
 
 const router = Express.Router()
 

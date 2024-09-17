@@ -1,10 +1,10 @@
 import asyncHandler from "express-async-handler"
-import productModel from "../models/products"
-import { clearStorage } from "../middlewares/multer"
-import { notFoundError,unauthorizedError } from "../errors/customErrors"
+import productModel from "../models/products.js"
+import { clearStorage } from "../middlewares/multer.js"
+import { notFoundError,unauthorizedError } from "../errors/customErrors.js"
 import dotenv from 'dotenv'
-import uploadCloudinary from "../utils/uploadCloudinary"
-import cloudinary from "../middlewares/cloudinary"
+import uploadCloudinary from "../utils/uploadCloudinary.js"
+import cloudinary from "../middlewares/cloudinary.js"
 
 dotenv.config()
 

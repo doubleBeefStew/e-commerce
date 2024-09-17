@@ -1,5 +1,5 @@
 import Express from "express"
-import {sheepopayPayment,createPaypalPayment,capturePaypalPayment} from "../controllers/payment"
+import {sheepopayPayment,createPaypalPayment,capturePaypalPayment} from "../controllers/payment.js"
 
 const router = Express.Router()
 

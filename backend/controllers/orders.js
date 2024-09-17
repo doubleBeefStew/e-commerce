@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler"
 import orderModel from "../models/order.js"
 import productModel from "../models/products.js"
-import { badRequestError, notFoundError, unauthorizedError } from "../errors/customErrors"
+import { badRequestError, notFoundError, unauthorizedError } from "../errors/customErrors.js"
 
 export const getOrder = asyncHandler(async (req,res,next)=>{
     if(req.user.role!='admin' && req.user.role!='user')

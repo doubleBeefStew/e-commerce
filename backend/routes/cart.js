@@ -1,6 +1,6 @@
 import { Router } from "express"
 import isAuthenticated from '../middlewares/auth.js'
-import {createCart,getCart,updateCart,deleteCart} from "../controllers/cart" 
+import {createCart,getCart,updateCart,deleteCart} from "../controllers/cart.js" 
 
 const router = Router()
 

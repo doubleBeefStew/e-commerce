@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler"
 import cartModel from "../models/cart.js"
 import userModel from "../models/user.js"
-import { badRequestError } from "../errors/customErrors"
+import { badRequestError } from "../errors/customErrors.js"
 
 export const getCart = asyncHandler(async (req,res,next)=>{
     const {user} = req

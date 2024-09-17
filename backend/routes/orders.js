@@ -1,6 +1,6 @@
 import express from "express"
-import { getOrder, createOrder, updateOrder, deleteOrder, cancelOrder } from "../controllers/orders"
-import { validateCreateOrder, validateUpdateOrder } from "../middlewares/validations"
+import { getOrder, createOrder, updateOrder, deleteOrder, cancelOrder } from "../controllers/orders.js"
+import { validateCreateOrder, validateUpdateOrder } from "../middlewares/validations.js"
 
 const router = express.Router()
 
