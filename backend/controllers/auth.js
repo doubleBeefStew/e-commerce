@@ -1,6 +1,6 @@
 import sendEmail from "../utils/sendEmail.js"
 import asyncHandler from "express-async-handler"
-import userModel from "../models/user.tsx"
+import userModel from "../models/user.js"
 import {badRequestError, unauthorizedError} from "../errors/customErrors.js"
 import { generateToken,validateToken } from "../utils/token.js"
 import dotenv from 'dotenv'

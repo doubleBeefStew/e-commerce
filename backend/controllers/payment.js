@@ -2,7 +2,7 @@ import asyncHandler from "express-async-handler"
 import axios from 'axios'
 import {badRequestError, unauthorizedError} from "../errors/customErrors.js"
 import orderModel from "../models/order.js"
-import userModel from "../models/user.tsx"
+import userModel from "../models/user.js"
 import {generatePaypalToken} from '../utils/token.js'
 import dotenv from 'dotenv'
 dotenv.config()

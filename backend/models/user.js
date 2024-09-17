@@ -1,37 +1,37 @@
 import { Schema, model } from "mongoose"
 import bcrypt from "bcrypt"
 
-interface User {
-  name: string;
-  cartId: typeof Schema.ObjectId,
-  email: string;
-  password: string;
-  phoneNumber: string;
-  sheepoPayBalance: Number;
-  address: Address[];
-  role: string;
-  avatar: Avatar;
-  createdAt: Date;
-  resetPasswordToken: String;
-  resetPasswordTime: Date;
-  isActive: boolean;
-  comparePassword(password: string): boolean
-}
+// interface User {
+//   name: string;
+//   cartId: typeof Schema.ObjectId,
+//   email: string;
+//   password: string;
+//   phoneNumber: string;
+//   sheepoPayBalance: Number;
+//   address: Address[];
+//   role: string;
+//   avatar: Avatar;
+//   createdAt: Date;
+//   resetPasswordToken: String;
+//   resetPasswordTime: Date;
+//   isActive: boolean;
+//   comparePassword(password: string): boolean
+// }
 
-interface Address {
-  country: string;
-  city: string;
-  address: string;
-  zipCode: number;
-  addressType: string;
-}
+// interface Address {
+//   country: string;
+//   city: string;
+//   address: string;
+//   zipCode: number;
+//   addressType: string;
+// }
 
-interface Avatar {
-  public_id: string;
-  url: string;
-}
+// interface Avatar {
+//   public_id: string;
+//   url: string;
+// }
 
-const userSchema = new Schema<User>({
+const userSchema = new Schema({
   name: String,
   cartId:Schema.ObjectId,
   email: {
@@ -101,12 +101,12 @@ userSchema.pre('save', async function (next) {
 })
 
 // validate password
-userSchema.methods.comparePassword = async function (password: string) {
+userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password)
 }
 
 
-const userModel = model<User>('user', userSchema)
+const userModel = model('user', userSchema)
 userModel.createIndexes()
 
 
