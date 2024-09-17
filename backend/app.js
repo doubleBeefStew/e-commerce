@@ -42,7 +42,7 @@ app.use(express.static(path.resolve(__dirname,'./public')))
 
 
 // TEST PING
-app.use('/api/v1/ping',validateRegister,(req,res,next)=>{
+app.use('/api/v1/ping',(req,res,next)=>{
     res.status(200).json({output:{message:'OK'}})
 })
 
