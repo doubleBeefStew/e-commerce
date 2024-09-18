@@ -91,8 +91,14 @@ export const login = asyncHandler(async(req,res,next)=>{
         
 })
 
-export const logout = asyncHandler(async(req,res,next)=>{    
-    res.clearCookie('token')
+export const logout = asyncHandler(async(req,res,next)=>{ 
+    const options = {
+        expires:new Date(Date.now()),
+        // httpOnly:true,
+        // sameSite:"none",
+        // secure:true,
+    }   
+    res.cookie('token','', options)
     res.status(200)
         .json({output:{message:'logout successful'}})
 })

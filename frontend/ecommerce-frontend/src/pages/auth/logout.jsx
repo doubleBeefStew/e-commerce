@@ -16,7 +16,7 @@ const Logout = ()=>{
     
     useEffect(()=>{
         if(!isAuthenticated){
-            navigate('/login')
+            // navigate('/login')
         }
     },[isAuthenticated])
 
