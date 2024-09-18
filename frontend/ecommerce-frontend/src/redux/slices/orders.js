@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import env from '../../../../env'
 
 export const loadOrders = createAsyncThunk('orders/',async(id)=>{
     try{
-        const response = await axios.get(`${env.API_URL}/orders`,{withCredentials:true})
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/orders`,{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -14,7 +13,7 @@ export const loadOrders = createAsyncThunk('orders/',async(id)=>{
 
 export const cancelOrders = createAsyncThunk('orders/cancel',async(id)=>{
     try{
-        const response = await axios.post(`${env.API_URL}/orders/cancel/${id}`,{},{withCredentials:true})
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/orders/cancel/${id}`,{},{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -24,7 +23,7 @@ export const cancelOrders = createAsyncThunk('orders/cancel',async(id)=>{
 
 export const createOrders = createAsyncThunk('orders/create',async(orderData)=>{
     try{
-        const response = await axios.post(`${env.API_URL}/orders/create`,orderData,{withCredentials:true})  
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/orders/create`,orderData,{withCredentials:true})  
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -34,7 +33,7 @@ export const createOrders = createAsyncThunk('orders/create',async(orderData)=>{
 
 export const updateOrders = createAsyncThunk('orders/update',async(data)=>{
     try{
-        const response = await axios.patch(`${env.API_URL}/orders/update/${data.id}`,data.orderData,{withCredentials:true})  
+        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/orders/update/${data.id}`,data.orderData,{withCredentials:true})  
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -44,7 +43,7 @@ export const updateOrders = createAsyncThunk('orders/update',async(data)=>{
 
 export const deleteOrders = createAsyncThunk('orders/delete',async(id)=>{
     try{
-        const response = await axios.delete(`${env.API_URL}/orders/delete/${id}`,{withCredentials:true})  
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}/orders/delete/${id}`,{withCredentials:true})  
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)

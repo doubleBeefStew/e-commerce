@@ -1,5 +1,4 @@
 - search product
 - quantity limit
 - react toast
-- dev & prod branch
-- change env file in react
+- fix git ignore

@@ -102,7 +102,7 @@ const router = createBrowserRouter([{
 }])
 
 const App = () => {
-    console.log(process.env.REACT_APP_API_URL)
+    console.log(import.meta.env)
     
     const dispatch = useDispatch()
     const [message, setMessage] = useState("")

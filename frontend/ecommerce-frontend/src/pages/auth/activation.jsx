@@ -3,7 +3,6 @@ import Row from "react-bootstrap/Row"
 import Container from "react-bootstrap/Container"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import env from "../../../../env"
 import axios from "axios"
 import Loading from "../../components/notifPages/loading"
 import success from '../../assets/animations/thumbsup.json'
@@ -24,7 +23,7 @@ const Activation = ()=>{
                 setLoading(true)
                 
                 if(token){
-                    const user = await axios.get(`${env.API_URL}/auth/activation/${token}`)
+                    const user = await axios.get(`${import.meta.env.VITE_API_URL}/auth/activation/${token}`)
 
                     setError(false)
                     setLoading(false)
