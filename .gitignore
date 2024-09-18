@@ -1,5 +1,5 @@
-# backend/.env
+backend/.env
 backend/node_modules
-# frontend/env.js
-frontend/node_modules
+frontend/ecommerce-frontend/node_modules
+frontend/ecommerce-frontend/.env
 node_modules
