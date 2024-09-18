@@ -11,7 +11,7 @@ import Lottie from "lottie-react"
 
 const Activation = ()=>{
     const {token} = useParams()
-    const [error,setError]=useState(true)
+    const [isError,setIsError]=useState(true)
     const [loading,setLoading]=useState(true)
     const navigate = useNavigate()
     const style = { height: '30%' }
@@ -25,19 +25,19 @@ const Activation = ()=>{
                 if(token){
                     const user = await axios.get(`${import.meta.env.VITE_API_URL}/auth/activation/${token}`)
 
-                    setError(false)
+                    setIsError(false)
                     setLoading(false)
 
                     setTimeout(()=>{
                         navigate('/login')
                     },5000)
                 }else{
-                    setError(true)
+                    setIsError(true)
                     setLoading(false)
                 }
             }catch(e){
                 (err)=>{
-                    setError(true)
+                    setIsError(true)
                     setLoading(false)
                     console.log(err)
                 }
@@ -53,18 +53,18 @@ const Activation = ()=>{
             <Row className='vh-100'>
                 <Col className='d-flex flex-column align-items-center justify-content-center text-center'>
                     {
-                        error?
-                            (<>
-                                <Lottie style={style} animationData={error} loop={false}/>
-                                <h1>Verification Failed.</h1>
-                                <p>Please <Link to={'/register'}>re-register</Link> your account.</p>
-                            </>)
-                            :
-                            (<>
-                                <Lottie style={style} animationData={error} loop={false}/>
-                                <h1>Verification Successful.</h1>
-                                <p>You will be automatically redirected to login page or click <Link to={'/login'}>here</Link> to continue.</p>
-                            </>)
+                        isError?
+                        (<>
+                            <Lottie style={style} animationData={error} loop={false}/>
+                            <h1>Verification Failed.</h1>
+                            <p>Please <Link to={'/register'}>re-register</Link> your account.</p>
+                        </>)
+                        :
+                        (<>
+                            <Lottie style={style} animationData={success} loop={false}/>
+                            <h1>Verification Successful.</h1>
+                            <p>You will be automatically redirected to login page or click <Link to={'/login'}>here</Link> to continue.</p>
+                        </>)
                     }
                 </Col>
             </Row>

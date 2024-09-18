@@ -1,4 +1,3 @@
 - search product
 - quantity limit
 - react toast
-- fix git ignore
