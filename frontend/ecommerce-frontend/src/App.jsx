@@ -102,6 +102,8 @@ const router = createBrowserRouter([{
 }])
 
 const App = () => {
+    console.log(process.env.REACT_APP_API_URL)
+    
     const dispatch = useDispatch()
     const [message, setMessage] = useState("")
     const {cartError,cartData} = useSelector((state)=>{return state.cart})
