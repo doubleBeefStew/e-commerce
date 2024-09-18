@@ -5,7 +5,6 @@ import { useParams,useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { addItem, loadCart, updateCart } from '../../../redux/slices/cart'
 import { useDispatch,useSelector } from 'react-redux'
-import env from '../../../../../env'
 import ProductCarousel from '../../../components/Carousel/productCarousel'
 import priceFormat from '../../../utils/priceFormat'
 import React from 'react'
@@ -30,7 +29,7 @@ const ProductDetail = () => {
     useEffect(()=>{
         const getProductData = async ()=>{
             setIsLoading(true)
-            const response = await axios.get(`${env.API_URL}/products/${id}`,{withCredentials:true})
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`,{withCredentials:true})
             setProductData(response.data.output.payload)
             setIsLoading(false)
         }
@@ -53,7 +52,7 @@ const ProductDetail = () => {
 
             dispatch(updateCart())
             
-            const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')??''),{withCredentials:true})
+            const response = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')??''),{withCredentials:true})
         }
 
     }

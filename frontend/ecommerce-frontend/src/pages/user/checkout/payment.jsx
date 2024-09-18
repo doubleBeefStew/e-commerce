@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom"
 import { sheepopayPayment, setRedirect } from "../../../redux/slices/payment"
 import { removeItem, updateCart } from "../../../redux/slices/cart"
 import axios from "axios"
-import env from "../../../../../env"
 import Loading from "../../../components/notifPages/loading"
 
 
@@ -84,7 +83,7 @@ const Payment = ()=>{
                                 }} 
                                 createOrder={async ()=>{
                                     try{
-                                        const response = await axios.post(`${env.API_URL}/payment/paypal/create`,{ orderId:currentCheckout._id },{withCredentials:true})
+                                        const response = await axios.post(`${import.meta.env.VITE_API_URL}/payment/paypal/create`,{ orderId:currentCheckout._id },{withCredentials:true})
                                         
                                         const id = response.data.id
                                         if(id)
@@ -97,7 +96,7 @@ const Payment = ()=>{
                                 }}
                                 onApprove={async(data,actions)=>{
                                     try {
-                                        const response = await axios.post(`${env.API_URL}/payment/paypal/capture`,{
+                                        const response = await axios.post(`${import.meta.env.VITE_API_URL}/payment/paypal/capture`,{
                                             paypalOrderId:data.orderID,
                                             orderId: currentCheckout._id
                                         },{withCredentials:true})

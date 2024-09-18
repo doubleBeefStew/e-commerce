@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import env from '../../../../env'
 
 export const createCart = createAsyncThunk('cart/create', async(id)=>{
     try{
-        const response = await axios.post(`${env.API_URL}/cart/create/${id}`,{withCredentials:true})
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/cart/create/${id}`,{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -14,7 +13,7 @@ export const createCart = createAsyncThunk('cart/create', async(id)=>{
 
 export const loadCart = createAsyncThunk('cart/', async()=>{
     try{
-        const response = await axios.get(`${env.API_URL}/cart`,{withCredentials:true})
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/cart`,{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -24,7 +23,7 @@ export const loadCart = createAsyncThunk('cart/', async()=>{
 
 export const updateCart = createAsyncThunk('cart/update', async()=>{
     try{
-        const response = await axios.patch(`${env.API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')),{withCredentials:true})
+        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')),{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)

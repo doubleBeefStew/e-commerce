@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import env from '../../../../env'
 
 export const register = createAsyncThunk('user/register',async(data)=>{
     try{
-        const response = await axios.post(`${env.API_URL}/auth/register`,data,{withCredentials:true})
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`,data,{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -14,7 +13,7 @@ export const register = createAsyncThunk('user/register',async(data)=>{
 
 export const login = createAsyncThunk('user/login',async(data)=>{
     try{
-        const response = await axios.post(`${env.API_URL}/auth/login`,data,{withCredentials:true})
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`,data,{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -24,7 +23,7 @@ export const login = createAsyncThunk('user/login',async(data)=>{
 
 export const loadUser = createAsyncThunk('user',async()=>{
     try{
-        const response = await axios.get(`${env.API_URL}/user`,{withCredentials:true})
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/user`,{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -34,7 +33,7 @@ export const loadUser = createAsyncThunk('user',async()=>{
 
 export const updateUser = createAsyncThunk('user/update',async(data)=>{
     try{
-        const response = await axios.patch(`${env.API_URL}/user/update/info`,data,{withCredentials:true})
+        const response = await axios.patch(`${import.meta.env.VITE_API_URL}/user/update/info`,data,{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)
@@ -44,7 +43,7 @@ export const updateUser = createAsyncThunk('user/update',async(data)=>{
 
 export const logout = createAsyncThunk('user/logout',async()=>{
     try{
-        const response = await axios.get(`${env.API_URL}/auth/logout`,{withCredentials:true})
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/logout`,{withCredentials:true})
         return response.data
     }catch(err){
         throw new Error(err.message)
@@ -56,6 +55,7 @@ const initialState = {
     userData:JSON.parse(localStorage.getItem('userData'))? JSON.parse(localStorage.getItem('userData')):[],
     isLoadingUser:false,
     isUserError:false,
+    alert:null
 }
 
 const userSlice = createSlice({
@@ -125,17 +125,19 @@ const userSlice = createSlice({
                 state.isUserError = true
         })
         .addCase(updateUser.pending,(state)=>{
-            state.isLoadingUser=true
+            // state.isLoadingUser=true
         })
         .addCase(updateUser.fulfilled,(state,action)=>{
-            state.isAuthenticated=true
+            state.isAuthenticated = true
             state.userData = action.payload.output.payload
             localStorage.setItem("userData",JSON.stringify(state.userData))
-            state.isLoadingUser=false
+            state.isLoadingUser = false
+            state.alert = {message:'Profile updated successfully.', type:'success'}
         })
         .addCase(updateUser.rejected,(state,action)=>{
             state.isLoadingUser=false
             state.isUserError=true
+            state.alert = {message:'Profile updated failed.', type:'danger'}
         })
     }
 })

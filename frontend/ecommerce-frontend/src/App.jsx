@@ -19,7 +19,7 @@ import {
     Payment
 } from './pages'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Profile from './pages/user/account/components/profile'
 import Orders from './pages/user/account/components/orders'
 import { loadUser, updateUser } from './redux/slices/user'
@@ -102,10 +102,7 @@ const router = createBrowserRouter([{
 }])
 
 const App = () => {
-    console.log(process.env.REACT_APP_API_URL)
-    
     const dispatch = useDispatch()
-    const [message, setMessage] = useState("")
     const {cartError,cartData} = useSelector((state)=>{return state.cart})
     const {userData,isAuthenticated} = useSelector((state)=>{return state.user})
 

@@ -6,7 +6,6 @@ import Col from "react-bootstrap/Col"
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
-import env from "../../../../env"
 import axios from 'axios'
 import {useFormik} from 'formik'
 import registerSchema from "../../validationSchema/registerSchema"
@@ -25,7 +24,7 @@ const Register = ()=>{
     }
 
     const onSubmit = (values,actions)=>{
-        axios.post(`${env.API_URL}/auth/register`,values)
+        axios.post(`${import.meta.env.VITE_API_URL}/auth/register`,values)
         .then(function(res){
             console.log(res)
             setAlert({message:`Registration successful. Please confirm the email sent to ${values.email} to continue.`,type:'success'})
