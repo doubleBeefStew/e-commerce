@@ -101,10 +101,10 @@ const userSlice = createSlice({
             state.isLoadingUser=true
         })
         .addCase(logout.fulfilled,(state,action)=>{
-            state.isAuthenticated = false
+            localStorage.clear()
             state.userData = []
             state.isLoadingUser = false
-            localStorage.clear()
+            state.isAuthenticated = false
         })
         .addCase(logout.rejected,(state,action)=>{
             state.isLoadingUser=false
