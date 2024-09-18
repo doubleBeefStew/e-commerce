@@ -8,7 +8,7 @@ import { setLogout } from "../../redux/slices/user"
 const Logout = ()=>{
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {isAuthenticated,isLoadingUser,setLogout} = useSelector((state)=>{return state.user})
+    const {isAuthenticated,isLoadingUser} = useSelector((state)=>{return state.user})
 
     // TODO: fix logout
     useEffect(()=>{
