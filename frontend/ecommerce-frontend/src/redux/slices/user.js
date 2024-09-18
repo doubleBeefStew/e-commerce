@@ -68,7 +68,7 @@ const userSlice = createSlice({
         setState(state,action){
             state = action.payload
         },
-        logout(state){
+        setLogout(state){
             state = initialState
         }
     },
@@ -142,6 +142,6 @@ const userSlice = createSlice({
     }
 })
 
-export const { setAlert } = userSlice.actions
+export const { setAlert,setLogout } = userSlice.actions
 
 export default userSlice.reducer

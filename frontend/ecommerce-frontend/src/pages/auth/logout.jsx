@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { logout } from "../../redux/slices/user"
 import { useNavigate } from "react-router-dom"
 import Loading from "../../components/notifPages/loading"
+import { setLogout } from "../../redux/slices/user"
 
 const Logout = ()=>{
     const dispatch = useDispatch()
@@ -11,12 +12,13 @@ const Logout = ()=>{
 
     // TODO: fix logout
     useEffect(()=>{
+        dispatch(setLogout())
         dispatch(logout())
     },[])
     
     useEffect(()=>{
         if(!isAuthenticated){
-            // navigate('/login')
+            navigate('/login')
         }
     },[isAuthenticated])
 
