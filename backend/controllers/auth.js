@@ -92,7 +92,11 @@ export const login = asyncHandler(async(req,res,next)=>{
 })
 
 export const logout = asyncHandler(async(req,res,next)=>{    
-    res.clearCookie('token')
+    res.clearCookie('token',{
+        httpOnly:true,
+        sameSite:"none",
+        secure:true,
+    })
     res.status(200)
         .json({output:{message:'logout successful'}})
 })

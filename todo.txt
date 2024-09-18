@@ -1,3 +1,4 @@
+- fix logout bug
 - search product
 - quantity limit
 - react toast
