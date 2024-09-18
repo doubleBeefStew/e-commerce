@@ -7,16 +7,17 @@ import Loading from "../../components/notifPages/loading"
 const Logout = ()=>{
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {isAuthenticated,isLoadingUser} = useSelector((state)=>{return state.user})
+    const {isAuthenticated,isLoadingUser,setLogout} = useSelector((state)=>{return state.user})
 
     // TODO: fix logout
     useEffect(()=>{
+        dispatch(setLogout())
         dispatch(logout())
     },[])
     
     useEffect(()=>{
         if(!isAuthenticated){
-            // navigate('/login')
+            navigate('/login')
         }
     },[isAuthenticated])
 

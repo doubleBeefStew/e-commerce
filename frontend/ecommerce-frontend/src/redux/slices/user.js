@@ -68,8 +68,10 @@ const userSlice = createSlice({
         setState(state,action){
             state = action.payload
         },
-        logout(state){
+        setLogout(state){
+            localStorage.clear()
             state = initialState
+            // state.userData = []
         }
     },
     extraReducers:(builder)=>{
@@ -101,8 +103,6 @@ const userSlice = createSlice({
             state.isLoadingUser=true
         })
         .addCase(logout.fulfilled,(state,action)=>{
-            localStorage.clear()
-            state.userData = []
             state.isLoadingUser = false
             state.isAuthenticated = false
         })
@@ -142,6 +142,6 @@ const userSlice = createSlice({
     }
 })
 
-export const { setAlert } = userSlice.actions
+export const { setAlert,setLogout } = userSlice.actions
 
 export default userSlice.reducer
