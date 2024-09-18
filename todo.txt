@@ -1,8 +1,26 @@
-- create pay & cancel button on order list page
+const mongoose = require('mongoose');
 
-- create cancel order endpoint
-- revert stock when cancel order
+let isConnected;
 
-- create lottie modal: negative, positive, loading
+const connectToDatabase = async () => {
+  if (isConnected) {
+    // If already connected, return the existing connection
+    return;
+  }
 
-- create category
+  // Establish a new connection
+  try {
+    const db = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 30000, // Increase timeout to handle cold starts
+    });
+    isConnected = db.connections[0].readyState;
+    console.log('Connected to MongoDB');
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    throw error;
+  }
+};
+
+module.exports = connectToDatabase;

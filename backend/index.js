@@ -11,7 +11,7 @@ const start = async ()=>{
             console.log(`server running on port ${process.env.PORT}`)
         })
     }catch(err){
-        console.log(err);
+        console.log(err)
     }
 }
 
