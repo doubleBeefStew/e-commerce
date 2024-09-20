@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 export const register = createAsyncThunk('user/register',async(data)=>{
     try{
@@ -69,6 +70,7 @@ const userSlice = createSlice({
             state = action.payload
         },
         setLogout(state){
+            Cookies.remove('token')
             localStorage.clear()
             state = initialState
             // state.userData = []
