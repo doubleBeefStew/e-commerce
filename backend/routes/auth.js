@@ -8,12 +8,12 @@ router.route('/register')
     .post(validateRegister,register)
 
 router.route('/activation/:token')
-.get(activation)
+.post(activation)
 
 router.route('/login')
     .post(login)
 
 router.route('/logout')
-    .get(logout)
+    .post(logout)
 
 export default router

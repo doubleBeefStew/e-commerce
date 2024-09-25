@@ -23,7 +23,7 @@ const Activation = ()=>{
                 setLoading(true)
                 
                 if(token){
-                    const user = await axios.get(`${import.meta.env.VITE_API_URL}/auth/activation/${token}`)
+                    const user = await axios.post(`${import.meta.env.VITE_API_URL}/auth/activation/${token}`)
 
                     setIsError(false)
                     setLoading(false)

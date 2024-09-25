@@ -84,6 +84,7 @@ export const login = asyncHandler(async(req,res,next)=>{
         httpOnly:true,
         sameSite:"none",
         secure:true,
+        path:'/'
     }
     
     res.cookie('token',token,options)
@@ -91,8 +92,17 @@ export const login = asyncHandler(async(req,res,next)=>{
         
 })
 
-export const logout = asyncHandler(async(req,res,next)=>{    
-    res.clearCookie('token')
+export const logout = asyncHandler(async(req,res,next)=>{   
+    console.log('clearing token')
+
+    const options = {
+        httpOnly:true,
+        sameSite:"none",
+        secure:true,
+        path:'/'
+    }
+    res.clearCookie('token',options)
+
     res.status(200)
         .json({output:{message:'logout successful'}})
 })

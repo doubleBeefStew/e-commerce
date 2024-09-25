@@ -43,7 +43,7 @@ export const updateUser = createAsyncThunk('user/update',async(data)=>{
 
 export const logout = createAsyncThunk('user/logout',async()=>{
     try{
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/logout`,{withCredentials:true})
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/logout`,{},{withCredentials:true})
         return response.data
     }catch(err){
         throw new Error(err.message)
@@ -68,8 +68,9 @@ const userSlice = createSlice({
         setState(state,action){
             state = action.payload
         },
-        logout(state){
-            state = initialState
+        setLogout(state){
+            localStorage.clear()
+            state = {initialState}
         }
     },
     extraReducers:(builder)=>{
@@ -102,9 +103,7 @@ const userSlice = createSlice({
         })
         .addCase(logout.fulfilled,(state,action)=>{
             state.isAuthenticated = false
-            state.userData = []
             state.isLoadingUser = false
-            localStorage.clear()
         })
         .addCase(logout.rejected,(state,action)=>{
             state.isLoadingUser=false
@@ -142,6 +141,6 @@ const userSlice = createSlice({
     }
 })
 
-export const { setAlert } = userSlice.actions
+export const { setAlert,setLogout } = userSlice.actions
 
 export default userSlice.reducer
