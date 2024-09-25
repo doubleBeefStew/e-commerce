@@ -3,12 +3,14 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { useParams,useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { addItem, loadCart, updateCart } from '../../../redux/slices/cart'
+import { addItem, updateCart } from '../../../redux/slices/cart'
 import { useDispatch,useSelector } from 'react-redux'
 import ProductCarousel from '../../../components/Carousel/productCarousel'
 import priceFormat from '../../../utils/priceFormat'
 import React from 'react'
 import Loading from '../../../components/notifPages/loading'
+import { Slide, ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetail = () => {
     const { id } = useParams()
@@ -18,13 +20,8 @@ const ProductDetail = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const {cartData} = useSelector((state)=>{
-        return state.cart
-    })
-
-    const {userData} = useSelector((state)=>{
-        return state.user
-    })
+    const {isLoadingCart} = useSelector((state)=>{ return state.cart })
+    const {userData} = useSelector((state)=>{ return state.user })
 
     useEffect(()=>{
         const getProductData = async ()=>{
@@ -35,6 +32,9 @@ const ProductDetail = () => {
         }
         getProductData()
     },[])
+
+    useEffect(()=>{
+    },[isLoadingCart])
 
     const addtoCart = async(product)=>{
         if(!userData){
@@ -51,8 +51,18 @@ const ProductDetail = () => {
             // TODO: make react toast to confirm add cart
 
             dispatch(updateCart())
+            toast('Added to cart!',{
+                position:'bottom-center',
+                autoClose:3000,
+                theme:'light',
+                hideProgressBar:true,
+                draggable:true,
+                closeOnClick:true,
+                closeButton:true,
+                transition:Slide,
+            })
             
-            const response = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')??''),{withCredentials:true})
+            // const response = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')??''),{withCredentials:true})
         }
 
     }
@@ -72,42 +82,51 @@ const ProductDetail = () => {
     }
 
     return (<>
+        
         {
             isLoading ? <Loading /> : 
-            <Row className="py-5 px-0 px-sm-5 justify-content-center">
-                {
-                    isLoading ? 
-                        <p>loading..</p> :
-                        <Row className='bg-white p-3 gx-5'>
-                            <Col className='col-12 col-md-5 px-0'>
-                                <ProductCarousel images={productData.images}/>
-                            </Col>
-                            <Col className='d-flex flex-column justify-content-between col-12 col-md-7'>
-                                <Row>
-                                    <Col>
-                                        <h5>{productData.name}</h5>
-                                        <h1 className='text-orange'>Rp{priceFormat(productData.initialPrice)}</h1>
-                                        <small>{productData.description}</small>
-                                    </Col>
-                                </Row>
-                                <Row className='gy-3'>
-                                    <Col className='col-12 text-center'>
-                                    <small className='text-muted'>{productData.stock} units left</small>
-                                    </Col>
-                                    <Col>
-                                        <button 
-                                            className='w-100 btn btn-outline-primary'
-                                            onClick={()=>{addtoCart(productData)}}
-                                        >Add to Basket</button>
-                                    </Col>
-                                    <Col>
-                                        <button className='w-100 btn btn-primary' onClick={()=>{buyNow()}}>Buy Now</button>
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                }
-            </Row>
+            <>
+                <ToastContainer/>
+                <Row className="py-5 px-0 px-sm-5 justify-content-center">
+                    <Row className='bg-white p-3 gx-5'>
+                        <Col className='col-12 col-md-5 px-0'>
+                            <ProductCarousel images={productData.images}/>
+                        </Col>
+                        <Col className='d-flex flex-column justify-content-between col-12 col-md-7'>
+                            <Row>
+                                <Col>
+                                    <h5>{productData.name}</h5>
+                                    <h1 className='text-orange'>Rp{priceFormat(productData.initialPrice)}</h1>
+                                    <small>{productData.description}</small>
+                                </Col>
+                            </Row>
+                            <Row className='gy-3'>
+                                <Col className='col-12 text-center'>
+                                    <small className={ productData.stock < 1 ? 'text-danger' : 'text-muted' }>
+                                        {
+                                            productData.stock < 1 ? 'This product is out of stock.' : (productData.stock+' units left') 
+                                        }
+                                    </small>
+                                </Col>
+                                <Col>
+                                    <button 
+                                        className='w-100 btn btn-outline-primary'
+                                        onClick={()=>{addtoCart(productData)}}
+                                        disabled = { productData.stock < 1 }
+                                    >Add to Basket</button>
+                                </Col>
+                                <Col>
+                                    <button 
+                                        className='w-100 btn btn-primary' 
+                                        onClick={ ()=>{buyNow()} }
+                                        disabled = { productData.stock < 1 }
+                                    >Buy Now</button>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Row>
+            </>
         }
     </>)
 }
