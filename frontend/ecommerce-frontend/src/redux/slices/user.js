@@ -124,7 +124,7 @@ const userSlice = createSlice({
                 state.isUserError = true
         })
         .addCase(updateUser.pending,(state)=>{
-            state.isLoadingUser=true
+            // state.isLoadingUser=true
         })
         .addCase(updateUser.fulfilled,(state,action)=>{
             state.isAuthenticated = true

@@ -3,6 +3,7 @@ import userModel from "../models/user.js"
 import cloudinary from "../middlewares/cloudinary.js"
 import { notFoundError } from "../errors/customErrors.js"
 import dotenv from 'dotenv'
+import { clearStorage } from "../middlewares/multer.js"
 dotenv.config()
 
 export const getUser = asyncHandler(async(req,res,next)=>{
@@ -57,6 +58,6 @@ export const updateUser = asyncHandler(async(req,res,next)=>{
     }
 
     await foundUser.save()
-    // clearStorage()
+    clearStorage()
     res.status(200).json({output:{message:'OK',payload:foundUser}})
 })
