@@ -1,6 +1,5 @@
 import asyncHandler from "express-async-handler"
 import productModel from "../models/products.js"
-import { clearStorage } from "../middlewares/multer.js"
 import { notFoundError,unauthorizedError } from "../errors/customErrors.js"
 import dotenv from 'dotenv'
 import uploadCloudinary from "../utils/uploadCloudinary.js"
@@ -49,7 +48,7 @@ export const createProduct = asyncHandler(async (req,res,next)=>{
         newProduct.save()
     }
 
-    clearStorage()
+    // clearStorage()
     res.status(201).json({output:{message:'product created successfully',payload:newProduct}})
 })
 
@@ -70,7 +69,7 @@ export const updateProduct = asyncHandler(async (req,res,next)=>{
 
     updatedProduct.save()
 
-    clearStorage()
+    // clearStorage()
     res.status(200).json({output:{message:'product updated successfully',payload:updatedProduct}})
 })
 

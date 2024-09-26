@@ -31,14 +31,14 @@ const parseImage = multer({
     }
 })
 
-export const clearStorage = ()=>{
-    const uploadPath = `./public/images`
-        if(fs.existsSync(uploadPath)){
-            fs.rmSync(uploadPath,{ recursive: true, force: true },(err)=>{
-                if(err)
-                    console.log(err)
-            })
-        }
-} 
+// export const clearStorage = ()=>{
+//     const uploadPath = `./public/images`
+//         if(fs.existsSync(uploadPath)){
+//             fs.rmSync(uploadPath,{ recursive: true, force: true },(err)=>{
+//                 if(err)
+//                     console.log(err)
+//             })
+//         }
+// } 
 
 export default parseImage

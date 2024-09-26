@@ -1,7 +1,6 @@
 import asyncHandler from "express-async-handler"
 import userModel from "../models/user.js"
 import cloudinary from "../middlewares/cloudinary.js"
-import { clearStorage } from "../middlewares/multer.js"
 import { notFoundError } from "../errors/customErrors.js"
 import dotenv from 'dotenv'
 dotenv.config()
@@ -58,6 +57,6 @@ export const updateUser = asyncHandler(async(req,res,next)=>{
     }
 
     await foundUser.save()
-    clearStorage()
+    // clearStorage()
     res.status(200).json({output:{message:'OK',payload:foundUser}})
 })
