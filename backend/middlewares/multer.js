@@ -3,14 +3,14 @@ import fs from 'fs'
 
 const storage = multer.diskStorage({
     // disable local storage
-    destination:(req,file,cb)=>{
-        const uploadPath = `./public/images/${req.user._id}`
-        if(!fs.existsSync(uploadPath)){
-            fs.mkdirSync(uploadPath,{recursive:true})
-        }
+    // destination:(req,file,cb)=>{
+    //     const uploadPath = `./public/images/${req.user._id}`
+    //     if(!fs.existsSync(uploadPath)){
+    //         fs.mkdirSync(uploadPath,{recursive:true})
+    //     }
         
-        cb(null,uploadPath)
-    },
+    //     cb(null,uploadPath)
+    // },
     filename:(req,file,cb)=>{
         cb(null, `${req.user._id}-${file.originalname}`)
     }
