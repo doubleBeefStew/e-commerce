@@ -9,7 +9,7 @@ import { BsSearch,BsCart3 } from "react-icons/bs";
 import { useSelector } from "react-redux"
 import { CgProfile } from "react-icons/cg"
 import ProfilePicture from "../profilePicture/profilePicture"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 //TODO: make header sticky when scrolling
 const Header = ()=>{
@@ -24,13 +24,17 @@ const Header = ()=>{
 
     const handleSubmit = (e)=>{
         e.preventDefault()
+
+        const searchData = {
+            keyword: formData.keyword,
+            sort:formData.sort || 'asc'
+        }
+
+        setFormData({ keyword: '', sort: 'asc' })
         
         navigate({
             pathname: '/products',
-            search: createSearchParams({
-                keyword: formData.keyword,
-                sort:formData.sort || 'asc'
-            }).toString()
+            search: createSearchParams(searchData).toString()
         })
     }
 

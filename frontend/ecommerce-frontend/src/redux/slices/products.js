@@ -2,11 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const loadProducts = createAsyncThunk('products/',async(searchData)=>{
-    console.log(searchData)
     
     try{
         const query = searchData.keyword ? `/s?keyword=${searchData.keyword}&sort=${searchData.sort}` : ''
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${query}`,{withCredentials:true})
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/products${query}`,{withCredentials:true})
         return response.data
     }catch(err){
         console.error(err.response.data.error.message)

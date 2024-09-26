@@ -87,91 +87,89 @@ const Cart = ()=>{
     return (<>
     {
         isLoadingCart? <Loading /> :
+        cartData.products.length > 0 ?
         <Row className="flex-column py-5 px-0 px-sm-5 gy-2">
+            <Col className='py-4 bg-light'>
+                <Row className='align-items-center justify-content-between px-3'>
+                    <Col className='col-auto'>
+                        <input type='checkbox' onChange={(event)=>{checkAllItems(event)}}></input>
+                    </Col>
+                    <Col className='col text-start'>
+                        <small>Product</small>
+                    </Col>
+                    <Col className='col-3'>
+                    </Col>
+                    <Col className='col text-center'>
+                        <small className='m-0'>Price</small>
+                    </Col>
+                    <Col className='col text-center'>
+                        <small className='m-0'>Quantity</small>
+                    </Col>
+                    <Col className='col-auto text-center'>
+                        <FaRegTrashCan color='#ee4d2d' onClick={()=>{deleteAllItems()}}/>
+                    </Col>
+                </Row>
+            </Col>
             {
-                cartData.products?
-                <>
-                <Col className='py-4 bg-light'>
-                    <Row className='align-items-center justify-content-between px-3'>
-                        <Col className='col-auto'>
-                            <input type='checkbox' onChange={(event)=>{checkAllItems(event)}}></input>
-                        </Col>
-                        <Col className='col text-start'>
-                            <small>Product</small>
-                        </Col>
-                        <Col className='col-3'>
-                        </Col>
-                        <Col className='col text-center'>
-                            <small className='m-0'>Price</small>
-                        </Col>
-                        <Col className='col text-center'>
-                            <small className='m-0'>Quantity</small>
-                        </Col>
-                        <Col className='col-auto text-center'>
-                            <FaRegTrashCan color='#ee4d2d' onClick={()=>{deleteAllItems()}}/>
-                        </Col>
-                    </Row>
-                </Col>
-                {
-                    cartData.products?.map((item)=>{
-                        return (
-                            <Col className='py-4 bg-light' key={item.productId}>
-                                <Row className='align-items-center justify-content-between px-3'>
+                cartData.products?.map((item)=>{
+                    return (
+                        <Col className='py-4 bg-light' key={item.productId}>
+                            <Row className='align-items-center justify-content-between px-3'>
+                                <Col className='col-auto'>
+                                    <input type='checkbox' checked={item.isChecked} onChange={()=>{
+                                        checkItem(item)
+                                        calculateTotal()
+                                    }}/>
+                                </Col>
+                                <Col className='col-auto text-center'>
+                                    <img className='object-fit-cover' height={100} width={100} src={item.productUrl} />
+                                </Col>
+                                <Col className='col'>
+                                    <small className='m-0'>{item.productName}</small>
+                                </Col>
+                                <Col className='col-auto text-center'>
+                                    <small className='m-0'>Rp{priceFormat(item.productPrice)}</small>
+                                </Col>
+                                <Col className='col-3'>
+                                <Row className='justify-content-center'>
                                     <Col className='col-auto'>
-                                        <input type='checkbox' checked={item.isChecked} onChange={()=>{
-                                            checkItem(item)
-                                            calculateTotal()
-                                        }}/>
-                                    </Col>
-                                    <Col className='col-auto text-center'>
-                                        <img className='object-fit-cover' height={100} width={100} src={item.productUrl} />
-                                    </Col>
-                                    <Col className='col'>
-                                        <small className='m-0'>{item.productName}</small>
-                                    </Col>
-                                    <Col className='col-auto text-center'>
-                                        <small className='m-0'>Rp{priceFormat(item.productPrice)}</small>
-                                    </Col>
-                                    <Col className='col-3'>
-                                    <Row className='justify-content-center'>
-                                        <Col className='col-auto'>
-                                            <Counter product={item}/>
-                                        </Col>
-                                    </Row>
-                                    </Col>
-                                    <Col className='col-auto text-center'>
-                                        <FaRegTrashCan color='#ee4d2d' onClick={async ()=>{
-                                            dispatch(removeItem(item.productId))
-                                            dispatch(updateCart())
-                                            }
-                                        }/>
+                                        <Counter product={item}/>
                                     </Col>
                                 </Row>
-                            </Col>)
-                    })
-                }
-                <Col className='p-4 bg-light'>
-                    <Row className='align-items-center justify-content-end px-3'>
-                        <Col className='col-auto text-end'>
-                            <small>Total Payment</small>
-                            <br/>
-                            <small>Rp{priceFormat(total)}</small>
-                        </Col>
-                        <Col className='col-auto text-center'>
-                            <Button 
-                                className="w-100 btn btn-primary" 
-                                state={{products}}
-                                onClick={()=>{checkOut()}}
-                            >Checkout</Button>
-                        </Col>
-                    </Row>
-                </Col>
-                </> : 
-                <Col>
-                    <p>Cart is Empty!</p> 
-                    {/* make empty cart lottie */}
-                </Col>
+                                </Col>
+                                <Col className='col-auto text-center'>
+                                    <FaRegTrashCan color='#ee4d2d' onClick={async ()=>{
+                                        dispatch(removeItem(item.productId))
+                                        dispatch(updateCart())
+                                        }
+                                    }/>
+                                </Col>
+                            </Row>
+                        </Col>)
+                })
             }
+            <Col className='p-4 bg-light'>
+                <Row className='align-items-center justify-content-end px-3'>
+                    <Col className='col-auto text-end'>
+                        <small>Total Payment</small>
+                        <br/>
+                        <small>Rp{priceFormat(total)}</small>
+                    </Col>
+                    <Col className='col-auto text-center'>
+                        <Button 
+                            className="w-100 btn btn-primary" 
+                            state={{products}}
+                            onClick={()=>{checkOut()}}
+                        >Checkout</Button>
+                    </Col>
+                </Row>
+            </Col>
+        </Row> :
+        <Row className="flex-column py-5 px-0 px-sm-5 gy-2">
+            <Col>
+                {/* TODO: make empty cart lottie */}
+                <p>Cart is Empty!</p> 
+            </Col>
         </Row>
     }
     </>)
