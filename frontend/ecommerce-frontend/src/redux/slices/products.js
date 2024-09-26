@@ -14,7 +14,7 @@ export const loadProducts = createAsyncThunk('products/',async(searchData)=>{
 })
 
 const initialState = {
-    productsData:null,
+    productsData:[],
     isLoadingProducts:false,
     error:null,
 }
@@ -37,6 +37,8 @@ const productSlice = createSlice({
         })
         .addCase(loadProducts.fulfilled,(state,action)=>{
             state.productsData = action.payload.output.payload
+            console.log(state.productsData)
+            
             state.isLoadingProducts=false
         })
         .addCase(loadProducts.rejected,(state,action)=>{
