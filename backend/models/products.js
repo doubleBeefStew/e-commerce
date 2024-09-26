@@ -3,7 +3,10 @@ import {Schema, model} from "mongoose"
 
 //TODO: integrate with category, reviews, shop model
 const productSchema = new Schema({
-    name:String,
+    name:{
+        type:String,
+        index:'text'
+    },
     description:String,
     category:Schema.ObjectId,
     tags:[String],

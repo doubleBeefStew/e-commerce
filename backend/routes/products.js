@@ -6,6 +6,9 @@ import {getProduct,createProduct,updateProduct,deleteProduct} from "../controlle
 
 const router = Express.Router()
 
+router.route('/s')
+    .get(getProduct)
+    
 router.route('/:id?')
     .get(getProduct)
 

@@ -10,23 +10,33 @@ dotenv.config()
 
 export const getProduct = asyncHandler(async(req,res,next)=>{
     const {id} = req.params
+    const {keyword,sort} = req.query
     let foundProduct
+    const sortTerm = sort.toLowerCase() == 'desc' ? -1 : 1
 
-    if(!id)
-        foundProduct = await productModel.find({})
+
+    if(!id){
+        if(keyword){
+            foundProduct = await productModel.find({
+                $text:{$search:keyword}
+            }).sort({name:sortTerm})
+        }else{
+            foundProduct = await productModel.find({}).sort({name:sortTerm})
+        }
+    }
     else{
         foundProduct = await productModel.findById(id)
         if (!foundProduct)
             throw new notFoundError('the product is not available','GET-404')
     }
 
-
     res.status(200).json({output:{message:'OK',payload:foundProduct}})
 })
 
 export const createProduct = asyncHandler(async (req,res,next)=>{
-    if(req.user.role!='admin')
+    if(req.user.role!='admin' && process.env.BYPASS_ADMIN=='false'){
         throw new unauthorizedError('only admin can create new products','CRT-401')
+    }
 
     const files = req.files
     const {name,description,initialPrice,discountPrice,stock} = req.body
@@ -44,7 +54,7 @@ export const createProduct = asyncHandler(async (req,res,next)=>{
 })
 
 export const updateProduct = asyncHandler(async (req,res,next)=>{
-    if(req.user.role!='admin')
+    if(req.user.role!='admin' && process.env.BYPASS_ADMIN=='false')
         throw new unauthorizedError('only admin can update products','UPDT-401')
     
     const {id} = req.params
@@ -65,7 +75,7 @@ export const updateProduct = asyncHandler(async (req,res,next)=>{
 })
 
 export const deleteProduct = asyncHandler(async (req,res,next)=>{
-    if(req.user.role!='admin')
+    if(req.user.role!='admin' && process.env.BYPASS_ADMIN=='false')
         throw new unauthorizedError('only admin can update products','UPDT-401')
 
     const {id} = req.params
