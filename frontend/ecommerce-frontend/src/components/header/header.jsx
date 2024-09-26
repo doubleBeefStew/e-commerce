@@ -3,18 +3,36 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/Button"
-import { Link } from "react-router-dom"
+import { createSearchParams, Link, useNavigate } from "react-router-dom"
 import styles from "./header.module.css"
 import { BsSearch,BsCart3 } from "react-icons/bs";
 import { useSelector } from "react-redux"
 import { CgProfile } from "react-icons/cg"
 import ProfilePicture from "../profilePicture/profilePicture"
+import { useState } from "react"
 
 //TODO: make header sticky when scrolling
 const Header = ()=>{
     const {userData,isAuthenticated} = useSelector((state)=>{return state.user})
-
+    const [formData, setFormData] = useState({ keyword: '', sort: 'asc' });
     const imageUrl= userData.avatar
+    const navigate = useNavigate()
+
+    const handleChange = (e)=>{
+        setFormData({...formData,keyword:e.target.value})
+    }
+
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        
+        navigate({
+            pathname: '/products',
+            search: createSearchParams({
+                keyword: formData.keyword,
+                sort:formData.sort || 'asc'
+            }).toString()
+        })
+    }
 
     return (
     <>
@@ -60,9 +78,15 @@ const Header = ()=>{
                 <Row className="flex-nowrap px-3">
                     <Col className='p-0 d-flex flex-column justify-content-center'>
                         <div className={`${styles.searchBar} mb-1 shadow-sm`}>
-                            <Form className="d-flex">
-                                <Form.Control className="border-0" type="text" name="search" placeholder="Daftar & Dapatkan Voucher Gratis"/>
-                                    <Button className={`${styles.searchButton} btn btn-primary border-0`}><BsSearch/></Button>
+                            <Form className="d-flex" onSubmit={handleSubmit}>
+                                <Form.Control 
+                                    className="border-0" 
+                                    type="text" 
+                                    name="search" 
+                                    value={formData.keyword}
+                                    onChange={handleChange}
+                                    placeholder="Register & get Discount Vouchers for Free!"/>
+                                    <Button type="submit" className={`${styles.searchButton} btn btn-primary border-0`}><BsSearch/></Button>
                             </Form>
                         </div>
                         <div className="d-flex justify-content-center align-items-center text-center">

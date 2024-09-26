@@ -5,14 +5,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadProducts } from '../../../redux/slices/products'
 import ProductCard from '../../../components/productCard/productCard'
 import Loading from '../../../components/notifPages/loading'
+import { useSearchParams } from 'react-router-dom'
 
 const Products = ()=>{
     const dispatch = useDispatch()
     const {isLoadingProducts,productsData} = useSelector((state)=>{return state.products})
+    const [params] = useSearchParams()
+    let searchData
 
     useEffect(()=>{
-        dispatch(loadProducts())
-    },[])
+        searchData = params.get('keyword') ? {
+            keyword:params.get('keyword'),
+            sort:params.get('sort') || 'arc',
+        } : null
+        
+        dispatch(loadProducts(searchData))
+    },[params])
     
     return (<>
     {

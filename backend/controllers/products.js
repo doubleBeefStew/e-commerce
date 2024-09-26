@@ -11,9 +11,9 @@ dotenv.config()
 export const getProduct = asyncHandler(async(req,res,next)=>{
     const {id} = req.params
     const {keyword,sort} = req.query
+    
     let foundProduct
-    const sortTerm = sort.toLowerCase() == 'desc' ? -1 : 1
-
+    const sortTerm = sort?.toLowerCase() == 'desc' ? -1 : 1
 
     if(!id){
         if(keyword){
