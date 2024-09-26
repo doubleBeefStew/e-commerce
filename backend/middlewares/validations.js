@@ -17,15 +17,13 @@ const validateValues = (validations)=>{
     }]
 }
 
-//TODO: make password more complex
 export const validateRegister = validateValues([
     body('email').escape().trim()
         .notEmpty().withMessage(validationData.email_required)
         .isEmail().withMessage(validationData.email_format),
     body('password').escape().trim()
         .notEmpty().withMessage(validationData.password_required)
-        .isAlphanumeric().withMessage(validationData.password_format)
-        .isLength({min:6,max:20}).withMessage(validationData.password_length)
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,25}$/).withMessage(validationData.password_format)
 ])
     
 export const validateUserInfo = validateValues([

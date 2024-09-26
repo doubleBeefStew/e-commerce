@@ -6,8 +6,7 @@ export const validationData = {
     email_format:'Email format is invalid',
 
     password_required:'Please input your password',
-    password_format:'Password must contain alphanumerics',
-    password_length:'Password must be between 6-20 characters',
+    password_format:'Password must be between 8-25 characters, is alphanumerics, contains uppercase and lowercase, and a special character',
 
     name_required:'Please input your name',
     name_length:'name must be between 2-30 characters',
