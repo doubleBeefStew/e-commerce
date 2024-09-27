@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import Button from 'react-bootstrap/Button'
 import Loading from '../../../components/notifPages/loading'
+import EmptyCart from '../../../errors/emptyCart'
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
@@ -165,11 +166,8 @@ const Cart = ()=>{
                 </Row>
             </Col>
         </Row> :
-        <Row className="flex-column py-5 px-0 px-sm-5 gy-2">
-            <Col>
-                {/* TODO: make empty cart lottie */}
-                <p>Cart is Empty!</p> 
-            </Col>
+        <Row className='vh-auto py-5 px-2 px-sm-5'>
+            <EmptyCart/>
         </Row>
     }
     </>)
