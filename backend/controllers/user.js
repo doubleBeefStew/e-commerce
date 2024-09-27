@@ -3,7 +3,7 @@ import userModel from "../models/user.js"
 import cloudinary from "../middlewares/cloudinary.js"
 import { notFoundError } from "../errors/customErrors.js"
 import dotenv from 'dotenv'
-import { clearStorage } from "../middlewares/multer.js"
+import uploadCloudinary from "../utils/uploadCloudinary.js"
 dotenv.config()
 
 export const getUser = asyncHandler(async(req,res,next)=>{
@@ -28,10 +28,8 @@ export const updateUser = asyncHandler(async(req,res,next)=>{
 
     if(id && req.user.role=='admin')
         updatedUser = id
-    else{
+    else
         updatedUser = req.user._id.toString()
-    }
-
     
     const foundUser = await userModel.findById(updatedUser)
     if(!foundUser)
@@ -46,18 +44,20 @@ export const updateUser = asyncHandler(async(req,res,next)=>{
     role && (foundUser.role = role)
 
     if(req.file){
-        const imagePath = req.file.path
         const folderPath = `users/profiles/${updatedUser}`
-        const result = await cloudinary.uploader.upload(imagePath,{
-            folder:folderPath,
-            resource_type:'auto',
-            invalidate:true,
-            public_id:encodeURIComponent(updatedUser.trim())
-        })
+        // const result = await cloudinary.uploader.upload(imagePath,{
+        //     folder:folderPath,
+        //     resource_type:'auto',
+        //     invalidate:true,
+        //     public_id:encodeURIComponent(updatedUser.trim())
+        // })
+        const result = await uploadCloudinary(req.file.buffer,folderPath,encodeURIComponent(updatedUser.trim()))
+        console.log('result.public_id')
+        console.log(result.public_id)
+        
         foundUser.avatar = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${result.public_id}`
     }
 
     await foundUser.save()
-    clearStorage()
     res.status(200).json({output:{message:'OK',payload:foundUser}})
 })

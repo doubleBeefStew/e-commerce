@@ -6,23 +6,25 @@ import path from 'path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const storage = multer.diskStorage({
-    // disable local storage
-    destination:async (req,file,cb)=>{
-        const uploadPath = path.join(__dirname,'..','public','images',req.user._id.toString())
-        fs.mkdir(uploadPath,{recursive:true},(err)=>{
-            if(err){
-                console.error(err)
-                cb(err,null)
-            }else{
-                cb(null,uploadPath)
-            }
-        })
-    },
-    filename:(req,file,cb)=>{
-        cb(null, `${req.user._id}-${file.originalname}`)
-    }
-})
+const storage = multer.memoryStorage()
+
+// const storage = multer.diskStorage({
+//     // disable local storage
+//     destination:async (req,file,cb)=>{
+//         const uploadPath = path.join(__dirname,'..','public','images',req.user._id.toString())
+//         fs.mkdir(uploadPath,{recursive:true},(err)=>{
+//             if(err){
+//                 console.error(err)
+//                 cb(err,null)
+//             }else{
+//                 cb(null,uploadPath)
+//             }
+//         })
+//     },
+//     filename:(req,file,cb)=>{
+//         cb(null, `${req.user._id}-${file.originalname}`)
+//     }
+// })
 
 const parseImage = multer({
     storage,
@@ -38,15 +40,5 @@ const parseImage = multer({
         }
     }
 })
-
-export const clearStorage = ()=>{
-    const uploadPath = path.join(__dirname,'..','public','images')
-    if(fs.existsSync(uploadPath)){
-        fs.rmSync(uploadPath,{ recursive: true, force: true },(err)=>{
-            if(err)
-                console.log(err)
-        })
-    }
-} 
 
 export default parseImage

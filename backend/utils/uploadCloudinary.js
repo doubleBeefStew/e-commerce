@@ -1,20 +1,24 @@
 import cloudinary from "../middlewares/cloudinary.js"
+import streamifier from 'streamifier'
 
-const uploadCloudinary = async (files,folderPath)=>{
-    const imageData = await Promise.all(files.map(async (file)=>{
-        try{
-            const result = await cloudinary.uploader.upload(file.path,{
+const uploadCloudinary = async (buffer,folderPath,publicId)=>{
+    return new Promise((resolve,reject)=>{
+        let stream = cloudinary.uploader.upload_stream(
+            {
                 folder:folderPath,
                 resource_type:'auto',
                 invalidate:true,
-                public_id:file.filename
-            })
-            return {public_id:result.public_id,url:result.url}
-        }catch(e){
-            console.log(e)
-        }
-    }))
-    return imageData
+                public_id:publicId
+            },
+            (error,result)=>{
+                if(result)
+                    resolve(result)
+                else
+                    reject(error)
+            }
+        )
+        streamifier.createReadStream(buffer).pipe(stream)
+    })
 }
 
 export default uploadCloudinary
