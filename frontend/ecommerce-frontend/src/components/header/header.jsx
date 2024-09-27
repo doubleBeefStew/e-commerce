@@ -15,7 +15,7 @@ import { useEffect, useState } from "react"
 const Header = ()=>{
     const {userData,isAuthenticated} = useSelector((state)=>{return state.user})
     const [formData, setFormData] = useState({ keyword: '', sort: 'asc' });
-    const imageUrl= userData.avatar
+    const imageUrl= userData.avatar?.url
     const navigate = useNavigate()
 
     const handleChange = (e)=>{
@@ -41,7 +41,7 @@ const Header = ()=>{
     return (
     <>
         {/* header login-signup */}
-        <Row className='bg-orange  justify-content-end py-1'>
+        <Row className='bg-orange justify-content-end py-1'>
             <Col className='col-auto d-flex align-items-center justify-content-center no-wrap'>
                 {
                     isAuthenticated &&
@@ -53,7 +53,7 @@ const Header = ()=>{
                 }
                 <span className="text-white px-1">
                     {
-                        isAuthenticated?(
+                        isAuthenticated ? (
                             <>
                             <Link className="text-decoration-none text-white " to={'user/'}>
                                 

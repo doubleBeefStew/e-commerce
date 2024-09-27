@@ -40,7 +40,10 @@ export const activation = asyncHandler(async(req,res,next)=>{
     const token = req.params.token
     const phoneNumber = ''
     const address = ''
-    const avatar= ''
+    const avatar= {
+        public_id:'',
+        url:''
+    }
 
     const data = validateToken(token)
     const {email,password} = data

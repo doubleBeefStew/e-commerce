@@ -76,7 +76,12 @@ const userSchema = new Schema({
     type: Boolean,
     default: true
   },
-  avatar: String,
+  avatar: {
+    type:{
+      public_id: String,
+      url: String,
+    }
+  },
   // {
   //   public_id: {
   //     type: String,

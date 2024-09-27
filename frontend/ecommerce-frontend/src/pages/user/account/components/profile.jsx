@@ -17,7 +17,7 @@ import Loading from '../../../../components/notifPages/loading'
 
 const Profile = ()=>{
     const {userData,isLoadingUser,alert} = useSelector((state)=>{ return state.user })
-    const [displayedImage,setDisplayedImage] = useState(userData.avatar||'')
+    const [displayedImage,setDisplayedImage] = useState(userData.avatar?.url||'')
     const [selectedImage,setSelectedImage] = useState(null)
     const selectPicture = useRef(null)
     const dispatch = useDispatch()

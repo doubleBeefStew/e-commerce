@@ -52,10 +52,11 @@ export const updateUser = asyncHandler(async(req,res,next)=>{
         //     public_id:encodeURIComponent(updatedUser.trim())
         // })
         const result = await uploadCloudinary(req.file.buffer,folderPath,encodeURIComponent(updatedUser.trim()))
-        console.log('result.public_id')
-        console.log(result.public_id)
         
-        foundUser.avatar = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${result.public_id}`
+        foundUser.avatar = {
+            public_id:result.public_id,
+            url:result.secure_url
+        }
     }
 
     await foundUser.save()
