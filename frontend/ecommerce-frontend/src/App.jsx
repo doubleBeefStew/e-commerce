@@ -27,6 +27,7 @@ import { createCart, loadCart } from './redux/slices/cart'
 import SuccessPage from './components/notifPages/successPage'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import NotFound from './errors/notFound'
+import { Slide, ToastContainer } from 'react-toastify'
 
 const router = createBrowserRouter([{
     path: '/',
@@ -131,6 +132,16 @@ const App = () => {
             clientId: "AQvyqBwM3U7jRILb7xxUnDYTdou3kFj8z-KvEWey2bJTV10AfZdi_VdR3YlEMbiG0Y4PZR-dxrAH1utn", 
             components: "buttons", 
             currency: "USD" }}>
+            <ToastContainer
+                position='bottom-center'
+                autoClose={3000}
+                theme='light'
+                hideProgressBar={true}
+                draggable={true}
+                closeOnClick={true}
+                closeButton={true}
+                transition={Slide}
+            />
             <RouterProvider router={router} />
         </PayPalScriptProvider>
     </>)

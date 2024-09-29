@@ -8,8 +8,9 @@ const NoResult = ({})=>{
 
     return (
             <Col className='d-flex flex-column align-items-center justify-content-center text-center'>
-                <Lottie style={style} animationData={animationData} loop={false}/>
-                <p className="p-5">Sorry, we couldn't find what you're looking for.</p>
+                <Lottie style={style} animationData={animationData} loop={true}/>
+                <h1>{"Sorry, we couldn't find what you're looking for."}</h1>
+                <p>Maybe give it another try?</p>
             </Col>
     )
 }

@@ -13,10 +13,10 @@ import { CgProfile } from "react-icons/cg"
 import ProfilePicture from '../../../../components/profilePicture/profilePicture'
 import styles from '../account.module.css'
 import {setAlert,updateUser} from '../../../../redux/slices/user'
-import Loading from '../../../../components/notifPages/loading'
+import Spinner from 'react-bootstrap/Spinner'
 
 const Profile = ()=>{
-    const {userData,isLoadingUser,alert} = useSelector((state)=>{ return state.user })
+    const {userData,isUpdateUser,alert} = useSelector((state)=>{ return state.user })
     const [displayedImage,setDisplayedImage] = useState(userData.avatar?.url||'')
     const [selectedImage,setSelectedImage] = useState(null)
     const selectPicture = useRef(null)
@@ -65,8 +65,6 @@ const Profile = ()=>{
     }
 
     return(<>
-    {
-        isLoadingUser ? <Loading /> : 
         <Form onSubmit={handleSubmit}>
         <Row className='bg-white p-4'>
             <Col className='col-12 col-md-8 order-2 order-md-1'>
@@ -124,7 +122,16 @@ const Profile = ()=>{
                             </td>
                         </tr>
                         <tr>
-                            <td colSpan={2} className='text-center'><Button type='submit'>Save Changes</Button></td>
+                            <td colSpan={2} className='text-center'>
+                                <Button type='submit'>
+                                    {
+                                        isUpdateUser ? 
+                                            <><Spinner animation="border" size='sm'/>
+                                            <span className='ms-2'>Please wait...</span></>
+                                            : 'Save Changes'
+                                    }
+                                </Button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -152,7 +159,6 @@ const Profile = ()=>{
             </Col>
         </Row>
         </Form>
-    }
     </>)
 }
 

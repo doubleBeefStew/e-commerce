@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"
 import Button from 'react-bootstrap/Button'
 import Loading from '../../../components/notifPages/loading'
 import EmptyCart from '../../../errors/emptyCart'
+import { toast } from 'react-toastify'
 
 const Cart = ()=>{
     const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
@@ -20,37 +21,67 @@ const Cart = ()=>{
     const [checkoutProcess,setCheckoutProcess] = useState(false)
     const [products,setProducts] = useState([])
 
-
-    useEffect(()=>{
-        calculateTotal()
-    },[cartData.products])
-
     useEffect(()=>{
         
         if(checkoutProcess && products.length > 0){
                 navigate('/checkout',{state:{products}})
         }else{
-            console.log('please choose items to checkout')
             setCheckoutProcess(false)
         }
     },[checkoutProcess])
+
+    useEffect(()=>{
+        const productList = cartData.products?.filter((item)=>{return item.isChecked})
+        console.log(productList)
+        
+        setProducts(productList)
+    },[])
+
+    useEffect(()=>{
+        calculateTotal()
+    },[products])
     
     const checkItem = async (item)=>{
-        dispatch(updateItem({
+        const updatedItem = {
             ...item,
             isChecked: !item.isChecked
-        }))
+        }
+
+        dispatch(updateItem(updatedItem))
         dispatch(updateCart())
+
+        setProducts((prevProducts)=>{
+            if(updatedItem.isChecked){
+                return [...prevProducts,{
+                    productId : item.productId,
+                    productName : item.productName,
+                    productPrice : item.productPrice,
+                    productUrl : item.productUrl,
+                    quantity : item.quantity
+                }]
+            }else{
+                return prevProducts.filter(p => p.productId !== updatedItem.productId)
+            }
+        })
     }
 
     const checkAllItems = (event)=>{
-        cartData.products.forEach((item)=>{
-            dispatch(updateItem({
-                ...item,
-                isChecked: event.target.checked
-            }))
-        })
+        const isChecked = event.target.checked
+        const updatedProducts = cartData.products.map(item => ({
+            ...item,
+            isChecked
+        }))
+
+        updatedProducts.forEach(item => dispatch(updateItem(item)))
         dispatch(updateCart())
+
+        setProducts(isChecked ? updatedProducts.map(item => ({
+            productId: item.productId,
+            productName: item.productName,
+            productPrice: item.productPrice,
+            productUrl: item.productUrl,
+            quantity: item.quantity
+        })) : [])
     }
 
     const deleteAllItems = async ()=>{
@@ -65,24 +96,8 @@ const Cart = ()=>{
                 newTotal+= Number(item.productPrice)*Number(item.quantity)
             }
         })
-        setTotal(()=>{
-            return newTotal
-        })
-    }
-
-    //TODO:validate when no item is checked, dont continue the process
-    const checkOut = ()=>{
-        const updatedProducts = cartData.products?.filter((item) => item.isChecked).map((item)=>{
-            return {
-                productId : item.productId,
-                productName : item.productName,
-                productPrice : item.productPrice,
-                productUrl : item.productUrl,
-                quantity : item.quantity
-            }
-        })
-        setProducts(updatedProducts)
-        setCheckoutProcess(true)
+        
+        setTotal(newTotal)
     }
     
     return (<>
@@ -158,9 +173,10 @@ const Cart = ()=>{
                     </Col>
                     <Col className='col-auto text-center'>
                         <Button 
+                            disabled={products.length === 0}
                             className="w-100 btn btn-primary" 
                             state={{products}}
-                            onClick={()=>{checkOut()}}
+                            onClick={()=>{setCheckoutProcess(true)}}
                         >Checkout</Button>
                     </Col>
                 </Row>

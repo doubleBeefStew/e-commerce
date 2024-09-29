@@ -9,7 +9,7 @@ import ProductCarousel from '../../../components/Carousel/productCarousel'
 import priceFormat from '../../../utils/priceFormat'
 import React from 'react'
 import Loading from '../../../components/notifPages/loading'
-import { Slide, ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetail = () => {
@@ -48,21 +48,9 @@ const ProductDetail = () => {
                 "quantity":1,
                 "isChecked":false
             }))
-            // TODO: make react toast to confirm add cart
 
             dispatch(updateCart())
-            toast('Added to cart!',{
-                position:'bottom-center',
-                autoClose:3000,
-                theme:'light',
-                hideProgressBar:true,
-                draggable:true,
-                closeOnClick:true,
-                closeButton:true,
-                transition:Slide,
-            })
-            
-            // const response = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/update`,JSON.parse(localStorage.getItem('cartData')??''),{withCredentials:true})
+            toast('Added to cart!')
         }
 
     }
@@ -86,7 +74,7 @@ const ProductDetail = () => {
         {
             isLoading ? <Loading /> : 
             <>
-                <ToastContainer/>
+                
                 <Row className="py-5 px-0 px-sm-5 justify-content-center">
                     <Row className='bg-white p-3 gx-5'>
                         <Col className='col-12 col-md-5 px-0'>

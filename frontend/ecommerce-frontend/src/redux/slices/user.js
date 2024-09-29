@@ -54,6 +54,7 @@ const initialState = {
     isAuthenticated:false,
     userData:JSON.parse(localStorage.getItem('userData'))? JSON.parse(localStorage.getItem('userData')):[],
     isLoadingUser:false,
+    isUpdateUser:false,
     isUserError:false,
     alert:null
 }
@@ -124,17 +125,17 @@ const userSlice = createSlice({
                 state.isUserError = true
         })
         .addCase(updateUser.pending,(state)=>{
-            // state.isLoadingUser=true
+            state.isUpdateUser=true
         })
         .addCase(updateUser.fulfilled,(state,action)=>{
             state.isAuthenticated = true
             state.userData = action.payload.output.payload
             localStorage.setItem("userData",JSON.stringify(state.userData))
-            state.isLoadingUser = false
+            state.isUpdateUser = false
             state.alert = {message:'Profile updated successfully.', type:'success'}
         })
         .addCase(updateUser.rejected,(state,action)=>{
-            state.isLoadingUser=false
+            state.isUpdateUser=false
             state.isUserError=true
             state.alert = {message:'Profile updated failed.', type:'danger'}
         })
