@@ -107,9 +107,12 @@ const Header = ()=>{
                         <div className="position-relative p-0">
                             <Link to={'/cart'}>
                                 <BsCart3 color='white' size='30'/>
-                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {!isLoadingCart && (cartData.products?.length > 99? '99+' : cartData.products?.length)}
-                                </span>
+                                {
+                                    (!isLoadingCart && cartData.products?.length > 0) && 
+                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        { (cartData.products?.length > 99 ? '99+' : cartData.products?.length) }
+                                    </span>
+                                }
                             </Link>
                         </div>
                     </Col>
