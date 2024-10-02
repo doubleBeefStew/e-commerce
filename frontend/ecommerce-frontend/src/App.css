@@ -77,6 +77,7 @@ code {
     transition-property: color, border, box-shadow, transform;
     transition-duration: 250ms;
   }
+
   .field-a:focus {
     outline: none;
     box-shadow: 0 0 7px #686de080;
@@ -92,5 +93,14 @@ code {
     background: #6ab04c;
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  .fredoka-500 {
+    font-family: "Fredoka", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
   }
   

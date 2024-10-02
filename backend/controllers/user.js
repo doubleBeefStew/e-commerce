@@ -22,7 +22,7 @@ export const getUser = asyncHandler(async(req,res,next)=>{
 
 export const updateUser = asyncHandler(async(req,res,next)=>{
     const {id} = req.params
-    const { name,cartId,email,phoneNumber,sheepoPayBalance,address,image,role } = req.body
+    const { name,cartId,email,phoneNumber,DealDashPayBalance,address,image,role } = req.body
 
     let updatedUser
 
@@ -39,7 +39,7 @@ export const updateUser = asyncHandler(async(req,res,next)=>{
     cartId && (foundUser.cartId = cartId)
     email && (foundUser.email = email)
     phoneNumber && (foundUser.phoneNumber = phoneNumber)
-    sheepoPayBalance && (foundUser.sheepoPayBalance = sheepoPayBalance)
+    DealDashPayBalance && (foundUser.DealDashPayBalance = DealDashPayBalance)
     address && (foundUser.address = address)
     role && (foundUser.role = role)
 

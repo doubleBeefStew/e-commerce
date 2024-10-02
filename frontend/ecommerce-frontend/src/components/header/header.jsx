@@ -7,13 +7,14 @@ import { createSearchParams, Link, useNavigate } from "react-router-dom"
 import styles from "./header.module.css"
 import { BsSearch,BsCart3 } from "react-icons/bs";
 import { useSelector } from "react-redux"
-import { CgProfile } from "react-icons/cg"
+import { CgDropInvert, CgProfile } from "react-icons/cg"
 import ProfilePicture from "../profilePicture/profilePicture"
 import { useEffect, useState } from "react"
 
 //TODO: make header sticky when scrolling
 const Header = ()=>{
     const {userData,isAuthenticated} = useSelector((state)=>{return state.user})
+    const {isLoadingCart,cartData} = useSelector((state)=>{ return state.cart })
     const [formData, setFormData] = useState({ keyword: '', sort: 'asc' });
     const imageUrl= userData.avatar?.url
     const navigate = useNavigate()
@@ -73,8 +74,9 @@ const Header = ()=>{
         <Row className='bg-orange py-2 justify-content-center gy-3'>
             {/* logo */}
             <Col className='col-auto'>
-                <Link to={'/'}>
-                    <Logo className='d-none' />
+                <Link to={'/'} className='text-decoration-none d-flex align-items-center'>
+                    <span className="text-white me-2 fw-bold fredoka-500 fs-1"><i>DealDash!</i></span>
+                    <img src="pricetag.svg" height={40} width={40} style={{filter:'invert(100%)'}}/>
                 </Link>
             </Col>
             <Col>
@@ -93,12 +95,12 @@ const Header = ()=>{
                                     <Button type="submit" className={`${styles.searchButton} btn btn-primary border-0`}><BsSearch/></Button>
                             </Form>
                         </div>
-                        <div className="d-flex justify-content-center align-items-center text-center">
+                        {/* <div className="d-flex justify-content-center align-items-center text-center">
                             <Col><small><Link className="px-1 text-decoration-none text-white" to={'/'}>Home</Link></small></Col>
                             <Col><small><Link className="px-1 text-decoration-none text-white" to={'/events'}>Events</Link></small></Col>
                             <Col><small><Link className="px-1 text-decoration-none text-white" to={'/best-sellers'}>Best Selling</Link></small></Col>
                             <Col><small><Link className="px-1 text-decoration-none text-white" to={'/products'}>Products</Link></small></Col>
-                        </div>
+                        </div> */}
                     </Col>
                     {/* Cart */}
                     <Col className='col-auto px-4 d-flex align-items-center justify-content-center'>
@@ -106,7 +108,7 @@ const Header = ()=>{
                             <Link to={'/cart'}>
                                 <BsCart3 color='white' size='30'/>
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {}
+                                    {!isLoadingCart && (cartData.products?.length > 99? '99+' : cartData.products?.length)}
                                 </span>
                             </Link>
                         </div>

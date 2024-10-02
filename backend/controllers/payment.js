@@ -65,7 +65,7 @@ export const capturePaypalPayment = asyncHandler(async (req,res,next)=>{
     }
 })
 
-export const sheepopayPayment = asyncHandler(async (req,res,next)=>{
+export const DealDashpayPayment = asyncHandler(async (req,res,next)=>{
     const {orderId,pin} = req.body
     const user = req.user
     
@@ -78,15 +78,15 @@ export const sheepopayPayment = asyncHandler(async (req,res,next)=>{
         const foundUser = await userModel.findById(user._id)
         const foundOrder = await orderModel.findById(orderId)
 
-        if(foundUser.sheepoPayBalance){
-            if(foundUser.sheepoPayBalance - foundOrder.totalPrice < 0)
-                throw new badRequestError('insufficient SheepoPay balance','PAY-400')
+        if(foundUser.DealDashPayBalance){
+            if(foundUser.DealDashPayBalance - foundOrder.totalPrice < 0)
+                throw new badRequestError('insufficient DealDashPay balance','PAY-400')
             else{
-                foundUser.sheepoPayBalance -= foundOrder.totalPrice
+                foundUser.DealDashPayBalance -= foundOrder.totalPrice
             }
         }
         else
-            throw new badRequestError(`SheepoPay is not available for this user`, 'PAY-400')
+            throw new badRequestError(`DealDashPay is not available for this user`, 'PAY-400')
         
         foundOrder.status='PAID'
         

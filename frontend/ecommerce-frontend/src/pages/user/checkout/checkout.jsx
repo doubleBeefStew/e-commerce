@@ -34,7 +34,7 @@ const Checkout = ()=>{
     const [total,setTotal] = useState(0)
     const [productTotal,setProductTotal] = useState(0)
     const [discountTotal,setDiscountTotal] = useState(0)
-    const [paymentMethod,setPaymentMethod] = useState('SheepoPay')
+    const [paymentMethod,setPaymentMethod] = useState('DealDashPay')
     const [shippingFee,setShippingFee] = useState(8000)
     const [shippingMethod,setshippingMethod] = useState("shopee Express")
     //discount=voucher on the backend:
@@ -93,8 +93,8 @@ const Checkout = ()=>{
 
     const createOrder = ()=>{
         let method
-        if(paymentMethod == 'SheepoPay')
-            method = 'SHEEPOPAY'
+        if(paymentMethod == 'DealDashPay')
+            method = 'DealDashPAY'
         else if(paymentMethod == 'Credit Card')
             method = 'CREDITCARD'
         else if(paymentMethod == 'PayPal')
@@ -206,7 +206,7 @@ const Checkout = ()=>{
                                     {paymentMethod}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item onClick={()=>{changePaymentMethod('SheepoPay')}}>SheepoPay</Dropdown.Item>
+                                    <Dropdown.Item onClick={()=>{changePaymentMethod('DealDashPay')}}>DealDashPay</Dropdown.Item>
                                     <Dropdown.Item onClick={()=>{changePaymentMethod('Credit Card')}}>Credit Card</Dropdown.Item>
                                     <Dropdown.Item onClick={()=>{changePaymentMethod('PayPal')}}>PayPal</Dropdown.Item>
                                 </Dropdown.Menu>

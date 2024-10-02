@@ -7,7 +7,7 @@ import bcrypt from "bcrypt"
 //   email: string;
 //   password: string;
 //   phoneNumber: string;
-//   sheepoPayBalance: Number;
+//   DealDashPayBalance: Number;
 //   address: Address[];
 //   role: string;
 //   avatar: Avatar;
@@ -44,7 +44,7 @@ const userSchema = new Schema({
     select: false
   },
   phoneNumber: String,
-  sheepoPayBalance: {
+  DealDashPayBalance: {
     type:Number,
     default:500000
   },

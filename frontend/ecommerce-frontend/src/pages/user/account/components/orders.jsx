@@ -101,6 +101,8 @@ const Orders = ()=>{
                                 </Row>
                                 {
                                     item.products.map((product)=>{
+                                        console.log(product)
+                                        
                                         return(
                                         <Row className='align-items-center justify-content-between px-3 mb-2' key={product._id}>
                                             <Col className='col-auto text-center'>

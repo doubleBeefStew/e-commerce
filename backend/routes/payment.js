@@ -1,10 +1,10 @@
 import Express from "express"
-import {sheepopayPayment,createPaypalPayment,capturePaypalPayment} from "../controllers/payment.js"
+import {DealDashpayPayment,createPaypalPayment,capturePaypalPayment} from "../controllers/payment.js"
 
 const router = Express.Router()
 
-router.route('/sheepopay')
-    .post(sheepopayPayment)
+router.route('/DealDashpay')
+    .post(DealDashpayPayment)
     
 router.route('/paypal/create')
     .post(createPaypalPayment)

@@ -21,16 +21,16 @@ export const register = asyncHandler(async (req,res,next)=>{
         subject:'Confirm Your Email Registration',
         text: `Hello,
 
-        Welcome to Sheepo!
+        Welcome to DealDash!
 
-        We received a registration request to Sheepo.com
+        We received a registration request to DealDash.com
         Please click on the link below to continue your registration and activate your account:
 
         ${process.env.FE_URL}/register/activation/${token}
 
         Ignore this email if you did not signup for this registration process.
 
-        Sheepo, BAA BAA DISCOUNT!`
+        DealDash, BAA BAA DISCOUNT!`
     })
     
     res.status(200).json({output:{message:'confirmation email sent',email}})

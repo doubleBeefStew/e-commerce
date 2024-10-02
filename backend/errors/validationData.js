@@ -41,5 +41,5 @@ export const validationData = {
 
 export const roles = ['user','admin']
 export const status = ['WAITING FOR PAYMENT','PAID','SHIPPING','DELIVERED','RETURNED','CANCELLED']
-export const paymentMethod = ['SHEEPOPAY','PAYPAL','CREDITCARD']
-export const shippingMethod = ['SHEEPOEXPRESS','JNE', 'JNT', 'ANTERAJA']
+export const paymentMethod = ['DealDashPAY','PAYPAL','CREDITCARD']
+export const shippingMethod = ['DealDashEXPRESS','JNE', 'JNT', 'ANTERAJA']

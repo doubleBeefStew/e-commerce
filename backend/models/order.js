@@ -8,7 +8,7 @@ const orderSchema = new Schema({
     address:String,
     paymentMethod:{
         type:String,
-        enum: ['SHEEPOPAY','CREDITCARD','PAYPAL'],
+        enum: ['DealDashPAY','CREDITCARD','PAYPAL'],
     },
     products:{
         type:[{

@@ -6,7 +6,7 @@ import { PayPalButtons } from "@paypal/react-paypal-js"
 import { useDispatch, useSelector } from "react-redux"
 import PinField from "react-pin-field"
 import { useNavigate } from "react-router-dom"
-import { sheepopayPayment, setRedirect } from "../../../redux/slices/payment"
+import { DealDashpayPayment, setRedirect } from "../../../redux/slices/payment"
 import { removeItem, updateCart } from "../../../redux/slices/cart"
 import axios from "axios"
 import Loading from "../../../components/notifPages/loading"
@@ -32,7 +32,7 @@ const Payment = ()=>{
     useEffect(()=>{
         if(pin.length == pinLength){
             const data = { orderId:currentCheckout._id, pin }
-            dispatch(sheepopayPayment(data))
+            dispatch(DealDashpayPayment(data))
         }
     },[pin])
 
@@ -55,7 +55,7 @@ const Payment = ()=>{
         <Row className='vh-100'>
             <Col className='d-flex flex-column align-items-center justify-content-center text-center'>
             {
-                currentCheckout.paymentMethod=='SHEEPOPAY' ?  (
+                currentCheckout.paymentMethod=='DealDashPAY' ?  (
                     <>
                         <h1>PIN</h1>
                         <br/>
@@ -116,7 +116,7 @@ const Payment = ()=>{
                     <>
                         <h1>CREDIT CARD</h1>
                         <br/>
-                        <p>We apologize, currently credit card payment is not available on Sheepo!</p>
+                        <p>We apologize, currently credit card payment is not available on DealDash!</p>
                     </>
                 ) : (
                     <>
