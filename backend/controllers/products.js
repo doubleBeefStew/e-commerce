@@ -43,8 +43,12 @@ export const createProduct = asyncHandler(async (req,res,next)=>{
     const newProduct = await productModel.create({name,description,initialPrice,discountPrice,stock})
 
     if(files){
-        const imageData = await uploadCloudinary(files,`products/${req.user._id}/${newProduct._id}`)
-        newProduct.images = imageData
+        const folderPath = `products/${req.user._id}/${newProduct._id}`
+        const imageData = await uploadCloudinary(files[0].buffer,folderPath,encodeURIComponent(newProduct._id.toString().trim()))
+        newProduct.images = [{
+            public_id:imageData.public_id,
+            url:imageData.secure_url
+        }]
         newProduct.save()
     }
 

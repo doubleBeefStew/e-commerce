@@ -1,0 +1,212 @@
+[
+    // {
+    //     "name": "TechPro Ultra-Slim Laptop",
+    //     "description": "Experience lightning-fast performance with our TechPro Ultra-Slim Laptop. Featuring a 14-inch 4K display, 1TB SSD, and 16GB RAM, this powerhouse weighs just 2.5 lbs. Perfect for professionals on the go!",
+    //     "initialPrice": 1299.99,
+    //     "stock": 42
+    // },
+    // {
+    //     "name": "EcoClean All-Natural Laundry Detergent",
+    //     "description": "Say goodbye to harsh chemicals and hello to fresh, clean clothes! Our EcoClean All-Natural Laundry Detergent is tough on stains but gentle on your skin and the environment. Biodegradable formula with a refreshing lavender scent.",
+    //     "initialPrice": 19.95,
+    //     "stock": 87
+    // },
+    // {
+    //     "name": "SmartHome Security Camera System",
+    //     "description": "Protect your home 24/7 with our cutting-edge SmartHome Security Camera System. Featuring 1080p HD cameras, night vision, and two-way audio. Easy setup and smartphone integration for peace of mind wherever you are.",
+    //     "initialPrice": 249.99,
+    //     "stock": 31
+    // },
+    // {
+    //     "name": "FitTrack Pro Smartwatch",
+    //     "description": "Elevate your fitness journey with the FitTrack Pro Smartwatch. Monitor heart rate, sleep patterns, and daily activity. Water-resistant up to 50m and a battery life of 7 days. Your personal health assistant on your wrist!",
+    //     "initialPrice": 179.95,
+    //     "stock": 56
+    // },
+    // {
+    //     "name": "CuisineMax Air Fryer Deluxe",
+    //     "description": "Enjoy crispy, delicious meals with 90% less oil! The CuisineMax Air Fryer Deluxe features a 5.8-quart capacity, 8 preset cooking functions, and a digital touch screen. Healthy eating made easy and tasty!",
+    //     "initialPrice": 129.99,
+    //     "stock": 72
+    // },
+    // {
+    //     "name": "KidZone Educational Tablet",
+    //     "description": "Give your child a head start with the KidZone Educational Tablet. Preloaded with age-appropriate learning apps, games, and e-books. Durable design with parental controls for safe, fun learning.",
+    //     "initialPrice": 99.95,
+    //     "stock": 63
+    // },
+    {
+        "name": "GreenThumb Indoor Herb Garden Kit",
+        "description": "Bring the garden to your kitchen with our GreenThumb Indoor Herb Garden Kit. Includes LED grow lights, self-watering system, and seeds for basil, cilantro, and mint. Fresh herbs year-round!",
+        "initialPrice": 59.99,
+        "stock": 88
+    },
+    {
+        "name": "SoundWave Noise-Canceling Headphones",
+        "description": "Immerse yourself in pure audio bliss with SoundWave Noise-Canceling Headphones. Features advanced ANC technology, 40mm drivers, and 30-hour battery life. Your personal oasis of sound awaits!",
+        "initialPrice": 199.99,
+        "stock": 45
+    },
+    {
+        "name": "PowerUp Portable Solar Charger",
+        "description": "Never run out of battery again! The PowerUp Portable Solar Charger harnesses the sun's energy to charge your devices anywhere. Compact, waterproof, and compatible with all USB devices.",
+        "initialPrice": 49.95,
+        "stock": 94
+    },
+    {
+        "name": "CozyNights Weighted Blanket",
+        "description": "Experience the comfort of a warm hug with our CozyNights Weighted Blanket. Made from soft, breathable fabric and filled with glass beads for even weight distribution. Better sleep is just a blanket away!",
+        "initialPrice": 79.99,
+        "stock": 67
+    },
+    {
+        "name": "PetPal Automatic Pet Feeder",
+        "description": "Keep your furry friend fed on schedule with the PetPal Automatic Pet Feeder. Programmable feeding times, portion control, and a built-in camera to check on your pet while you're away. Peace of mind for pet parents!",
+        "initialPrice": 89.95,
+        "stock": 53
+    },
+    {
+        "name": "BeautyGlow LED Face Mask",
+        "description": "Achieve radiant skin at home with the BeautyGlow LED Face Mask. Uses red and blue light therapy to reduce wrinkles, fight acne, and promote collagen production. Salon-quality results in just 10 minutes a day!",
+        "initialPrice": 149.99,
+        "stock": 39
+    },
+    {
+        "name": "WorkPro Ergonomic Office Chair",
+        "description": "Say goodbye to back pain with the WorkPro Ergonomic Office Chair. Features adjustable lumbar support, breathable mesh back, and customizable armrests. Your productivity and comfort will soar!",
+        "initialPrice": 229.95,
+        "stock": 28
+    },
+    {
+        "name": "CampMaster 4-Person Instant Tent",
+        "description": "Set up camp in seconds with the CampMaster 4-Person Instant Tent. Pre-attached poles for easy setup, waterproof fabric, and built-in LED lighting. Your home away from home in the great outdoors!",
+        "initialPrice": 159.99,
+        "stock": 41
+    },
+    {
+        "name": "BrainBoost Omega-3 Supplements",
+        "description": "Support cognitive function and heart health with BrainBoost Omega-3 Supplements. Sourced from sustainable, wild-caught fish and purified for maximum potency. Fuel your mind and body!",
+        "initialPrice": 29.95,
+        "stock": 76
+    },
+    {
+        "name": "CleanSweep Robot Vacuum",
+        "description": "Let the CleanSweep Robot Vacuum do the dirty work for you! With smart mapping technology, powerful suction, and a self-emptying dustbin, it's like having a personal cleaning assistant. More free time, less mess!",
+        "initialPrice": 399.99,
+        "stock": 33
+    },
+    {
+        "name": "ArtisanCraft Pottery Wheel",
+        "description": "Unleash your creativity with the ArtisanCraft Pottery Wheel. Features variable speed control, reversible spin, and includes clay and basic tools. Perfect for beginners and experienced potters alike!",
+        "initialPrice": 279.95,
+        "stock": 22
+    },
+    {
+        "name": "LuxeGlow Tanning Mousse",
+        "description": "Achieve a natural, streak-free tan with LuxeGlow Tanning Mousse. Infused with nourishing vitamins and a color guide for even application. Sun-kissed skin without the harmful UV rays!",
+        "initialPrice": 34.99,
+        "stock": 85
+    },
+    {
+        "name": "KitchenPro Stand Mixer",
+        "description": "Elevate your baking game with the KitchenPro Stand Mixer. Powerful 500-watt motor, 5-quart stainless steel bowl, and 10 speed settings. Includes dough hook, wire whip, and flat beater. Whip up delicious creations with ease!",
+        "initialPrice": 299.95,
+        "stock": 47
+    },
+    {
+        "name": "ZenSleep Memory Foam Pillow",
+        "description": "Experience the ultimate in sleep comfort with the ZenSleep Memory Foam Pillow. Contours to your head and neck for proper alignment, with cooling gel technology for a refreshing night's sleep. Wake up rejuvenated!",
+        "initialPrice": 69.99,
+        "stock": 91
+    },
+    {
+        "name": "TravelMate Compact Luggage Set",
+        "description": "Travel in style with the TravelMate Compact Luggage Set. Includes 20\", 24\", and 28\" spinner suitcases with hardshell exteriors and expandable interiors. Built-in TSA locks for added security. Adventure awaits!",
+        "initialPrice": 249.99,
+        "stock": 36
+    },
+    {
+        "name": "GamerPro Mechanical Keyboard",
+        "description": "Dominate the competition with the GamerPro Mechanical Keyboard. Features customizable RGB lighting, anti-ghosting technology, and durable Cherry MX switches. Take your gaming to the next level!",
+        "initialPrice": 129.95,
+        "stock": 58
+    },
+    {
+        "name": "EcoWarrior Reusable Produce Bags",
+        "description": "Join the zero-waste movement with EcoWarrior Reusable Produce Bags. Set of 9 bags in various sizes, made from durable, washable mesh. Say goodbye to single-use plastics and hello to sustainable shopping!",
+        "initialPrice": 15.99,
+        "stock": 100
+    },
+    {
+        "name": "LuminarX Photography Drone",
+        "description": "Capture breathtaking aerial footage with the LuminarX Photography Drone. Features a 4K camera with 3-axis gimbal, 30-minute flight time, and intelligent flight modes. Your creativity knows no bounds!",
+        "initialPrice": 799.99,
+        "stock": 25
+    },
+    {
+        "name": "VitaBlend High-Speed Blender",
+        "description": "Whip up smoothies, soups, and more with the VitaBlend High-Speed Blender. Powerful 2HP motor, 64oz BPA-free container, and pre-programmed settings for consistent results. Nutritious meals made easy!",
+        "initialPrice": 189.95,
+        "stock": 62
+    },
+    {
+        "name": "AquaFresh Countertop Water Filter",
+        "description": "Enjoy clean, great-tasting water with the AquaFresh Countertop Water Filter. Removes 99% of contaminants, easy installation, and long-lasting filters. Better for you and the environment!",
+        "initialPrice": 79.99,
+        "stock": 73
+    },
+    {
+        "name": "YogaFlow Non-Slip Exercise Mat",
+        "description": "Perfect your practice with the YogaFlow Non-Slip Exercise Mat. Extra thick for joint protection, moisture-wicking surface for grip, and eco-friendly materials. Namaste in style and comfort!",
+        "initialPrice": 39.95,
+        "stock": 82
+    },
+    {
+        "name": "BrilliantSmile Teeth Whitening Kit",
+        "description": "Achieve a dazzling smile with the BrilliantSmile Teeth Whitening Kit. Includes LED light accelerator, custom-fit trays, and professional-grade whitening gel. Visibly whiter teeth in just 7 days!",
+        "initialPrice": 59.99,
+        "stock": 69
+    },
+    {
+        "name": "SwiftChop Food Processor",
+        "description": "Make meal prep a breeze with the SwiftChop Food Processor. Features a powerful motor, 3-in-1 feed tube, and reversible slicing/shredding disc. Chop, slice, and dice like a pro!",
+        "initialPrice": 89.95,
+        "stock": 54
+    },
+    {
+        "name": "NatureDream Bamboo Bed Sheets",
+        "description": "Experience luxury every night with NatureDream Bamboo Bed Sheets. Silky soft, naturally hypoallergenic, and temperature-regulating. Sweet dreams are made of these!",
+        "initialPrice": 99.99,
+        "stock": 77
+    },
+    {
+        "name": "PowerLift Electric Stand-Up Desk",
+        "description": "Boost your productivity and health with the PowerLift Electric Stand-Up Desk. Smooth height adjustment, spacious work surface, and built-in cable management. Stand up for better work!",
+        "initialPrice": 349.95,
+        "stock": 30
+    },
+    {
+        "name": "PetPamper Grooming Kit",
+        "description": "Keep your furry friend looking their best with the PetPamper Grooming Kit. Includes professional-grade clippers, various attachment combs, nail trimmer, and grooming scissors. Salon-quality grooming at home!",
+        "initialPrice": 69.99,
+        "stock": 65
+    },
+    {
+        "name": "MindfulMoments Meditation Cushion",
+        "description": "Find your zen with the MindfulMoments Meditation Cushion. Ergonomically designed for proper posture, filled with natural buckwheat hulls, and covered in soft, breathable fabric. Inner peace starts here!",
+        "initialPrice": 49.95,
+        "stock": 88
+    },
+    {
+        "name": "AdventureMax Waterproof Action Camera",
+        "description": "Capture life's thrilling moments with the AdventureMax Waterproof Action Camera. 4K video, 20MP photos, and waterproof up to 33 feet. Share your adventures in stunning detail!",
+        "initialPrice": 149.99,
+        "stock": 43
+    },
+    {
+        "name": "CulinaryDelight Sous Vide Cooker",
+        "description": "Achieve restaurant-quality results at home with the CulinaryDelight Sous Vide Cooker. Precise temperature control, WiFi-enabled for remote monitoring, and compact design for easy storage. Elevate your cooking game!",
+        "initialPrice": 129.95,
+        "stock": 51
+    }
+]
