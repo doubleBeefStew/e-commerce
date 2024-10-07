@@ -22,7 +22,7 @@
     // {
     //     "name": "SmartHome Security Camera System",
     //     "description": "Protect your home 24/7 with our cutting-edge SmartHome Security Camera System. Featuring 1080p HD cameras, night vision, and two-way audio. Easy setup and smartphone integration for peace of mind wherever you are.",
-    //     "initialPrice": 249.99,
+    //     "initialPrice": 2499000,
     //     "stock": 31,
     //     "images":[{
     //         "public_id":null,
@@ -32,7 +32,7 @@
     // {
     //     "name": "FitTrack Pro Smartwatch",
     //     "description": "Elevate your fitness journey with the FitTrack Pro Smartwatch. Monitor heart rate, sleep patterns, and daily activity. Water-resistant up to 50m and a battery life of 7 days. Your personal health assistant on your wrist!",
-    //     "initialPrice": 179.95,
+    //     "initialPrice": 1799000,
     //     "stock": 56,
     //     "images":[{
     //         "public_id":null,
@@ -42,7 +42,7 @@
     // {
     //     "name": "CuisineMax Air Fryer Deluxe",
     //     "description": "Enjoy crispy, delicious meals with 90% less oil! The CuisineMax Air Fryer Deluxe features a 5.8-quart capacity, 8 preset cooking functions, and a digital touch screen. Healthy eating made easy and tasty!",
-    //     "initialPrice": 129.99,
+    //     "initialPrice": 1299900,
     //     "stock": 72,
     //     "images":[{
     //         "public_id":null,
@@ -52,7 +52,7 @@
     // {
     //     "name": "KidZone Educational Tablet",
     //     "description": "Give your child a head start with the KidZone Educational Tablet. Preloaded with age-appropriate learning apps, games, and e-books. Durable design with parental controls for safe, fun learning.",
-    //     "initialPrice": 99.95,
+    //     "initialPrice": 999500,
     //     "stock": 63,
     //     "images":[{
     //         "public_id":null,
@@ -62,7 +62,7 @@
     // {
     //     "name": "GreenThumb Indoor Herb Garden Kit",
     //     "description": "Bring the garden to your kitchen with our GreenThumb Indoor Herb Garden Kit. Includes LED grow lights, self-watering system, and seeds for basil, cilantro, and mint. Fresh herbs year-round!",
-    //     "initialPrice": 59.99,
+    //     "initialPrice": 59900,
     //     "stock": 88,
     //     "images":[{
     //         "public_id":null,
@@ -169,26 +169,26 @@
     //         "url":"ArtisanCraft-Pottery-Wheel.png"
     //     }]
     // },
-    // {
-    //     "name": "LuxeGlow Tanning Mousse",
-    //     "description": "Achieve a natural, streak-free tan with LuxeGlow Tanning Mousse. Infused with nourishing vitamins and a color guide for even application. Sun-kissed skin without the harmful UV rays!",
-    //     "initialPrice": 349900,
-    //     "stock": 85,
-    //     "images":[{
-    //         "public_id":null,
-    //         "url":"LuxeGlow-Tanning-Mousse.png"
-    //     }]
-    // },
-    // {
-    //     "name": "KitchenPro Stand Mixer",
-    //     "description": "Elevate your baking game with the KitchenPro Stand Mixer. Powerful 500-watt motor, 5-quart stainless steel bowl, and 10 speed settings. Includes dough hook, wire whip, and flat beater. Whip up delicious creations with ease!",
-    //     "initialPrice": 455900,
-    //     "stock": 47,
-    //     "images":[{
-    //         "public_id":null,
-    //         "url":"KitchenPro-Stand-Mixer.png"
-    //     }]
-    // },
+    {
+        "name": "LuxeGlow Tanning Mousse",
+        "description": "Achieve a natural, streak-free tan with LuxeGlow Tanning Mousse. Infused with nourishing vitamins and a color guide for even application. Sun-kissed skin without the harmful UV rays!",
+        "initialPrice": 349900,
+        "stock": 85,
+        "images":[{
+            "public_id":null,
+            "url":"LuxeGlow-Tanning-Mousse.png"
+        }]
+    },
+    {
+        "name": "KitchenPro Stand Mixer",
+        "description": "Elevate your baking game with the KitchenPro Stand Mixer. Powerful 500-watt motor, 5-quart stainless steel bowl, and 10 speed settings. Includes dough hook, wire whip, and flat beater. Whip up delicious creations with ease!",
+        "initialPrice": 455900,
+        "stock": 47,
+        "images":[{
+            "public_id":null,
+            "url":"KitchenPro-Stand-Mixer.png"
+        }]
+    },
     {
         "name": "ZenSleep Memory Foam Pillow",
         "description": "Experience the ultimate in sleep comfort with the ZenSleep Memory Foam Pillow. Contours to your head and neck for proper alignment, with cooling gel technology for a refreshing night's sleep. Wake up rejuvenated!",
