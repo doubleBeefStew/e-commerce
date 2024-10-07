@@ -26,7 +26,7 @@ const ProductDetail = () => {
     useEffect(()=>{
         const getProductData = async ()=>{
             setIsLoading(true)
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`,{withCredentials:true})
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/pducts/${id}`,{withCredentials:true})
             setProductData(response.data.output.payload)
             setIsLoading(false)
         }

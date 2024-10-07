@@ -13,10 +13,7 @@ const ProductCard = ({product})=>{
                 <Card.Img 
                     className='overflow-hidden object-fit-contain' height={'200px'}
                     variant="top" 
-                    src={
-                        // product.images[0]?.public_id? product.images[0].url : 
-                        `${import.meta.env.VITE_BASE_URL}${product.images[0].url}`
-                    }/>
+                    src={ product.images[0].url }/>
                 <Card.Body>
                     <Card.Title className={'text-transform-capitalize fs-6 text-truncate'}>{product.name}</Card.Title>
                         <small className='text-orange'>Rp</small>
