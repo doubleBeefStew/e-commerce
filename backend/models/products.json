@@ -1,10 +1,14 @@
 [
-    // {
-    //     "name": "TechPro Ultra-Slim Laptop",
-    //     "description": "Experience lightning-fast performance with our TechPro Ultra-Slim Laptop. Featuring a 14-inch 4K display, 1TB SSD, and 16GB RAM, this powerhouse weighs just 2.5 lbs. Perfect for professionals on the go!",
-    //     "initialPrice": 1299.99,
-    //     "stock": 42
-    // },
+    {
+        "name": "TechPro Ultra-Slim Laptop",
+        "description": "Experience lightning-fast performance with our TechPro Ultra-Slim Laptop. Featuring a 14-inch 4K display, 1TB SSD, and 16GB RAM, this powerhouse weighs just 2.5 lbs. Perfect for professionals on the go!",
+        "initialPrice": 1299.99,
+        "stock": 42,
+        "images":[{
+            "public_id":"null",
+            "url":"images/TechPro Ultra-Slim Laptop.png"
+        }]
+    },
     // {
     //     "name": "EcoClean All-Natural Laundry Detergent",
     //     "description": "Say goodbye to harsh chemicals and hello to fresh, clean clothes! Our EcoClean All-Natural Laundry Detergent is tough on stains but gentle on your skin and the environment. Biodegradable formula with a refreshing lavender scent.",
@@ -35,24 +39,24 @@
     //     "initialPrice": 99.95,
     //     "stock": 63
     // },
-    {
-        "name": "GreenThumb Indoor Herb Garden Kit",
-        "description": "Bring the garden to your kitchen with our GreenThumb Indoor Herb Garden Kit. Includes LED grow lights, self-watering system, and seeds for basil, cilantro, and mint. Fresh herbs year-round!",
-        "initialPrice": 59.99,
-        "stock": 88
-    },
-    {
-        "name": "SoundWave Noise-Canceling Headphones",
-        "description": "Immerse yourself in pure audio bliss with SoundWave Noise-Canceling Headphones. Features advanced ANC technology, 40mm drivers, and 30-hour battery life. Your personal oasis of sound awaits!",
-        "initialPrice": 199.99,
-        "stock": 45
-    },
-    {
-        "name": "PowerUp Portable Solar Charger",
-        "description": "Never run out of battery again! The PowerUp Portable Solar Charger harnesses the sun's energy to charge your devices anywhere. Compact, waterproof, and compatible with all USB devices.",
-        "initialPrice": 49.95,
-        "stock": 94
-    },
+    // {
+    //     "name": "GreenThumb Indoor Herb Garden Kit",
+    //     "description": "Bring the garden to your kitchen with our GreenThumb Indoor Herb Garden Kit. Includes LED grow lights, self-watering system, and seeds for basil, cilantro, and mint. Fresh herbs year-round!",
+    //     "initialPrice": 59.99,
+    //     "stock": 88
+    // },
+    // {
+    //     "name": "SoundWave Noise-Canceling Headphones",
+    //     "description": "Immerse yourself in pure audio bliss with SoundWave Noise-Canceling Headphones. Features advanced ANC technology, 40mm drivers, and 30-hour battery life. Your personal oasis of sound awaits!",
+    //     "initialPrice": 199.99,
+    //     "stock": 45
+    // },
+    // {
+    //     "name": "PowerUp Portable Solar Charger",
+    //     "description": "Never run out of battery again! The PowerUp Portable Solar Charger harnesses the sun's energy to charge your devices anywhere. Compact, waterproof, and compatible with all USB devices.",
+    //     "initialPrice": 49.95,
+    //     "stock": 94
+    // },
     {
         "name": "CozyNights Weighted Blanket",
         "description": "Experience the comfort of a warm hug with our CozyNights Weighted Blanket. Made from soft, breathable fabric and filled with glass beads for even weight distribution. Better sleep is just a blanket away!",

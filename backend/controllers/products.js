@@ -38,9 +38,9 @@ export const createProduct = asyncHandler(async (req,res,next)=>{
     }
 
     const files = req.files
-    const {name,description,initialPrice,discountPrice,stock} = req.body
+    const {name,description,initialPrice,discountPrice,stock,images} = req.body
 
-    const newProduct = await productModel.create({name,description,initialPrice,discountPrice,stock})
+    const newProduct = await productModel.create({name,description,initialPrice,discountPrice,stock,images})
 
     if(files){
         const folderPath = `products/${req.user._id}/${newProduct._id}`
