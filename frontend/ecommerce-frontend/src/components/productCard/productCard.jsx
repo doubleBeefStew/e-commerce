@@ -17,7 +17,7 @@ const ProductCard = ({product})=>{
                 <Card.Body>
                     <Card.Title className={'text-transform-capitalize fs-6 text-truncate'}>{product.name}</Card.Title>
                         <small className='text-orange'>Rp</small>
-                        <span className='fs-5 text-orange- text-truncate'>{`${priceFormat(product.initialPrice)}`}</span>
+                        <span className='fs-5 text-orange text-truncate'>{`${priceFormat(product.initialPrice)}`}</span>
                         <div className='row align-items-center mt-2'>
                             <div className='col-12 col-sm-6 d-flex align-items-center'>
                                 {
