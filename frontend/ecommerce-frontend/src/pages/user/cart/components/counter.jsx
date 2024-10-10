@@ -35,25 +35,35 @@ const Counter = ({ product }) => {
     }, [dispatch, product]);
 
     return (
-        <div className="input-group">
-            <span className="input-group-btn">
-                <button type="button" className="btn btn-default btn-number" onClick={handleDecrement}>
-                    <span className="">-</span>
-                </button>
-            </span>
-            <input 
-                value={product.quantity}
-                type="number" 
-                className="border border-0 text-center form-control-small" 
-                style={{ 'width': '30px' }}
-                onChange={handleChange}
-                min="1"
-            />
-            <span className="input-group-btn">
-                <button type="button" className="btn btn-default btn-number" onClick={handleIncrement}>
-                    <span className="">+</span>
-                </button>
-            </span>
+        <div className="d-flex align-items-center">
+            <div className="input-group input-group-sm">
+                <div className="input-group-prepend">
+                    <button 
+                        type="button" 
+                        className="btn btn-outline-secondary"
+                        onClick={handleDecrement}
+                    >
+                        -
+                    </button>
+                </div>
+                <input 
+                    value={product.quantity}
+                    type="number" 
+                    className="form-control text-center"
+                    style={{ width: '50px', minWidth: '50px' }}
+                    onChange={handleChange}
+                    min="1"
+                />
+                <div className="input-group-append">
+                    <button 
+                        type="button" 
+                        className="btn btn-outline-secondary"
+                        onClick={handleIncrement}
+                    >
+                        +
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };
