@@ -2,8 +2,5 @@
 - quantity limit
 - react toast
 
-cara main search:
-- input keyword di header & submit
-- navigate ke product page dengan location state
-- useEffect product page: if ada keyword di state, loadProduct dengan keyword
-- 
+customer@dealdash.example.com
+customer_dealdash
